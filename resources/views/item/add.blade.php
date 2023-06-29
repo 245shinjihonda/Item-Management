@@ -24,17 +24,31 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="type">種別</label>
+                            <label for="type">種別番号</label>
                             <input type="number" class="form-control" id="type" name="type" placeholder="1, 2, 3, ...">
                         </div>
 
                         <div class="form-group">
-                            <label for="name">名前</label>
+                            <label for="name">商品番号</label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="名前">
                         </div>
 
                         <div class="form-group">
-                            <label for="detail">詳細</label>
+                            <label for="detail">種別</label>
+                            <input type="text" class="form-control" id="detail" name="detail" placeholder="詳細説明">
+                        </div>
+                        <div class="form-group">
+                            <label for="type">ブランド</label>
+                            <input type="number" class="form-control" id="type" name="type" placeholder="1, 2, 3, ...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">商品名</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="名前">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="detail">定価</label>
                             <input type="text" class="form-control" id="detail" name="detail" placeholder="詳細説明">
                         </div>
                     </div>

@@ -15,12 +15,16 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->string('name', 100)->index();
-            $table->string('type', 100)->index();
             $table->string('status', 100)->default('active');
-            $table->smallInteger('type')->nullable();
-            $table->string('detail', 500)->nullable();
+            $table->bigInteger('user_id')->unsigned()->index();
+            $table->integer('cat-number')->index();
+            $table->integer('item-number')->index();
+            $table->index(['cat-number', 'item-number'])->unique();
+            $table->string('category', 100)->index();
+            $table->string('brand', 100)->index();
+            $table->string('name', 100)->index();
+            $table->integer('list-price')->index();
+            
             $table->timestamps();
         });
     }

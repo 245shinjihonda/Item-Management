@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Item;
 
 class InventoryController extends Controller
 {
@@ -23,6 +24,17 @@ class InventoryController extends Controller
         return view('inventory.record');
     }
 
+    public function InventoryUpdate()
+    {
+        // 利用者一覧取得
+        // $items = Item
+        //     ::where('items.status', 'active')
+        //     ->select()
+        //     ->get();
+
+        return view('inventory.update');
+    }
+
     public function InventoryInput()
     {
         // 利用者一覧取得
@@ -31,7 +43,9 @@ class InventoryController extends Controller
         //     ->select()
         //     ->get();
 
-        return view('inventory.input');
+        return view('inventory.record');
     }
+
+
     //
 }

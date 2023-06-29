@@ -14,7 +14,16 @@ class CreateInventoriesTable extends Migration
     public function up()
     {
         Schema::create('inventories', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->integer('item_id')->unsigned();
+            $table->string("status", 100)->default('active');
+            $table->integer('in-quantity');
+            $table->integer('in-unit-price');
+            $table->integer('in-amount');
+            $table->integer('out-quantity');
+            $table->integer('out-unit-price');
+            $table->integer('out-amount');
             $table->timestamps();
         });
     }

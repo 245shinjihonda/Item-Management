@@ -236,7 +236,6 @@ return [
             'url'  => 'users',
             'icon' => 'fas fa-gamepad',
         ],
-
         [
             'text' => 'ホーム画面へ戻る',
             'url'  => '/',

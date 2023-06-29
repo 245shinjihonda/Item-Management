@@ -7,6 +7,10 @@
 @stop
 
 @section('content')
+
+<div>商品検索</div>
+<br>
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -24,10 +28,12 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>名前</th>
+                                <th>種別番号</th>
+                                <th>商品番号</th>
                                 <th>種別</th>
+                                <th>ブランド</th>   
                                 <th>商品名</th>
+                                <th>定価</th>
                                 <th>在庫記録</th>
                                 <th>出入荷入力</th>
                             </tr>
@@ -39,8 +45,10 @@
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->type }}</td>
                                     <td>{{ $item->detail }}</td>
-                                    <td><a href="{{ url('inventories') }}" class="btn btn-default">在庫を確認する</a></td>
-                                    <td><a href="{{ url('inventories/input') }}" class="btn btn-default">出入荷を入力する</a></td> 
+                                    <td>{{ $item->type }}</td>
+                                    <td>{{ $item->detail }}</td>
+                                    <td><a href="{{ url('inventories') }}" class="btn btn-default">確認する</a></td>
+                                    <td><a href="{{ url('inventories/update') }}" class="btn btn-default">入力する</a></td> 
                                 </tr>
                             @endforeach
                         </tbody>
