@@ -17,13 +17,13 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('status', 100)->default('active');
             $table->bigInteger('user_id')->unsigned()->index();
-            $table->integer('cat-number')->index();
-            $table->integer('item-number')->index();
-            $table->index(['cat-number', 'item-number'])->unique();
+            $table->String('cat_number')->index();
+            $table->String('item_number')->index();
+            $table->index(['cat_number', 'item_number'])->unique();
             $table->string('category', 100)->index();
             $table->string('brand', 100)->index();
-            $table->string('name', 100)->index();
-            $table->integer('list-price')->index();
+            $table->string('item_name', 100)->index();
+            $table->integer('list_price')->index();
             
             $table->timestamps();
         });

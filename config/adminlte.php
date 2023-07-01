@@ -242,6 +242,11 @@ return [
             'icon' => 'fas fa-gamepad',
         ],
 
+        [
+            'text' => 'change_password',
+            'url'  => 'password',
+            'icon' => 'fas fa-fw fa-lock',
+        ],
 
         // AdminLTEデフォルト
         // 

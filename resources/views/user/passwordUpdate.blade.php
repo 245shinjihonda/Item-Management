@@ -1,17 +1,24 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'パスワード変更')
+
+@section('content_header')
+    <h1>パスワード変更</h1>
+@stop
 
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">登録画面</div>
+                <div class="card-header">パスワードの変更を登録する</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    
+                    <form method="POST" action="/password/update/{{$passwordUser->id}}" enctype="multipart/form-data">
                         @csrf
 
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">名前</label>
 
                             <div class="col-md-6">
@@ -37,10 +44,10 @@
                                     </span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">パスワード</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">新しいパスワード</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -64,7 +71,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    登録する<!-- {{ __('Register') }} -->
+                                    登録する
                                 </button>
                             </div>
                         </div>
@@ -74,4 +81,11 @@
         </div>
     </div>
 </div>
-@endsection
+
+@stop
+
+@section('css')
+@stop
+
+@section('js')
+@stop

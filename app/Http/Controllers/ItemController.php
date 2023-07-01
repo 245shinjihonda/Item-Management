@@ -21,7 +21,7 @@ class ItemController extends Controller
     /**
      * 商品一覧
      */
-    public function index()
+    public function ItemIndex()
     {
         // 商品一覧取得
         $items = Item
@@ -35,21 +35,25 @@ class ItemController extends Controller
     /**
      * 商品登録
      */
-    public function add(Request $request)
+    public function ItemAdd(Request $request)
     {
         // POSTリクエストのとき
         if ($request->isMethod('post')) {
             // バリデーション
             $this->validate($request, [
-                'name' => 'required|max:100',
+                'cat_number' => 'required|size:3',
+                'item_number' => 'required|size:5',
             ]);
 
             // 商品登録
             Item::create([
                 'user_id' => Auth::user()->id,
-                'name' => $request->name,
-                'type' => $request->type,
-                'detail' => $request->detail,
+                'cat_number' => $request->cat_number,
+                'item_number' => $request->item_number,
+                'category' => $request->category,
+                'brand' => $request->brand,
+                'item_name' => $request->item_name,
+                'list_price' => $request->list_price,
             ]);
 
             return redirect('/items');

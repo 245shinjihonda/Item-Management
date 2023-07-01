@@ -27,11 +27,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items as $item)
+                            @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td><button type="sumbit" class="btn btn-default"><a href="{{ url('users/delete') }}">削除</a></td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td><button type="sumbit" class="btn btn-default"><a href="/users/delete/{{$user->id}}">削除</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -9,8 +9,10 @@
 @section('content')
 
 <div>
-<a href="{{ url('users/add') }}" class="btn btn-default">利用者登録</a>
+<!-- <a href="{{ route('register')}}" class="btn btn-default">利用者登録</a> -->
+<a href="{{ url('users/add-form') }}" class="btn btn-default">利用者登録</a>
 <a href="{{ url('users/delete-list') }}" class="btn btn-default">利用者削除</a>
+
 </div>
 <br>
 
@@ -29,10 +31,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items as $item)
+                            @foreach ($admiusers as $admiuser)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
+                                    <td>{{$admiuser->name}}</td>
+                                    <td>{{$admiuser->email}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -43,7 +45,7 @@
     </div>
 
 
-    <div>利用者検索</div>
+    <div>利用者検索(TO DO) </div>
     <br>
 
     <div class="row">
@@ -69,10 +71,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($items as $item)
+                            @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
                                 </tr>
                             @endforeach
                         </tbody>

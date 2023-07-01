@@ -41,12 +41,12 @@
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->type }}</td>
-                                    <td>{{ $item->detail }}</td>
-                                    <td>{{ $item->type }}</td>
-                                    <td>{{ $item->detail }}</td>
+                                    <td>{{ $item->cat_number }}</td>
+                                    <td>{{ $item->item_number }}</td>
+                                    <td>{{ $item->category }}</td>
+                                    <td>{{ $item->brand }}</td>
+                                    <td>{{ $item->item_name }}</td>
+                                    <td>{{ $item->list_price }}</td>
                                     <td><a href="{{ url('inventories') }}" class="btn btn-default">確認する</a></td>
                                     <td><a href="{{ url('inventories/update') }}" class="btn btn-default">入力する</a></td> 
                                 </tr>

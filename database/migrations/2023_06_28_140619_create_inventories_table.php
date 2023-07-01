@@ -18,12 +18,12 @@ class CreateInventoriesTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('item_id')->unsigned();
             $table->string("status", 100)->default('active');
-            $table->integer('in-quantity');
-            $table->integer('in-unit-price');
-            $table->integer('in-amount');
-            $table->integer('out-quantity');
-            $table->integer('out-unit-price');
-            $table->integer('out-amount');
+            $table->integer('in_quantity');
+            $table->integer('in_unit_price');
+            $table->integer('in_amount');
+            $table->integer('out_quantity');
+            $table->integer('out_unit_price');
+            $table->integer('out_amount');
             $table->timestamps();
         });
     }

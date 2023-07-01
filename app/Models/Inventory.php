@@ -12,11 +12,11 @@ class Inventory extends Model
     protected $fillable = [
         'user_id',
         'item_id',
-        'in-quantity',
-        'in-unit-price',
-        'in-amount',
-        'out-quantity',
-        'out-unit-price',
-        'out-amount',
+        'in_quantity',
+        'in_unit_price',
+        'in_amount',
+        'out_quantity',
+        'out_unit_price',
+        'out_amount',
     ];
 }

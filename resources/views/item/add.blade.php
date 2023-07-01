@@ -20,36 +20,36 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="type">種別番号</label>
-                            <input type="number" class="form-control" id="type" name="type" placeholder="1, 2, 3, ...">
+                            <label for="cut_number">種別番号</label>
+                            <input type="text" class="form-control" name="cat_number" placeholder="001, 002, ...">
                         </div>
 
                         <div class="form-group">
-                            <label for="name">商品番号</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="名前">
+                            <label for="item_number">商品番号</label>
+                            <input type="text" class="form-control" name="item_number" placeholder="0000A, 0000B, ...">
                         </div>
 
                         <div class="form-group">
-                            <label for="detail">種別</label>
-                            <input type="text" class="form-control" id="detail" name="detail" placeholder="詳細説明">
+                            <label for="category">種別</label>
+                            <input type="text" class="form-control" name="category" placeholder="ザック, 靴, レインウエア等">
                         </div>
                         <div class="form-group">
-                            <label for="type">ブランド</label>
-                            <input type="number" class="form-control" id="type" name="type" placeholder="1, 2, 3, ...">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="name">商品名</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="名前">
+                            <label for="brand">ブランド</label>
+                            <input type="text" class="form-control" name="brand" placeholder="ブランド名, メーカー名">
                         </div>
 
                         <div class="form-group">
-                            <label for="detail">定価</label>
-                            <input type="text" class="form-control" id="detail" name="detail" placeholder="詳細説明">
+                            <label for="item_name">商品名</label>
+                            <input type="text" class="form-control" name="item_name" placeholder="商品名">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="list_price">定価</label>
+                            <input type="number" class="form-control" name="list_price" placeholder="定価（税込価格）">
                         </div>
                     </div>
 
