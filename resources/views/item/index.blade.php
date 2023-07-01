@@ -28,9 +28,9 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>種別番号</th>
+                                <th>種別コード</th>
                                 <th>商品番号</th>
-                                <th>種別</th>
+                                <th>種別名</th>
                                 <th>ブランド</th>   
                                 <th>商品名</th>
                                 <th>定価</th>
@@ -41,14 +41,14 @@
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
-                                    <td>{{ $item->cat_number }}</td>
+                                    <td>{{ $item->item_code}}</td>
                                     <td>{{ $item->item_number }}</td>
                                     <td>{{ $item->category }}</td>
                                     <td>{{ $item->brand }}</td>
                                     <td>{{ $item->item_name }}</td>
-                                    <td>{{ $item->list_price }}</td>
-                                    <td><a href="{{ url('inventories') }}" class="btn btn-default">確認する</a></td>
-                                    <td><a href="{{ url('inventories/update') }}" class="btn btn-default">入力する</a></td> 
+                                    <td>{{ number_format($item->list_price) }}円</td>
+                                    <td><a href="/inventories/{{$item->id}}" class="btn btn-default">確認する</a></td>
+                                    <td><a href="/inventories/update/{{$item->id}}" class="btn btn-default">入力する</a></td> 
                                 </tr>
                             @endforeach
                         </tbody>

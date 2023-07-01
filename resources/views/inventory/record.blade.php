@@ -13,9 +13,9 @@
         <table class="table table-hover text-nowrap">
             <thead>
             <tr>
-                <th>種別番号</th>
+                <th>種別コード</th>
                 <th>商品番号</th>
-                <th>種別</th>
+                <th>種別名</th>
                 <th>ブランド</th>   
                 <th>商品名</th>
                 <th>定価</th>
@@ -24,13 +24,13 @@
             </thead>
             <tbody>
             <tr>
-                <td>001</td>
-                <td>3772A</td>
-                <td>ザック</td>
-                <td>South Face</td>
-                <td>富士</td>
-                <td>{{number_format(25000)}}円</td>
-                <td><a href="{{ url('items/delete') }}" class="btn btn-default">削除する</a></td> 
+                <td>{{$itemInventory->item_code}}</td>
+                <td>{{$itemInventory->item_number}}</td>
+                <td>{{$itemInventory->category}}</td>
+                <td>{{$itemInventory->brand}}</td>
+                <td>{{$itemInventory->item_name}}</td>
+                <td>{{number_format($itemInventory->list_price)}}円</td>
+                <td><a href="/items/delete/{{$itemInventory->id}}" class="btn btn-default">削除する</a></td> 
             </tr>
             </tbody>
         </table>

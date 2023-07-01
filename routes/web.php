@@ -39,13 +39,13 @@ Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'ItemIndex']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
-    Route::get('/delete', [App\Http\Controllers\ItemController::class, 'ItemDelete']);
+    Route::get('/delete/{id}', [App\Http\Controllers\ItemController::class, 'ItemDelete']);
 });
 
 Route::prefix('inventories')->group(function () {
-    Route::get('/', [App\Http\Controllers\InventoryController::class, 'InventoryRecord']);
-    Route::get('/update', [App\Http\Controllers\InventoryController::class, 'InventoryUpdate']);
-    Route::get('/input', [App\Http\Controllers\InventoryController::class, 'InventoryInput']);
+    Route::get('/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryRecord']);
+    Route::get('/update/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryUpdate']);
+    Route::post('/input', [App\Http\Controllers\InventoryController::class, 'InventoryInput']);
 });
 
 

@@ -40,15 +40,22 @@ class ItemController extends Controller
         // POSTリクエストのとき
         if ($request->isMethod('post')) {
             // バリデーション
+
+            // dd($itemcode);
+            // exit;
+
             $this->validate($request, [
-                'cat_number' => 'required|size:3',
-                'item_number' => 'required|size:5',
+                'item_code' => 'required|size:3',
+                'item_number' => 'required|size:4',
             ]);
+
+            // if // 検索を入れる
+            // $error = 既に登録すみです。
 
             // 商品登録
             Item::create([
                 'user_id' => Auth::user()->id,
-                'cat_number' => $request->cat_number,
+                'item_code' => $request->item_code,
                 'item_number' => $request->item_number,
                 'category' => $request->category,
                 'brand' => $request->brand,
@@ -60,16 +67,17 @@ class ItemController extends Controller
         }
 
         return view('item.add');
+        // ->with($error);
     }
 
     // 商品削除
 
-    public function ItemDelete(Request $request)
+    public function ItemDelete(Request $request, $id)
     {
         // 商品削除
-        //   $item = Item::find($id);
-        //   $item->status = 'delete';
-        //   $item->save();
+          $item = Item::find($id);
+          $item->status = 'delete';
+          $item->save();
           return redirect('/items');
         
     }

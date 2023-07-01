@@ -24,17 +24,17 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="cut_number">種別番号</label>
-                            <input type="text" class="form-control" name="cat_number" placeholder="001, 002, ...">
+                            <label for="cut_number">種別コード</label>
+                            <input type="text" class="form-control" name="item_code" placeholder="AAA, AAB, ...">
                         </div>
 
                         <div class="form-group">
                             <label for="item_number">商品番号</label>
-                            <input type="text" class="form-control" name="item_number" placeholder="0000A, 0000B, ...">
+                            <input type="text" class="form-control" name="item_number" placeholder="0000, 0000, ...">
                         </div>
 
                         <div class="form-group">
-                            <label for="category">種別</label>
+                            <label for="category">種別名</label>
                             <input type="text" class="form-control" name="category" placeholder="ザック, 靴, レインウエア等">
                         </div>
                         <div class="form-group">

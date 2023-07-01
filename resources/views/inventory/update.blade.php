@@ -23,12 +23,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>001</td>
-                <td>3772A</td>
-                <td>ザック</td>
-                <td>South Face</td>
-                <td>富士</td>
-                <td>{{number_format(25000)}}円</td>
+                <td>{{$updateInventory->item_code}}</td>
+                <td>{{$updateInventory->item_number}}</td>
+                <td>{{$updateInventory->category}}</td>
+                <td>{{$updateInventory->brand}}</td>
+                <td>{{$updateInventory->item_name}}</td>
+                <td>{{number_format($updateInventory->list_price)}}円</td>
             </tr>
             </tbody>
         </table>
@@ -37,25 +37,25 @@
 <br>
 <br>
 
-    <form method="POST">
-    @csrf
-    <div class="col-6">
+    <form method="POST" action="{{url('inventories/input')}}" enctype="multipart/form-data">
+        @csrf
+        <div class="col-6">
         <h2>入荷</h2>
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <tr>
-                        <td>仕入単価</td>
-                        <td><input type ="number", id ="ShiirePrice", value="0"></td>
-                        <td>円</td>
-                    </tr>
-                    <tr>
-                        <td>個数</td>
-                        <td><input type ="number", id ="ShiireUnit", value ="0"></td>
+                        <td>仕入個数</td>
+                        <td><input type="number", id="in_quantity", value ="0"></td>
                         <td>個</td>
                     </tr>
                     <tr>
+                        <td>仕入単価</td>
+                        <td><input type="number", id ="in_unit_price", value="0"></td>
+                        <td>円</td>
+                    </tr>
+                    <tr>
                         <td>合計額</td>
-                        <td><p id ="ShiireResult"></P></td>
+                        <td><p id="in_amount"><input type="number", name="in_amount" value="0"><P></td>
                         <td>円</td>
                     </tr>
                 </table>
@@ -67,18 +67,18 @@
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <tr>
-                        <td>販売単価</td>
-                        <td><input type ='number', id ='HanbaiPrice', value='0'></td>
-                        <td>円</td>
-                    </tr>
-                    <tr>
                         <td>販売個数</td>
-                        <td><input type = 'number', id ='HanbaiUnit', value ='0'></td>
+                        <td><input type = 'number', id ='out_quantity', value ='0'></td>
                         <td>個</td>
                     </tr>
                     <tr>
+                    <td>販売単価</td>
+                        <td><input type ='number', id ='out_unit_price', value='0'></td>
+                        <td>円</td>
+                    </tr>
+                    <tr>
                         <td>合計額</td>
-                        <td><p id ='HanbaiResult'></p></td>
+                        <td><p id ='out_amount'><input type="number", name="out_amount" value="0"></p></td>
                         <td>円</td>
                     </tr>
                 </table>
@@ -101,38 +101,38 @@
 @section('js')
     <script> 
     // 仕入合計額の計算
-    function Calc(ShiirePrice, ShiireUnit){
-            return ShiirePrice*ShiireUnit;
+    function Calc(in_quantity, in_unit_price){
+            return in_quantity*in_unit_price;
         }
         
         let ShiireRun = document.getElementById('ShiireRun');
 
         ShiireRun.addEventListener('click', function(){
-            let Price = document.getElementById('ShiirePrice').value;
-            let Unit  = document.getElementById('ShiireUnit').value;
+            let Price = document.getElementById('in_quantity').value;
+            let Unit  = document.getElementById('in_unit_price').value;
             var Total = Calc(Price, Unit);
-            let Result = document.getElementById('ShiireResult');
+            let Result = document.getElementById('in_amount');
             
             console.log(Total);
             var Amount = new Intl.NumberFormat().format(Total);
-            ShiireResult.innerHTML = Amount;
+            in_amount.innerHTML = Amount;
         });
     
-        function Calc(HanbaiPrice, HanbaiUnit){
-            return HanbaiPrice*HanbaiUnit;
+        function Calc(out_quantity, out_unit_price){
+            return out_quantity*out_unit_price;
         }
         
         let HanbaiRun = document.getElementById('HanbaiRun');
 
         HanbaiRun.addEventListener('click', function(){
-            let Price = document.getElementById('HanbaiPrice').value;
-            let Unit  = document.getElementById('HanbaiUnit').value;
+            let Price = document.getElementById('out_quantity').value;
+            let Unit  = document.getElementById('out_unit_price').value;
             var Total = Calc(Price, Unit);
-            let Result = document.getElementById('HanbaiResult');
+            let Result = document.getElementById('out_amount');
             
             console.log(Total);
             var Amount = new Intl.NumberFormat().format(Total);
-            HanbaiResult.innerHTML = Amount;
+            out_amount.innerHTML = Amount;
         });
 
     console.log('Hi!'); 
