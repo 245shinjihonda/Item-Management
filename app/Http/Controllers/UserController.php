@@ -14,18 +14,30 @@ class UserController extends Controller
     } 
     
     // 利用者一覧を表示する。
-    public function UserList()
+    public function UserList(Request $request)
     {
-        // 利用者一覧取得
+        //    検索の設定
+        // input()は<form>で送付された<input>のname属性
+        
+        $keyword = $request->input('keyword');
+        $query = User::query();
+
+        // $keywordが存在すれば、$queryにif文の中の条件が設定される
+        if(!empty($keyword)) {
+            $query->where('email', 'LIKE', "%{$keyword}%")
+            ->select()     
+            ->get();
+        }
+                    // 利用者一覧取得
         $admiusers = User::where('users.is_admi', '1')
             ->select()
             ->get();
 
-        $users = User::where('users.is_admi', '0')
+        $users = $query->where('users.is_admi', '0')
             ->select()
             ->get();
 
-        return view('user.list', compact('admiusers', 'users'));
+        return view('user.list', compact('admiusers', 'users', 'keyword'));
     }
 
     // 利用者登録画面を表示する。
@@ -37,6 +49,7 @@ class UserController extends Controller
     // 管理者が許可した利用者を登録する
     public function UserAdd(Request $request)
     {
+        // バリデーションの設定
         // $this->validate($request, [
         // 'name' => 'required|max:255',
         // 'email' => 'required|min:5|email|unique:users',
@@ -74,9 +87,8 @@ class UserController extends Controller
     // 利用者がパスワードを更新する  
     public function UserPasswordUpdate(Request $request, $id)
     {                 
-        User::where('id', '=',$request->id)->update([
-            'password' => password_hash($request->password, PASSWORD_DEFAULT), 
-            ]);
+        User::where('id', '=',$request->id)
+            ->update(['password' => password_hash($request->password, PASSWORD_DEFAULT)]);
            
             return redirect('/users');
     }
@@ -93,7 +105,7 @@ class UserController extends Controller
     }
 
     // 利用者を削除する。
-    public function UserDelete(Request $request)
+    public function UserDelete(Request $request, $id)
     {      
             // 対象の利用者を削除する関数       
             User::where('id', '=',$request->id)->delete();

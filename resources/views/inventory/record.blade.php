@@ -24,13 +24,13 @@
             </thead>
             <tbody>
             <tr>
-                <td>{{$itemInventory->item_code}}</td>
-                <td>{{$itemInventory->item_number}}</td>
-                <td>{{$itemInventory->category}}</td>
-                <td>{{$itemInventory->brand}}</td>
-                <td>{{$itemInventory->item_name}}</td>
-                <td>{{number_format($itemInventory->list_price)}}円</td>
-                <td><a href="/items/delete/{{$itemInventory->id}}" class="btn btn-default">削除する</a></td> 
+                <td>{{$item->item_code}}</td>
+                <td>{{$item->item_number}}</td>
+                <td>{{$item->category}}</td>
+                <td>{{$item->brand}}</td>
+                <td>{{$item->item_name}}</td>
+                <td>{{number_format($item->list_price)}}円</td>
+                <td><a href="/items/delete/{{$item->id}}" class="btn btn-default">削除する</a></td> 
             </tr>
             </tbody>
         </table>
@@ -79,17 +79,19 @@
                 <th>合計額</th>   
             </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td>2023/6/29</td>
-                <td>1</td>
-                <td>2</td>
-                <td>3</td>
-                <td>4</td>
-                <td>5</td>
-                <td>6</td>
-                <td>じろたん</td>
-            </tr>
+            <tbody>           
+                @foreach($recordInventories as $recordInventory)
+                <tr>
+                    <td>{{$recordInventory->created_at}}</td>
+                    <td>{{$recordInventory->in_quantity}}</td>
+                    <td>{{$recordInventory->in_unit_price}}</td>
+                    <td>{{$recordInventory->in_amount}}</td>
+                    <td>{{$recordInventory->out_quantity}}</td>
+                    <td>{{$recordInventory->out_unit_price}}</td>
+                    <td>{{$recordInventory->out_amount}}</td>
+                    <td>{{$recordInventory->user_id}}</td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

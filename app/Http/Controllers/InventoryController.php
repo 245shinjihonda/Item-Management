@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Inventory;
@@ -16,27 +17,45 @@ class InventoryController extends Controller
     // 在庫記録を表示する
     public function InventoryRecord(Request $request, $id)
     {
-        $itemInventory = Item::where('id', '=' ,$request->id)->first();
+        // dd($id);
+        // exit;
+        $item = Item::where('id', '=' ,$request->id)
+                        ->first();
 
-        return view('inventory.record', compact('itemInventory'));
+        $recordInventories = Inventory::
+                            where('status', 'active')->
+                            where('item_id', $request->id)->
+                            get();
+
+        return view('inventory.record', compact('item', 'recordInventories'));
     }
 
+    // 出入荷を登録するフォームを表示する
     public function InventoryUpdate(Request $request, $id)
     {
-        $updateInventory = Item::where('id', '=' ,$request->id)->first();
+        $item = Item::where('id', '=' ,$request->id)->first();
 
-        return view('inventory.update', compact('updateInventory'));
+        return view('inventory.update', compact('item'));
     }
 
+    // 出入荷記録を登録する
     public function InventoryInput(Request $request)
     {
-        // 利用者一覧取得
-        // $items = Item
-        //     ::where('items.status', 'active')
-        //     ->select()
-        //     ->get();
+         Inventory::create([
+            'user_id' => Auth::user()->id,
+            'item_id' => $request->item_id,
+            'in_quantity' => $request->in_quantity,
+            'in_unit_price' => $request->in_unit_price,
+            'in_amount' => $request->in_amount,
+            'out_quantity' => $request->out_quantity,
+            'out_unit_price' => $request->out_unit_price,
+            'out_amount' => $request->out_amount,
+        ]);
 
-        return view('inventory.record');
+    // dd("/inventories/$request->item_id");
+    // exit;
+
+        return redirect('/inventories/'.$request->item_id);
     }
 
 }

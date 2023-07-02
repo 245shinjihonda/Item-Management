@@ -13,6 +13,12 @@
             <div class="card">
                 <div class="card-header">登録画面</div>
 
+                @if($error_existingItem)
+                <span class="invalid-feedback" role="alert">
+                    <strong>入力した商品はすでに登録すみです。</strong>
+                </span>
+                @endif
+
                 <div class="card-body">
                     <form method="POST" action="{{ url('users/add') }}" enctype="multipart/form-data">
                         @csrf

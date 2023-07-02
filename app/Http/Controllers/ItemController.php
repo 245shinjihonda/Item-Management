@@ -41,16 +41,22 @@ class ItemController extends Controller
         if ($request->isMethod('post')) {
             // バリデーション
 
-            // dd($itemcode);
-            // exit;
-
             $this->validate($request, [
                 'item_code' => 'required|size:3',
                 'item_number' => 'required|size:4',
             ]);
 
-            // if // 検索を入れる
-            // $error = 既に登録すみです。
+            $query = Item::query();
+            $query->where('item_code', '=' ,$request->item_code);
+            $query->where('item_number', '=' ,$request->item_number);
+            $existingItem = $query->first();
+
+                if ($existingItem){
+                    return view('item.add')->with($error_existingItem);
+                }
+            
+            // dd($itemcode);
+            // exit;
 
             // 商品登録
             Item::create([
@@ -66,14 +72,17 @@ class ItemController extends Controller
             return redirect('/items');
         }
 
-        return view('item.add');
-        // ->with($error);
+        
+       
     }
 
     // 商品削除
 
     public function ItemDelete(Request $request, $id)
     {
+        // dd($id);
+        // exit;
+        
         // 商品削除
           $item = Item::find($id);
           $item->status = 'delete';

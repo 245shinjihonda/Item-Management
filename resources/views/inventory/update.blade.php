@@ -23,12 +23,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>{{$updateInventory->item_code}}</td>
-                <td>{{$updateInventory->item_number}}</td>
-                <td>{{$updateInventory->category}}</td>
-                <td>{{$updateInventory->brand}}</td>
-                <td>{{$updateInventory->item_name}}</td>
-                <td>{{number_format($updateInventory->list_price)}}円</td>
+                <td>{{$item->item_code}}</td>
+                <td>{{$item->item_number}}</td>
+                <td>{{$item->category}}</td>
+                <td>{{$item->brand}}</td>
+                <td>{{$item->item_name}}</td>
+                <td>{{number_format($item->list_price)}}円</td>
             </tr>
             </tbody>
         </table>
@@ -37,29 +37,33 @@
 <br>
 <br>
 
-    <form method="POST" action="{{url('inventories/input')}}" enctype="multipart/form-data">
+    <form method="POST" action="/inventories/input/{{$item->id}}" enctype="multipart/form-data">
         @csrf
+
+        <input type="hidden" value="{{$item->id}}" name="item_id">
+
         <div class="col-6">
         <h2>入荷</h2>
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <tr>
                         <td>仕入個数</td>
-                        <td><input type="number", id="in_quantity", value ="0"></td>
+                        <td><input type='number' id='in_quantity' name='in_quantity' value ='0'></td>
                         <td>個</td>
                     </tr>
                     <tr>
                         <td>仕入単価</td>
-                        <td><input type="number", id ="in_unit_price", value="0"></td>
+                        <td><input type='number' id='in_unit_price' name='in_unit_price' value='0'></td>
                         <td>円</td>
                     </tr>
                     <tr>
                         <td>合計額</td>
-                        <td><p id="in_amount"><input type="number", name="in_amount" value="0"><P></td>
+                        <td><p id='in_amount'></p>    </td>  
+                        <input type='hidden' id='total_in_amount' type='number' name='in_amount' value='0'>
                         <td>円</td>
                     </tr>
                 </table>
-            <div><input type ="button", id ="ShiireRun", value ="合計額">
+            <div><input type ='button', id='ShiireRun', value ='合計額'>
 <br>
 <br>
 <br>
@@ -68,27 +72,27 @@
                 <table class="table table-hover text-nowrap">
                     <tr>
                         <td>販売個数</td>
-                        <td><input type = 'number', id ='out_quantity', value ='0'></td>
+                        <td><input type='number' id='out_quantity' name="out_quantity" value='0'></td>
                         <td>個</td>
                     </tr>
                     <tr>
                     <td>販売単価</td>
-                        <td><input type ='number', id ='out_unit_price', value='0'></td>
+                        <td><input type='number' id='out_unit_price' name='out_unit_price' value='0'></td>
                         <td>円</td>
                     </tr>
                     <tr>
                         <td>合計額</td>
-                        <td><p id ='out_amount'><input type="number", name="out_amount" value="0"></p></td>
+                        <td><p id='out_amount'></p></td>
+                        <input type='hidden' id='total_out_amount' type='number' name='out_amount' value='0'>
                         <td>円</td>
                     </tr>
                 </table>
-            <div><input type ='button', id ='HanbaiRun', value = '合計額'>
+            <div><input type='button' id='HanbaiRun' value='合計額'>
     </div>
 <br>
 <br>
         <div class="card-footer">
-            <!-- <button type="submit" class="btn btn-primary">出入荷を入力する</button> -->
-            <a href="{{ url('inventories/input') }}" class="btn btn-default">出入荷を入力する
+            <button type="submit" class="btn btn-primary">出入荷を入力する</button>
         </div>
     </form>
 
@@ -100,10 +104,10 @@
 
 @section('js')
     <script> 
-    // 仕入合計額の計算
     function Calc(in_quantity, in_unit_price){
             return in_quantity*in_unit_price;
         }
+        
         
         let ShiireRun = document.getElementById('ShiireRun');
 
@@ -112,10 +116,12 @@
             let Unit  = document.getElementById('in_unit_price').value;
             var Total = Calc(Price, Unit);
             let Result = document.getElementById('in_amount');
-            
+           
+            document.getElementById('total_in_amount').value = Total;
+
             console.log(Total);
-            var Amount = new Intl.NumberFormat().format(Total);
-            in_amount.innerHTML = Amount;
+            var In_Amount = new Intl.NumberFormat().format(Total);
+            in_amount.innerHTML = In_Amount;
         });
     
         function Calc(out_quantity, out_unit_price){
@@ -130,9 +136,13 @@
             var Total = Calc(Price, Unit);
             let Result = document.getElementById('out_amount');
             
+            document.getElementById('total_out_amount').value = Total;
+
             console.log(Total);
-            var Amount = new Intl.NumberFormat().format(Total);
-            out_amount.innerHTML = Amount;
+            var Out_Amount = new Intl.NumberFormat().format(Total);
+            out_amount.innerHTML = Out_Amount;
+
+           
         });
 
     console.log('Hi!'); 

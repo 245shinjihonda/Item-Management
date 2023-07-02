@@ -15,7 +15,6 @@
 
 </div>
 <br>
-
     <div class="row">
         <div class="col-8">
             <div class="card">
@@ -44,8 +43,32 @@
         </div>
     </div>
 
+     <!-- 検索機能 -->
+    <div>利用者検索</div> 
+    <div class="search-form">
+        <form class="row g-2" action="{{ url('users') }}" method="GET">
+            @csrf
+            <div class="col-auto">
+            <input class="form-control" type="text" name="keyword" value="{{$keyword}}">
+            </div>
+            <div class="col-auto">
+            <input class="btn btn-success" type="submit" value="検索">
+            </div>
+        </form>
+    </div>
+    <br>
 
-    <div>利用者検索(TO DO) </div>
+    <!-- 一覧表示・検索結果表示 -->
+    <div class="list-form">
+        <div>
+        <?php $url = $_SERVER['REQUEST_URI']; ?>
+        @if (strstr($url, 'keyword'))
+            検索結果表示  <a href="{{ url('users') }}">全件表示に戻る</a>
+            @else
+            全件表示
+        @endif
+    
+    <br>
     <br>
 
     <div class="row">

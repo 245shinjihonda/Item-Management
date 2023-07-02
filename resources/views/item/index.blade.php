@@ -9,6 +9,21 @@
 @section('content')
 
 <div>商品検索</div>
+
+{{-- 
+    <label for="">カテゴリー
+<div>
+<select name="category" data-toggle="select">
+<option value="">全て</option>
+@foreach ($categories_list as $categories_item)
+<option value="{{ $categories_item->getCategory() }}" @if($category=='{{ $categories_item->getCategory() }}') selected @endif>{{ $categories_item->getCategory() }}</option>
+@endforeach
+</select>
+/div>
+</label>  
+--}}
+
+
 <br>
 
     <div class="row">
