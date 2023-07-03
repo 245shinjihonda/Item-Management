@@ -25,7 +25,8 @@ class InventoryController extends Controller
         $recordInventories = Inventory::
                             where('status', 'active')->
                             where('item_id', $request->id)->
-                            get();
+                            latest()->
+                            paginate(10);
 
         return view('inventory.record', compact('item', 'recordInventories'));
     }

@@ -19,4 +19,12 @@ class Inventory extends Model
         'out_unit_price',
         'out_amount',
     ];
+
+    // itemの情報を取得する
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+
 }

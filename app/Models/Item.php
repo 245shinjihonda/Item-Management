@@ -36,4 +36,13 @@ class Item extends Model
      */
     protected $casts = [
     ];
+
+    // itemが保持する全inventories
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+
 }
+

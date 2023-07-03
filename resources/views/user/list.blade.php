@@ -9,11 +9,11 @@
 @section('content')
 
 <div>
-<!-- <a href="{{ route('register')}}" class="btn btn-default">利用者登録</a> -->
 <a href="{{ url('users/add-form') }}" class="btn btn-default">利用者登録</a>
 <a href="{{ url('users/delete-list') }}" class="btn btn-default">利用者削除</a>
 
 </div>
+<!-- 利用者には管理者が見えないようにするコードを実装する -->
 <br>
     <div class="row">
         <div class="col-8">
@@ -41,7 +41,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+
 
      <!-- 検索機能 -->
     <div>利用者検索</div> 

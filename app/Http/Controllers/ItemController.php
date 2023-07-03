@@ -31,48 +31,66 @@ class ItemController extends Controller
 
         return view('item.index', compact('items'));
     }
-
+        // dd($error_existingItem);
+        // exit;
     /**
      * 商品登録
      */
     public function ItemAdd(Request $request)
     {
         // POSTリクエストのとき
-        if ($request->isMethod('post')) {
+        if ($request->isMethod('post'))
+        {
             // バリデーション
-
             $this->validate($request, [
                 'item_code' => 'required|size:3',
                 'item_number' => 'required|size:4',
-            ]);
+                ]);
 
-            $query = Item::query();
-            $query->where('item_code', '=' ,$request->item_code);
-            $query->where('item_number', '=' ,$request->item_number);
-            $existingItem = $query->first();
+            // 同一番号がなれけば商品登録
 
-                if ($existingItem){
-                    return view('item.add')->with($error_existingItem);
+            if (!Item::where('item_code', '=' ,$request->item_code)
+                        ->where('item_number', '=' ,$request->item_number)
+                        ->exists())
+                {   
+                    Item::create([
+                    'user_id' => Auth::user()->id,
+                    'item_code' => $request->item_code,
+                    'item_number' => $request->item_number,
+                    'category' => $request->category,
+                    'brand' => $request->brand,
+                    'item_name' => $request->item_name,
+                    'list_price' => $request->list_price,
+                    ]);
+    
+                return redirect('/items');
                 }
-            
-            // dd($itemcode);
-            // exit;
 
-            // 商品登録
-            Item::create([
-                'user_id' => Auth::user()->id,
-                'item_code' => $request->item_code,
-                'item_number' => $request->item_number,
-                'category' => $request->category,
-                'brand' => $request->brand,
-                'item_name' => $request->item_name,
-                'list_price' => $request->list_price,
-            ]);
-
-            return redirect('/items');
+                // そうでなければ登録済をエラーとして返す
+            else{
+                $error_existingItem = 'この商品はすでに登録されています。';
+                return view('item.add', compact('error_existingItem'));
+            }
+                    // 別の実装方法
+                    // $item_code = $request->item_code;
+                    // $item_number = $request->item_number;
+        
+                    // $query = Item::query();
+                    // $query->where('item_code', '=' ,$item_code);
+                    // $query->where('item_number', '=' ,$item_number);
+                    // $existingItem = $query->first();
+        
+                    // if ($existingItem)
+                    //     {
+                    //         $error_existingItem = 'この商品はすでに登録されています。';
+        
+                    //         return view('item.add', compact('error_existingItem'));
+        
+                    //         // return view('item.add')->with('error_existingItem', $error_existingItem);
+                    //     }
         }
 
-        
+    return view('item.add');
        
     }
 
@@ -88,7 +106,43 @@ class ItemController extends Controller
           $item->status = 'delete';
           $item->save();
           return redirect('/items');
-        
     }
 
+
+
+    // 検索機能
+    public function ItemSearch(Request $request)
+    {
+        $code = $request->input('item_code');
+        $price = $request->input('list_price');
+
+        $query = Item::query();
+
+        $items= $query->where('status','active')
+                ->when($code, function($query) use ($code){
+                    $query->where('item_code', $code);
+                })
+                ->when($price, function($query) use ($price){
+                    if($price == '10000'){
+                        $query->where('list_price', '<' , 10000);
+                    }
+                    elseif ($price == '20000') {
+                        $query->where('list_price', '>=' , 10000);
+                        $query->where('list_price', '<' , 20000);
+                    }
+                    elseif ($price == '30000') {
+                        $query->where('list_price', '>=' , 20000);
+                        $query->where('list_price', '<' , 30000);
+                    }
+                    else{
+                        $query->where('list_price', '>=' , 30000);
+                    }
+                })
+                ->get();
+
+        return view('item.index',$items,compact('items'));
+
+    }
 }
+
+

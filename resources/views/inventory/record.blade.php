@@ -83,18 +83,22 @@
                 @foreach($recordInventories as $recordInventory)
                 <tr>
                     <td>{{$recordInventory->created_at}}</td>
-                    <td>{{$recordInventory->in_quantity}}</td>
-                    <td>{{$recordInventory->in_unit_price}}</td>
-                    <td>{{$recordInventory->in_amount}}</td>
-                    <td>{{$recordInventory->out_quantity}}</td>
-                    <td>{{$recordInventory->out_unit_price}}</td>
-                    <td>{{$recordInventory->out_amount}}</td>
+                    <td>{{number_format($recordInventory->in_quantity)}}</td>
+                    <td>{{number_format($recordInventory->in_unit_price)}}</td>
+                    <td>{{number_format($recordInventory->in_amount)}}</td>
+                    <td>{{number_format($recordInventory->out_quantity)}}</td>
+                    <td>{{number_format($recordInventory->out_unit_price)}}</td>
+                    <td>{{number_format($recordInventory->out_amount)}}</td>
                     <td>{{$recordInventory->user_id}}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+
+    <footer>
+    <div>{{$recordInventories->links('pagination::bootstrap-4')}}      </div>
+    </footer>
 
 
 @stop

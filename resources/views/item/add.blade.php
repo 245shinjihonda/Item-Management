@@ -7,6 +7,13 @@
 @stop
 
 @section('content')
+           
+        @if(isset($error_existingItem))
+        <div class="alert alert-danger">
+        {{$error_existingItem}}
+        </div>
+        @endif
+        
     <div class="row">
         <div class="col-md-10">
             @if ($errors->any())

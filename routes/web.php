@@ -40,6 +40,7 @@ Route::prefix('items')->group(function () {
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
     Route::get('/delete/{id}', [App\Http\Controllers\ItemController::class, 'ItemDelete']);
+    Route::get('/search', [App\Http\Controllers\ItemController::class, 'ItemSearch']);
 });
 
 Route::prefix('inventories')->group(function () {
