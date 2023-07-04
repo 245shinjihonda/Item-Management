@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@include('common')
 
 @section('title', 'パスワード変更')
 

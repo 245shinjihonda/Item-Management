@@ -45,6 +45,7 @@ Route::prefix('items')->group(function () {
 
 Route::prefix('inventories')->group(function () {
     Route::get('/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryRecord']);
+    Route::get('/{id}/search', [App\Http\Controllers\InventoryController::class, 'InventorySearch']);
     Route::get('/update/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryUpdate']);
     Route::post('/input/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryInput']);
 });

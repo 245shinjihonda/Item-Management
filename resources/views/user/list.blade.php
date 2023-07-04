@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@include('common')
 
 @section('title', '利用者一覧')
 

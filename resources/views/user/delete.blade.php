@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@include('ommon')
 
 @section('title', '利用者削除')
 
@@ -8,7 +9,7 @@
 
 @section('content')
 
-<div> 利用者検索</div>
+<div>利用者検索</div>
 <br>
 
     <div class="row">

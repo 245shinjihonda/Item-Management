@@ -1,9 +1,20 @@
 @extends('adminlte::page')
+@include('common')
 
 @section('title', '在庫状況')
 
 @section('content_header')
     <h1>在庫状況 </h1>
+
+    <form class="row g-2" Method="GET" action="/inventories/{{$item->id}}/search">
+        <div>
+            <label for="">日付検索</label>
+            <input type="date" name="from" placeholder="from_date" value="">
+            <input type="date" name="until" placeholder="until_date" value="">
+            <button type="submit">検索</button>
+        </div>
+    </form>
+
 @stop
 
 @section('content')
@@ -43,14 +54,14 @@
     <table class="table table-hover text-nowrap">
             <thead>
             <tr class="KPI-table-title">
-                <th>売上累計額</th>
+                <th>売上高</th>
                 <th>粗利益総額</th>
                 <th>在庫数</th>
                 <th>在庫評価額</th>
             </tr>
             </thead>     
             <tr class="KPI-table-index">
-                <td>{{number_format(1000000)}}円</td>
+                <td>{{number_format($revenue)}}円</td>
                 <td>{{number_format(200000)}}円</td>
                 <td >{{number_format(1500)}}種類</td>
                 <td >{{number_format(10000)}}円</td>
@@ -97,7 +108,7 @@
     </div>
 
     <footer>
-    <div>{{$recordInventories->links('pagination::bootstrap-4')}}      </div>
+    <div>{{$recordInventories->appends(request()->query())->links('pagination::bootstrap-4')}}      </div>
     </footer>
 
 

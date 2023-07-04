@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@include('commom')
 
 @section('title', '取扱商品一覧')
 
@@ -51,14 +52,15 @@
             全件表示
         @endif
 
-        
-        @if($items->isEmpty())
+       <?php   
+        $noitem = $items->isEmpty();
+        ?>
+        @if($noitem)
         <div class="alert alert-danger">
         <p>該当する商品はありません。</p>
         </div>
         @endif
-    
-
+        <!-- if($noitem)はif($items->isEmpty())でも可 -->
 
 <div class="col-auto">
     <div class="card">
@@ -110,6 +112,7 @@
 @stop
 
 @section('css')
+{{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}
 @stop
 
 @section('js')

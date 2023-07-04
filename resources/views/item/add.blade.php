@@ -1,4 +1,5 @@
 @extends('adminlte::page')
+@include('common')
 
 @section('title', '商品登録')
 

@@ -14,21 +14,52 @@ class InventoryController extends Controller
         $this->middleware('auth');
     } 
     
-    // 在庫記録を表示する
+    // 画面遷移後に在庫記録を全体を表示する
     public function InventoryRecord(Request $request, $id)
+    {
+       
+        $item = Item::where('id', '=' ,$request->id)
+        ->first();
+
+        $recordInventories = Inventory::   
+                                where('item_id', $request->id)
+                                ->latest()->paginate(10);
+
+        $revenue = Inventory::
+                    where('item_id', $request->id)
+                    ->sum('out_amount');
+      
+        // $profit = Inventory::
+        //         where('item_id', $request->id)
+        //         ->select('out_amount', '-', 'in_amount') 
+        //         ->sum();
+
+    //                 dd($profit);
+    //    exit;
+
+        return view('inventory.record', compact('item', 'recordInventories', 'revenue'));
+    }
+
+    // 検索ボタンをクリック後に検索期間を対象として在庫記録を表示する
+
+    public function InventorySearch(Request $request, $id)
     {
         // dd($id);
         // exit;
         $item = Item::where('id', '=' ,$request->id)
                         ->first();
 
-        $recordInventories = Inventory::
-                            where('status', 'active')->
-                            where('item_id', $request->id)->
-                            latest()->
-                            paginate(10);
+        $from = $request->input('from');
+        $until = $request->input('until');
+        $period = [$from, $until];
+        $query = Inventory::query();
 
+        $recordInventories = $query->where('item_id', $request->id)                      
+                                    ->whereBetween('created_at', $period)
+                                   ->latest()->paginate(10);
+  
         return view('inventory.record', compact('item', 'recordInventories'));
+
     }
 
     // 出入荷を登録するフォームを表示する
@@ -52,9 +83,6 @@ class InventoryController extends Controller
             'out_unit_price' => $request->out_unit_price,
             'out_amount' => $request->out_amount,
         ]);
-
-    // dd("/inventories/$request->item_id");
-    // exit;
 
         return redirect('/inventories/'.$request->item_id);
     }

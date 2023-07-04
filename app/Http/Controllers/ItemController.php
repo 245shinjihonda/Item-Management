@@ -108,8 +108,6 @@ class ItemController extends Controller
           return redirect('/items');
     }
 
-
-
     // 検索機能
     public function ItemSearch(Request $request)
     {
@@ -139,9 +137,8 @@ class ItemController extends Controller
                     }
                 })
                 ->get();
-
+                
         return view('item.index',$items,compact('items'));
-
     }
 }
 
