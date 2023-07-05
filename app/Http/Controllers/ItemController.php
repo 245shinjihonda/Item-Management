@@ -31,6 +31,7 @@ class ItemController extends Controller
 
         return view('item.index', compact('items'));
     }
+
         // dd($error_existingItem);
         // exit;
     /**

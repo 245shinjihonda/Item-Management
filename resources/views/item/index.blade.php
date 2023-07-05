@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@include('commom')
+@include('common')
 
 @section('title', '取扱商品一覧')
 
@@ -60,7 +60,14 @@
         <p>該当する商品はありません。</p>
         </div>
         @endif
-        <!-- if($noitem)はif($items->isEmpty())でも可 -->
+       <!-- if($noitem)はif($items->isEmpty())でも可 -->
+
+       @if (session('flashmessage'))
+            <div class="flash_message">
+                {{ session('flashmessage') }}
+            </div>
+        @endif
+
 
 <div class="col-auto">
     <div class="card">

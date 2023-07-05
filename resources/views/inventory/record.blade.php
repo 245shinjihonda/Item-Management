@@ -48,23 +48,30 @@
     </div>
 
     <br>
+    
+    <?php echo date("Y-01-01")." 00:00:00"?>
+    <?php echo date("Y-01-01", strtotime('-1 year'))?>
+    <?php echo date("Y-m-t", strtotime('-1 year'))?>
 
     <h2>KPI</h2>
     <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap">
             <thead>
             <tr class="KPI-table-title">
-                <th>売上高</th>
-                <th>粗利益総額</th>
-                <th>在庫数</th>
-                <th>在庫評価額</th>
+                <th>当月売上高 </th>
+                <th>当月利益</th>
+                <th>現在の在庫数</th>
+                <th>現在の在庫単価</th>
+                <th>現在の在庫評価額</th>
             </tr>
             </thead>     
+            
             <tr class="KPI-table-index">
-                <td>{{number_format($revenue)}}円</td>
-                <td>{{number_format(200000)}}円</td>
-                <td >{{number_format(1500)}}種類</td>
-                <td >{{number_format(10000)}}円</td>
+                <td>{{number_format($currentRevenue)}}円</td>
+                <td>{{number_format($currentProfit)}}円</td>
+                <td >{{number_format($currentQuantity)}}個</td>
+                <td >{{number_format($currentUnitPrice)}}円</td>
+                <td >{{number_format($currentValuation)}}円</td>  
             </tr>
             </tbody>
             </table>
@@ -90,25 +97,25 @@
                 <th>合計額</th>   
             </tr>
             </thead>
-            <tbody>           
-                @foreach($recordInventories as $recordInventory)
-                <tr>
-                    <td>{{$recordInventory->created_at}}</td>
-                    <td>{{number_format($recordInventory->in_quantity)}}</td>
-                    <td>{{number_format($recordInventory->in_unit_price)}}</td>
-                    <td>{{number_format($recordInventory->in_amount)}}</td>
-                    <td>{{number_format($recordInventory->out_quantity)}}</td>
-                    <td>{{number_format($recordInventory->out_unit_price)}}</td>
-                    <td>{{number_format($recordInventory->out_amount)}}</td>
-                    <td>{{$recordInventory->user_id}}</td>
-                </tr>
-                @endforeach
-            </tbody>
+            <tbody>                 
+                    @foreach($recordInventories as $recordInventory)
+                    <tr>
+                        <td>{{$recordInventory->created_at}}</td>
+                        <td>{{number_format($recordInventory->in_quantity)}}</td>
+                        <td>{{number_format($recordInventory->in_unit_price)}}</td>
+                        <td>{{number_format($recordInventory->in_amount)}}</td>
+                        <td>{{number_format($recordInventory->out_quantity)}}</td>
+                        <td>{{number_format($recordInventory->out_unit_price)}}</td>
+                        <td>{{number_format($recordInventory->out_amount)}}</td>
+                        <td>{{$recordInventory->user_id}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
         </table>
     </div>
 
     <footer>
-    <div>{{$recordInventories->appends(request()->query())->links('pagination::bootstrap-4')}}      </div>
+    <div>{{$recordInventories->appends(request()->query())->links('pagination::bootstrap-4')}} </div>
     </footer>
 
 
