@@ -15,6 +15,53 @@ class InventoryController extends Controller
         $this->middleware('auth');
     } 
     
+   // 画面遷移後に在庫一覧を表示する
+   
+   public function InventoryIndex()
+   {
+
+     // 商品一覧取得
+     $items = Item ::where('items.status', 'active')
+     ->select()
+     ->get();
+
+    return view('inventory.index', compact('items'));
+
+   }
+   
+ // 検索機能
+ public function InventoryItem(Request $request)
+ {
+     $code = $request->input('item_code');
+     $price = $request->input('list_price');
+
+     $query = Item::query();
+
+     $items= $query->where('status','active')
+             ->when($code, function($query) use ($code){
+                 $query->where('item_code', $code);
+             })
+             ->when($price, function($query) use ($price){
+                 if($price == '10000'){
+                     $query->where('list_price', '<' , 10000);
+                 }
+                 elseif ($price == '20000') {
+                     $query->where('list_price', '>=' , 10000);
+                     $query->where('list_price', '<' , 20000);
+                 }
+                 elseif ($price == '30000') {
+                     $query->where('list_price', '>=' , 20000);
+                     $query->where('list_price', '<' , 30000);
+                 }
+                 else{
+                     $query->where('list_price', '>=' , 30000);
+                 }
+             })
+             ->get();
+             
+     return view('inventory.index',$items,compact('items'));
+ }
+
     // 画面遷移後に在庫記録を全体を表示する
     public function InventoryRecord(Request $request, $id)
     {

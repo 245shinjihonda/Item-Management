@@ -61,23 +61,23 @@ class ItemController extends Controller
                     'list_price' => $request->list_price,
                     ]);
 
-                    // $query = Item::query();
+                    $query = Item::query();
 
-                    // $inventory_insert = $query->where('item_code', '=' ,$request->item_code)
-                    //                             ->where('item_number', '=' ,$request->item_number)
-                    //                     ->first();
+                    $inventory_insert = $query->where('item_code', '=' ,$request->item_code)
+                                                ->where('item_number', '=' ,$request->item_number)
+                                        ->first();
 
-                    // Inventory:: create([
+                    Inventory:: create([
 
-                    // 'user_id' => Auth::user()->id,
-                    // 'item_id' => $inventory_insert->id,
-                    // 'in_quantity' => '1',
-                    // 'in_unit_price' => '0',
-                    // 'in_amount' => '0',
-                    // 'out_quantity' => '0',
-                    // 'out_unit_price' => '0',
-                    // 'out_amount' => '0',
-                    // ]);
+                    'user_id' => Auth::user()->id,
+                    'item_id' => $inventory_insert->id,
+                    'in_quantity' => '1',
+                    'in_unit_price' => '0',
+                    'in_amount' => '0',
+                    'out_quantity' => '0',
+                    'out_unit_price' => '0',
+                    'out_amount' => '0',
+                    ]);
 
                     // dd($inventory->in_quantity);
                     // exit;

@@ -21,14 +21,6 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::prefix('users')->group(function () {
-    Route::get('/', [App\Http\Controllers\UserController::class, 'UserList']);
-    Route::get('/add-form', [App\Http\Controllers\UserController::class, 'UserAddForm']);
-    Route::post('/add', [App\Http\Controllers\UserController::class, 'UserAdd']);
-    Route::get('/delete-list', [App\Http\Controllers\UserController::class, 'UserDeleteList']);
-    Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'UserDelete']);
-});
-
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'ItemIndex']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
@@ -38,6 +30,8 @@ Route::prefix('items')->group(function () {
 });
 
 Route::prefix('inventories')->group(function () {
+    Route::get('/', [App\Http\Controllers\InventoryController::class, 'InventoryIndex']);
+    Route::get('/search', [App\Http\Controllers\InventoryController::class, 'InventoryItem']);
     Route::get('/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryRecord']);
     Route::get('/{id}/search', [App\Http\Controllers\InventoryController::class, 'InventorySearch']);
     Route::get('/update/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryUpdate']);
@@ -46,6 +40,14 @@ Route::prefix('inventories')->group(function () {
 
 Route::prefix('finance')->group(function () {
     Route::get('/', [App\Http\Controllers\FinanceController::class, 'RevenueRecord']);
+});
+
+Route::prefix('users')->group(function () {
+    Route::get('/', [App\Http\Controllers\UserController::class, 'UserList']);
+    Route::get('/add-form', [App\Http\Controllers\UserController::class, 'UserAddForm']);
+    Route::post('/add', [App\Http\Controllers\UserController::class, 'UserAdd']);
+    Route::get('/delete-list', [App\Http\Controllers\UserController::class, 'UserDeleteList']);
+    Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'UserDelete']);
 });
 
 Route::prefix('password')->group(function () {

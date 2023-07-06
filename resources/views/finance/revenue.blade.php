@@ -6,6 +6,10 @@
 @section('content_header')
     <h1>売上実績</h1>
 
+    <?php echo date("Y-01-01")." 00:00:00"?>
+    <?php echo date("Y-01-01", strtotime('-1 year'))?>
+    <?php echo date("Y-m-t", strtotime('-1 year'))?>
+
     <!-- <form class="row g-2" Method="GET" action="/inventories//search">
         <div>
             <label for="">出入荷記録を検索して確認する。</label>
@@ -20,63 +24,46 @@
 @section('content')
 <br>
     <h2>実績データ</h2>
-    <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap">
-            <thead>
-            <tr>
-                <th>種別コード</th>
-                <th>商品番号</th>
-                <th>種別名</th>
-                <th>ブランド</th>   
-                <th>商品名</th>
-                <th>定価</th>
-                <th>登録削除</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>円</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <br>
     
-    <?php echo date("Y-01-01")." 00:00:00"?>
-    <?php echo date("Y-01-01", strtotime('-1 year'))?>
-    <?php echo date("Y-m-t", strtotime('-1 year'))?>
+    <div class="col-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"></h3>
+        </div>
 
-    
-    <h2>KPI</h2>
-    <div class="card-body table-responsive p-0">
-    <table class="table table-hover text-nowrap">
-            <thead>
-            <tr class="KPI-table-title">
-                <th>当月売上高 </th>
-                <th>当月利益</th>
-                <th>現在の在庫数</th>
-                <th>現在の在庫単価</th>
-                <th>現在の在庫評価額</th>
-            </tr>
-            </thead>     
-            
-            <tr class="KPI-table-index">
-                <td>円</td>
-                <td>円</td>
-                <td >個</td>
-                <td >円</td>
-                <td >円</td>  
-            </tr>
-            </tbody>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                    <tr>
+                        <th>種別コード</th>
+                        <th>商品番号</th>
+                        <th>商品名</th>
+                        <th>当月売上高</th>   
+                        <th>当期売上高</th>
+                        <th>当期利益</th>
+                        <th>前期売上高</th>
+                        <th>前期利益</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($items as $item)
+                        <tr>
+                            <td>{{ $item->item_code}}</td>
+                            <td>{{ $item->item_number }}</td>
+                            <td><a href="/inventories/{{$item->id}}">{{ $item->item_name }}</a></td>
+                            <td>円</td>
+                            <td>円</td>
+                            <td>円}</a></td>
+                            <td>円</td>
+                            <td>円</td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
-   
-    <br>
+        </div>
+    </div>
+</div>
+
 
     <h2>出入荷記録</h2>
     <div class="card-body table-responsive p-0">

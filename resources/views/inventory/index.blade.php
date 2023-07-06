@@ -1,16 +1,17 @@
 @extends('adminlte::page')
 @include('common')
 
-@section('title', '商品一覧')
+@section('title', '在庫一覧')
 
 @section('content_header')
-    <h1>商品一覧</h1>
+    <h1>在庫一覧</h1>
 @stop
 
 @section('content')
 
+<!-- 検索機能 -->
 <div class="search-form">
-    <form class="row g-2" action="{{ url('items/search') }}" method="GET">
+    <form class="row g-2" action="{{ url('inventories/search') }}" method="GET">
     @csrf
 
     <div class="col-auto">
@@ -41,10 +42,8 @@
     </div> 
 
     </form>
-</div>
 
-<br>
-        <?php $url = $_SERVER['REQUEST_URI']; ?>
+    <?php $url = $_SERVER['REQUEST_URI']; ?>
         @if (strstr($url, 'item_code'))
             検索結果表示 
         @endif
@@ -64,20 +63,15 @@
                 {{ session('flashmessage') }}
             </div>
         @endif
+</div>
 
-
+<!-- 在庫一覧表 -->
 <div class="col-auto">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">商品一覧</h3>
-            <div class="card-tools">
-                <div class="input-group input-group-sm">
-                    <div class="input-group-append">
-                        <a href="{{ url('items/add') }}" class="btn btn-default">商品登録</a>
-                    </div>
-                </div>
-            </div>
+            <h3 class="card-title">在庫総数       円</h3>
         </div>
+
         <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap">
                 <thead>
@@ -88,8 +82,9 @@
                         <th>ブランド</th>   
                         <th>商品名</th>
                         <th>定価</th>
-                        <th>在庫記録</th>
-                        <th>出入荷入力</th>
+                        <th>在庫数</th>
+                        <th>現在の在庫単価</th>
+                        <th>現在の在庫評価額</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,10 +94,11 @@
                             <td>{{ $item->item_number }}</td>
                             <td>{{ $item->category }}</td>
                             <td>{{ $item->brand }}</td>
-                            <td>{{ $item->item_name }}</td>
+                            <td><a href="/inventories/{{$item->id}}">{{ $item->item_name }}</a></td>
                             <td>{{ number_format($item->list_price) }}円</td>
-                            <td><a href="/inventories/{{$item->id}}" class="btn btn-default">確認する</a></td>
-                            <td><a href="/inventories/update/{{$item->id}}" class="btn btn-default">入力する</a></td> 
+                            <td>円</td>
+                            <td>円</td>
+                            <td>円</td>
                         </tr>
                     @endforeach
                 </tbody>

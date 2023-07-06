@@ -232,6 +232,12 @@ return [
         ],
 
         [
+            'text' => '在庫情報画面へ',
+            'url'  => 'inventories',
+            'icon' => 'fas fa-gamepad',
+        ],
+
+        [
             'text' => '財務情報画面へ',
             'url'  => 'finance',
             'icon' => 'fas fa-gamepad',

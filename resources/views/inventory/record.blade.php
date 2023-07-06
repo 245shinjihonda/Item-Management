@@ -15,6 +15,8 @@
         </div>
     </form>
 
+    <a href="/inventories/update/{{$item->id}}" class="btn btn-default">出入荷記録を入力する</a>
+
 @stop
 
 @section('content')
