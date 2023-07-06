@@ -226,16 +226,23 @@ return [
 
     'menu' => [
         [
-            'text' => '取扱商品一覧画面へ',
+            'text' => '商品情報画面へ',
             'url'  => 'items',
             'icon' => 'fas fa-gamepad',
         ],
 
         [
-            'text' => '利用者一覧画面へ',
+            'text' => '財務情報画面へ',
+            'url'  => 'finance',
+            'icon' => 'fas fa-gamepad',
+        ],
+
+        [
+            'text' => '利用者情報画面へ',
             'url'  => 'users',
             'icon' => 'fas fa-gamepad',
         ],
+
         [
             'text' => 'ホーム画面へ戻る',
             'url'  => '/',

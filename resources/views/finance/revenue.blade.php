@@ -1,25 +1,25 @@
 @extends('adminlte::page')
 @include('common')
 
-@section('title', '在庫状況')
+@section('title', '売上実績')
 
 @section('content_header')
-    <h1>在庫状況 </h1>
+    <h1>売上実績</h1>
 
-    <form class="row g-2" Method="GET" action="/inventories/{{$item->id}}/search">
+    <!-- <form class="row g-2" Method="GET" action="/inventories//search">
         <div>
             <label for="">出入荷記録を検索して確認する。</label>
             <input type="date" name="from" placeholder="from_date" value="">
             <input type="date" name="until" placeholder="until_date" value="">
             <button type="submit">検索</button>
         </div>
-    </form>
+    </form> -->
 
 @stop
 
 @section('content')
 <br>
-    <h2>商品詳細</h2>
+    <h2>実績データ</h2>
     <div class="card-body table-responsive p-0">
         <table class="table table-hover text-nowrap">
             <thead>
@@ -35,13 +35,12 @@
             </thead>
             <tbody>
             <tr>
-                <td>{{$item->item_code}}</td>
-                <td>{{$item->item_number}}</td>
-                <td>{{$item->category}}</td>
-                <td>{{$item->brand}}</td>
-                <td>{{$item->item_name}}</td>
-                <td>{{number_format($item->list_price)}}円</td>
-                <td><a href="/items/delete/{{$item->id}}" class="btn btn-default">削除する</a></td> 
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>円</td>
             </tr>
             </tbody>
         </table>
@@ -53,7 +52,7 @@
     <?php echo date("Y-01-01", strtotime('-1 year'))?>
     <?php echo date("Y-m-t", strtotime('-1 year'))?>
 
-    @isset ($currentRevenue)
+    
     <h2>KPI</h2>
     <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap">
@@ -68,15 +67,15 @@
             </thead>     
             
             <tr class="KPI-table-index">
-                <td>{{number_format($currentRevenue)}}円</td>
-                <td>{{number_format($currentProfit)}}円</td>
-                <td >{{number_format($currentQuantity)}}個</td>
-                <td >{{number_format($currentUnitPrice)}}円</td>
-                <td >{{number_format($currentValuation)}}円</td>  
+                <td>円</td>
+                <td>円</td>
+                <td >個</td>
+                <td >円</td>
+                <td >円</td>  
             </tr>
             </tbody>
             </table>
-    @endisset
+   
     <br>
 
     <h2>出入荷記録</h2>
@@ -98,25 +97,13 @@
                 <th>合計額</th>   
             </tr>
             </thead>
-            <tbody>                 
-                    @foreach($recordInventories as $recordInventory)
-                    <tr>
-                        <td>{{$recordInventory->created_at}}</td>
-                        <td>{{number_format($recordInventory->in_quantity)}}</td>
-                        <td>{{number_format($recordInventory->in_unit_price)}}</td>
-                        <td>{{number_format($recordInventory->in_amount)}}</td>
-                        <td>{{number_format($recordInventory->out_quantity)}}</td>
-                        <td>{{number_format($recordInventory->out_unit_price)}}</td>
-                        <td>{{number_format($recordInventory->out_amount)}}</td>
-                        <td>{{$recordInventory->user_id}}</td>
-                    </tr>
-                    @endforeach
+            <tbody>                
                 </tbody>
         </table>
     </div>
 
     <footer>
-    <div>{{$recordInventories->appends(request()->query())->links('pagination::bootstrap-4')}} </div>
+    
     </footer>
 
 

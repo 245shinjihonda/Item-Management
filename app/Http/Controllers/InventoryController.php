@@ -113,7 +113,7 @@ class InventoryController extends Controller
 
         $recordInventories = $query->where('item_id', $request->id)                      
                                     ->whereBetween('created_at', $period)
-                                   ->latest()->paginate(10);
+                                   ->latest()->paginate(20);
   
         return view('inventory.record', compact('item', 'recordInventories'));
 

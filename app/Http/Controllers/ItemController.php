@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\Inventory;
+
 
 class ItemController extends Controller
 {
@@ -18,9 +20,8 @@ class ItemController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * 商品一覧
-     */
+    // 商品一覧
+    
     public function ItemIndex()
     {
         // 商品一覧取得
@@ -32,11 +33,8 @@ class ItemController extends Controller
         return view('item.index', compact('items'));
     }
 
-        // dd($error_existingItem);
-        // exit;
-    /**
-     * 商品登録
-     */
+    //  商品登録
+     
     public function ItemAdd(Request $request)
     {
         // POSTリクエストのとき
@@ -49,7 +47,6 @@ class ItemController extends Controller
                 ]);
 
             // 同一番号がなれけば商品登録
-
             if (!Item::where('item_code', '=' ,$request->item_code)
                         ->where('item_number', '=' ,$request->item_number)
                         ->exists())
@@ -63,6 +60,27 @@ class ItemController extends Controller
                     'item_name' => $request->item_name,
                     'list_price' => $request->list_price,
                     ]);
+
+                    // $query = Item::query();
+
+                    // $inventory_insert = $query->where('item_code', '=' ,$request->item_code)
+                    //                             ->where('item_number', '=' ,$request->item_number)
+                    //                     ->first();
+
+                    // Inventory:: create([
+
+                    // 'user_id' => Auth::user()->id,
+                    // 'item_id' => $inventory_insert->id,
+                    // 'in_quantity' => '1',
+                    // 'in_unit_price' => '0',
+                    // 'in_amount' => '0',
+                    // 'out_quantity' => '0',
+                    // 'out_unit_price' => '0',
+                    // 'out_amount' => '0',
+                    // ]);
+
+                    // dd($inventory->in_quantity);
+                    // exit;
     
                 return redirect('/items');
                 }
@@ -72,6 +90,7 @@ class ItemController extends Controller
                 $error_existingItem = 'この商品はすでに登録されています。';
                 return view('item.add', compact('error_existingItem'));
             }
+            
                     // 別の実装方法
                     // $item_code = $request->item_code;
                     // $item_number = $request->item_number;
@@ -99,9 +118,6 @@ class ItemController extends Controller
 
     public function ItemDelete(Request $request, $id)
     {
-        // dd($id);
-        // exit;
-        
         // 商品削除
           $item = Item::find($id);
           $item->status = 'delete';

@@ -29,12 +29,6 @@ Route::prefix('users')->group(function () {
     Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'UserDelete']);
 });
 
-Route::prefix('password')->group(function () {
-    Route::get('/', [App\Http\Controllers\UserController::class, 'UserPassword']);
-    Route::post('/update-form', [App\Http\Controllers\UserController::class, 'UserPasswordForm']);
-    Route::post('/update/{id}', [App\Http\Controllers\UserController::class, 'UserPasswordUpdate']);
-});
-
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'ItemIndex']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
@@ -50,5 +44,14 @@ Route::prefix('inventories')->group(function () {
     Route::post('/input/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryInput']);
 });
 
+Route::prefix('finance')->group(function () {
+    Route::get('/', [App\Http\Controllers\FinanceController::class, 'RevenueRecord']);
+});
+
+Route::prefix('password')->group(function () {
+    Route::get('/', [App\Http\Controllers\UserController::class, 'UserPassword']);
+    Route::post('/update-form', [App\Http\Controllers\UserController::class, 'UserPasswordForm']);
+    Route::post('/update/{id}', [App\Http\Controllers\UserController::class, 'UserPasswordUpdate']);
+});
 
 
