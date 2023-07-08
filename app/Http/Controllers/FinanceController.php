@@ -74,13 +74,17 @@ class FinanceController extends Controller
         // 当月売上高 （全商品）                                
         $totalCurrentRevenue = array_sum($currentRevenues);
 
-    // 3. 前期(Year 0)の売上を計算  
+    // 3. 第1期(2022)の売上を計算  
         
-            // 前期を取得
-            $priorYearStart = date("Y-01-01", strtotime('-1 year')). " 00:00:00";
-            $priorYearEnd = date("Y-12-31", strtotime('-1 year') ). " 23:59:59";
-            $priorYear = [$priorYearStart, $priorYearEnd];
+            // システム導入初期日
+            $initialDate = date("2022-01-01"). " 00:00:00";
 
+            // 第1期を取得
+            $priorYearStart = date("2022-01-01"). " 00:00:00";
+            $priorYearEnd = date("2022-12-31"). " 23:59:59";;
+
+            $priorYear = [$priorYearStart, $priorYearEnd];
+        
           // 前期売上高(DBより取得)
             $tempPriorRevenues = Inventory::where('inventories.status', 'active')
                                         ->whereBetween('created_at', $priorYear)
@@ -100,7 +104,7 @@ class FinanceController extends Controller
         // 前期売上高 （全商品）                                
         $totalPriorRevenue = array_sum($priorRevenues);
      
-    //   4. 前期(Year=0)の利益を計算  
+    //   4. 前期(Year1)の利益を計算  
      
             // 前期売上原価
             $tempPriorCostOfSales = Inventory::where('inventories.status', 'active')
@@ -118,57 +122,105 @@ class FinanceController extends Controller
                 $priorCostOfSales[$PCOS->item_id]=$PCOS->priorCostOfSales;
             }
            
+            // 前期売上から前期売上原価を控除して前期利益を計算     
             $priorProfits=[];
             foreach ($priorRevenues as $key => $value) {
                      $priorProfits[$key] = $value - $priorCostOfSales[$key];
                 }
+
             // 前期売上高 （全商品）                                
             $totalPriorProfit = array_sum($priorProfits);
                 
+    //  5. 当期(Year2)の利益を計算  
 
-            // dd($priorProfits) ; 
-               
+            // 前期末在庫数
+            $historicalYears = [$initialDate, $priorYearEnd];
+        
+            $tempEndBalances = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $historicalYears)
+                                        ->select('item_id')
+                                        ->selectRaw('SUM(in_quantity) - SUM(out_quantity) AS endBalances')
+                                        ->groupBY('item_id') 
+                                        ->get();
 
-
-            //  dd($priorRevenues[$PR->item_id]=$PR->priorRevenues);
-
-
-        //     // 現在の在庫の単価を取得
-        //     $totalInAmount = Inventory::   
-        //                             where('item_id', $request->id)                      
-        //                             ->sum('in_amount');
-        //     $totalInQuantity = Inventory::   
-        //                             where('item_id', $request->id)                      
-        //                             ->sum('in_quantity');
-        //     $totalOutQuantity = Inventory::   
-        //                             where('item_id', $request->id)                      
-        //                             ->sum('out_quantity');
+            $endBalances = [];
+            foreach ($tempEndBalances as $b){
+                $endBalances[$b->item_id]=$b->endBalances;
+            }                       
             
-        //     // 現在の在庫数
-        //     $currentQuantity  = ($totalOutQuantity - $totalInQuantity);
+            // 前期末単価
+            $tempEndUnitPrices = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $historicalYears)
+                                        ->select('item_id')
+                                        ->selectRaw('SUM(in_amount)/SUM(in_quantity) AS endUnitPrices')
+                                        ->groupBY('item_id') 
+                                        ->get();
 
-        //     // 現在の在庫単価
-        //     $currentUnitPrice= $totalInAmount/$totalInQuantity;
+            $endUnitPrices = [];
+            foreach ($tempEndUnitPrices as $up){
+                $endUnitPrices[$up->item_id]=$up->endUnitPrices;
+                }                       
 
-        //     // 当月の出荷数
-        //     $currentOutQuantity = Inventory::
-        //                     where('item_id', $request->id)
-        //                     ->whereBetween('created_at', $currentMonth)
-        //                     ->sum('out_quantity');
-        
-        //     // 当月の売上原価
-        //     $currentCostOfSale = $currentUnitPrice*$currentOutQuantity;
+            // 当期仕入高
+            $tempInAmounts = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $currentYear)
+                                        ->select('item_id')
+                                        ->selectRaw('SUM(in_amount) AS inAmounts')
+                                        ->groupBY('item_id') 
+                                        ->get();
 
-        //     // 現在の在庫評価額
-        //     $currentValuation =$currentUnitPrice*$currentQuantity;
-        
-        //     // dd($currentCostOfSale);
+            $inAmounts = [];
+            foreach ($tempInAmounts as $ia){
+            $inAmounts[$ia->item_id]=$ia->inAmounts;
+            }  
 
-        //     // 当月利益         
-        //     $currentProfit = ($currentRevenue - $currentCostOfSale);
+            // 当期仕入数
+            $tempInQuantities = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $currentYear)
+                                        ->select('item_id')
+                                        ->selectRaw('SUM(in_amount - out_amount) AS inQuantities')
+                                        ->groupBY('item_id') 
+                                        ->get();
 
-        //     // dd($currentProfit);
-        //     // exit;
+            $inQuantities = [];
+            foreach ($tempInQuantities as $iq){
+            $inQuantities[$iq->item_id]=$iq->inQuantities;
+            }          
+
+
+            // 前期末在庫評価額の計算     
+            $priorValuations=[];
+            foreach ($endBalances as $key => $value) {
+                    $priorValuations[$key] = $value*$endUnitPrices[$key];
+            }
+           
+            // 当期の在庫評価額 = 前期末在庫評価額+当期仕入額     
+            $currentValuations=[];
+            foreach ($priorValuations as $key => $value) {
+                    $currentValuations[$key] = $value + $inAmounts[$key];
+            }
+
+            // 当期の在庫数 = 前期末在庫数+当期仕入数   
+            $currentQuantities=[];
+            foreach ($endBalances as $key => $value) {
+                    $currentQuantities[$key] = $value + $inQuantities[$key];
+            }
+
+             // 当期の売上原価   
+             $currentCostOfSales=[];
+             foreach ($currentValuations as $key => $value) {
+                     $currentCostOfSales[$key] = $value/$currentQuantities[$key];
+             }
+
+            // 当期の利益   
+            $currentProfits=[];
+            foreach ($currentRevenues as $key => $value) {
+                    $currentProfits[$key] = $value - $currentCostOfSales[$key];
+            }
+
+            $totalCurrentProfit = array_sum($currentProfits);
+
+            // dd($totalCurrentProfit); 
 
             return view('finance.revenue', 
             compact(
@@ -181,15 +233,9 @@ class FinanceController extends Controller
                 'totalPriorRevenue',
                 'priorProfits',
                 'totalPriorProfit',
-              
-            
-    
-            
+                'currentProfits',
+                'totalCurrentProfit'
             ));
-
-            // return view('finance.revenue', compact('items', 'currentRevenues', 'recordInventories', 'currentProfit',
-            // 'currentQuantity', 'currentUnitPrice', 'currentValuation'));
-      
     }
 
 }

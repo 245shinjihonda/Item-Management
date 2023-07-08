@@ -44,7 +44,7 @@
                             <td></td>
                             <td>{{number_format($totalMonthRevenue)}}円</td>
                             <td>{{number_format($totalCurrentRevenue)}}円</td>
-                            <td>円</a></td>
+                            <td>{{number_format($totalCurrentProfit)}}円</td>
                             <td>{{number_format($totalPriorRevenue)}}円</td>
                             <td>{{number_format($totalPriorProfit)}}円</td>
                         </tr>
@@ -96,7 +96,7 @@
                             <td><a href="/inventories/{{$item->id}}">{{ $item->item_name }}</a></td>
                             <td>{{number_format($monthRevenues[$item->id])}}円</td>
                             <td>{{number_format($currentRevenues[$item->id])}}円</td>
-                            <td>円</td>
+                            <td>{{number_format($currentProfits[$item->id])}}円</td>
                             <td>{{number_format($priorRevenues[$item->id])}}円</td>
                             <td>{{number_format($priorProfits[$item->id])}}円</td>
                         </tr>
