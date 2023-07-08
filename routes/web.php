@@ -31,7 +31,6 @@ Route::prefix('items')->group(function () {
 
 Route::prefix('inventories')->group(function () {
     Route::get('/', [App\Http\Controllers\InventoryController::class, 'InventoryIndex']);
-    Route::get('/search', [App\Http\Controllers\InventoryController::class, 'InventoryItem']);
     Route::get('/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryRecord']);
     Route::get('/{id}/search', [App\Http\Controllers\InventoryController::class, 'InventorySearch']);
     Route::get('/update/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryUpdate']);
@@ -39,7 +38,7 @@ Route::prefix('inventories')->group(function () {
 });
 
 Route::prefix('finance')->group(function () {
-    Route::get('/', [App\Http\Controllers\FinanceController::class, 'RevenueRecord']);
+    Route::get('/', [App\Http\Controllers\FinanceController::class, 'RevenueIndex']);
 });
 
 Route::prefix('users')->group(function () {
