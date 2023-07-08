@@ -22,14 +22,14 @@
                 <thead>
                     <tr>
                         <th>種別コード</th>
-                        <th>商品番号</th>
-                        <th>種別名</th>
-                        <th>ブランド</th>   
                         <th>商品名</th>
+                        <th>平均仕入数</th>
+                        <th>平均仕入単価</th>   
+                        <th>平均出荷数</th>
+                        <th>平均出荷単価</th>
                         <th>定価</th>
                         <th>在庫数</th>
-                        <th>現在の在庫単価</th>
-                        <th>現在の在庫評価額</th>
+                        <th>在庫回転率</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -38,10 +38,10 @@
                  @foreach($items as $item)
                         <tr>
                             <td>{{$item->item_code}}</td>
+                            <td><a href="/inventories/{{$item->id}}">{{$item->item_name}}</a></td>
                             <td>{{$item->item_number}}</td>
                             <td>{{$item->category}}</td>
-                            <td>{{$item->brand}}</td>
-                            <td><a href="/inventories/{{$item->id}}">{{$item->item_name}}</a></td>
+                            <td>{{$item->brand}}</td>                     
                             <td>{{number_format($item->list_price)}}円</td>
                             <td>{{number_format($balances[$i]->balances)}}個</td>
                             <td>{{number_format($tempUnitPrices[$item->id])}}円</td>

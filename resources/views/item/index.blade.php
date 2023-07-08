@@ -88,21 +88,22 @@
                         <th>ブランド</th>   
                         <th>商品名</th>
                         <th>定価</th>
-                        <th>在庫記録</th>
-                        <th>出入荷入力</th>
+                        <th>取扱状況</th>
+                        <th>商品登録日</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($items as $item)
                         <tr>
-                            <td>{{ $item->item_code}}</td>
-                            <td>{{ $item->item_number }}</td>
-                            <td>{{ $item->category }}</td>
-                            <td>{{ $item->brand }}</td>
-                            <td>{{ $item->item_name }}</td>
-                            <td>{{ number_format($item->list_price) }}円</td>
+                            <td>{{$item->item_code}}</td>
+                            <td>{{$item->item_number}}</td>
+                            <td>{{$item->category}}</td>
+                            <td>{{$item->brand}}</td>
+                            <td><a href="/inventories/{{$item->id}}">{{$item->item_name}}</td>
+                            <td>{{number_format($item->list_price) }}円</td>
                             <td><a href="/inventories/{{$item->id}}" class="btn btn-default">確認する</a></td>
-                            <td><a href="/inventories/update/{{$item->id}}" class="btn btn-default">入力する</a></td> 
+                            <td>{{$item->created_at->format('Y/m/d')}}</td>
+                            {{-- <td><a href="/inventories/update/{{$item->id}}" class="btn btn-default">入力する</a></td>  --}}
                         </tr>
                     @endforeach
                 </tbody>

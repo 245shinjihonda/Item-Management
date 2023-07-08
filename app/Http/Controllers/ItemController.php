@@ -25,14 +25,16 @@ class ItemController extends Controller
     public function ItemIndex()
     {
         // 商品一覧取得
-        $items = Item
-            ::where('items.status', 'active')
-            ->select()
-            ->get();
+    
+
+        $items = item::latest()
+                        ->paginate(10);
 
         return view('item.index', compact('items'));
     }
 
+
+    
     //  商品登録
      
     public function ItemAdd(Request $request)
@@ -159,4 +161,8 @@ class ItemController extends Controller
     }
 }
 
-
+    // $items = Item
+        //     ::where('items.status', 'active')
+        //     ->select()
+        //     ->latest()
+        //     ->paginate(10);
