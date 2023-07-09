@@ -26,7 +26,7 @@
                         <th rowspan="2"></th> 
                         <th rowspan="2"></th>
                         <th rowspan="2"></th>
-                        <th rowspan="2">{{date("n", strtotime('-1 month'))}}月売上高</th>
+                        <th rowspan="2">{{date("n")}}月売上高</th>
                         <th colspan="2">{{date("Y")}}</th>
                         <th colspan="2">{{date("Y", strtotime('-1 year'))}}</th>
                     </tr>
@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                         <tr>
-                            <td>全商品売上高 (円）</td>
+                            <td>全商品売上高 </td>
                             <td></td>
                             <td></td>
                             <td>{{number_format($totalMonthRevenue)}}円</td>
@@ -52,9 +52,9 @@
                             <td>前期比 (%)</td>
                             <td></td>
                             <td></td>
-                            <td>円</td>
-                            <td>円</td>
-                            <td>円</a></td>
+                            <td>({{number_format($yoyMonthRevenue)}}%)</td>
+                            <td>({{number_format($yoyCurrentRevenue)}}%)</td>
+                            <td>({{number_format($yoyCurrentProfit)}}%)</a></td>
                             <td>-</td>
                             <td>-</td>
                         </tr>
@@ -77,7 +77,8 @@
                         <th rowspan="2">種別コード</th> 
                         {{-- <th rowspan="2">商品番号</th> --}}
                         <th rowspan="2">商品名</th>
-                        <th rowspan="2">{{date("n", strtotime('-1 month'))}}月売上高</th>
+                        <th rowspan="2">定価</th>
+                        <th rowspan="2">{{date("n")}}月売上高</th>
                         <th colspan="2">{{date("Y")}}</th>
                         <th colspan="2">{{date("Y", strtotime('-1 year'))}}</th>
                     </tr>
@@ -94,6 +95,7 @@
                             <td>{{ $item->item_code}}</td>
                             {{-- <td>{{ $item->item_number }}</td> --}}
                             <td><a href="/inventories/{{$item->id}}">{{ $item->item_name }}</a></td>
+                            <td>{{number_format($item->list_price)}}円</td>
                             <td>{{number_format($monthRevenues[$item->id])}}円</td>
                             <td>{{number_format($currentRevenues[$item->id])}}円</td>
                             <td>{{number_format($currentProfits[$item->id])}}円</td>

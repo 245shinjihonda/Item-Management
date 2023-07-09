@@ -16,7 +16,6 @@ class FinanceController extends Controller
         $this->middleware('auth');
     } 
     
-// 画面遷移後に在庫記録を全体を表示する
     public function RevenueIndex()
     {
     
@@ -187,13 +186,13 @@ class FinanceController extends Controller
             $inQuantities[$iq->item_id]=$iq->inQuantities;
             }          
 
-
             // 前期末在庫評価額の計算     
             $priorValuations=[];
             foreach ($endBalances as $key => $value) {
                     $priorValuations[$key] = $value*$endUnitPrices[$key];
             }
-           
+        
+
             // 当期の在庫評価額 = 前期末在庫評価額+当期仕入額     
             $currentValuations=[];
             foreach ($priorValuations as $key => $value) {
@@ -222,6 +221,45 @@ class FinanceController extends Controller
 
             // dd($totalCurrentProfit); 
 
+ //  6. 当月の前年同月比を計算する
+ 
+         // 前年同月を取得
+         $priorMonthStart = date("Y-m-01", strtotime('-1 year', strtotime('-1 month'))). " 00:00:00";
+         $priorMonthEnd = date("Y-m-t", strtotime('-1 year', strtotime('-1 month'))). " 23:59:59";
+         $priorMonth = [$priorMonthStart, $priorMonthEnd];
+
+         // 前年同月売上高(DBより取得)
+         $totalPriorMonthRevenue = Inventory::where('inventories.status', 'active')
+                                         ->whereBetween('created_at', $priorMonth)
+                                         ->sum('out_amount');
+    
+        if(!($totalPriorMonthRevenue == 0)){
+           $yoyMonthRevenue = ($totalMonthRevenue - $totalPriorMonthRevenue)/$totalPriorMonthRevenue*100;
+            }
+        else{
+            $yoyMonthRevenue = '-';
+        }
+
+    // 7. 当期売上と前期売上の比率を比較（達成率）
+ 
+    if(!($totalCurrentRevenue == 0)){
+        $yoyCurrentRevenue = ($totalCurrentRevenue - $totalPriorRevenue)/$totalPriorRevenue*100;
+         }
+     else{
+         $yoyCurrentRevenue = '-';
+     }
+
+    // 8. 当期利益と前期利益の比率を比較（達成率）
+ 
+    if(!($totalCurrentProfit == 0)){
+        $yoyCurrentProfit = ($totalCurrentProfit - $totalPriorProfit)/$totalPriorProfit*100;
+         }
+     else{
+         $yoyCurrentProfit = '-';
+     }
+
+    //  dd($yoyCurrentProfit);
+
             return view('finance.revenue', 
             compact(
                 'items',
@@ -234,7 +272,10 @@ class FinanceController extends Controller
                 'priorProfits',
                 'totalPriorProfit',
                 'currentProfits',
-                'totalCurrentProfit'
+                'totalCurrentProfit',
+                'yoyMonthRevenue',
+                'yoyCurrentRevenue',
+                'yoyCurrentProfit',
             ));
     }
 

@@ -32,46 +32,157 @@ class InventoryController extends Controller
 
     // dd($tempCategories);
 
-    $totalBalance = Inventory::where('inventories.status', 'active')
-                                ->selectRaw('SUM(in_quantity) - SUM(out_quantity) AS totalBalance')
-                                ->first();
-   
-    $balances = Inventory::where('inventories.status', 'active')
-        ->select('item_id')
-        ->selectRaw('SUM(in_quantity) - SUM(out_quantity) AS balances')
-        ->groupBY('item_id') 
-        ->orderBY('item_id')
-        ->paginate(10);
+    //  1. 在庫数を計算する   
 
-    $unitPrices = Inventory::where('inventories.status', 'active')
-        ->select('item_id')
-        ->selectRaw('SUM(in_amount)/SUM(in_quantity) AS unitPrices')
-        ->groupBY('item_id')
-        ->orderBY('item_id')
-        ->paginate(10);
+        // 各商品の現在在庫数
+        $tempUpdatedBalances = Inventory::where('inventories.status', 'active')
+                                ->select('item_id')
+                                ->selectRaw('SUM(in_quantity) - SUM(out_quantity) AS updatedBalances')
+                                ->groupBY('item_id') 
+                                ->orderBY('item_id')
+                                ->paginate(10);
 
-    $tempUnitPrices =[];
-        foreach ($unitPrices as $u){
-        $tempUnitPrices[$u->item_id]=$u->unitPrices;
+        // 各商品の現在の在庫数の配列
+        $updatedBalances = [];
+        foreach ($tempUpdatedBalances as $UB){
+            $updatedBalances[$UB->item_id]=$UB->updatedBalances;
+        }
+       
+        // 全商品の在庫数の合計
+        $totalUpdatedBalance = array_sum($updatedBalances);
+      
+    // 2. 過去3か月間を取得
+
+        // システム導入初期日
+        $initialDate = date("2022-01-01"). " 00:00:00";
+
+        $startDate = date('Y-m-d', strtotime('-3 month')). " 00:00:00";
+        $endDate = date('Y-m-d', strtotime('-3 month')). " 00:00:00";
+        $threeMonthsPeriod =[$startDate, $endDate];
+
+    // 3. 過去3か月間の仕入数
+        $tempThreeInQuantities = Inventory::where('inventories.status', 'active')
+                                            ->select('item_id')
+                                            ->selectRaw('SUM(in_quantity) AS threeInQuantities')
+                                            ->groupBY('item_id') 
+                                            ->orderBY('item_id')
+                                            ->paginate(20);
+
+        // 商品別の仕入数の配列
+        $threeInQuantities = [];
+        foreach ($tempThreeInQuantities as $TIQ){
+            $threeInQuantities[$TIQ->item_id]=$TIQ->threeInQuantities;
         }
 
-    $valuations = Inventory::where('inventories.status', 'active')
-        ->select('item_id')
-        ->selectRaw('(SUM(in_quantity) - SUM(out_quantity))*SUM(in_amount)/SUM(in_quantity) AS valuations')
-        ->groupBY('item_id') 
-        ->orderBY('item_id') 
-        ->paginate(10);
+        //  全商品の合計数
+        $totalThreeInQuantity = array_sum($threeInQuantities);
 
-    // $valuationsから各商品の在庫評価額を配列として取り出す
-    // $vはどのようなものでも構わない
-    $tempValuations = [];
-        foreach ($valuations as $v){
-        $tempValuations[$v->item_id]=$v->valuations;
+     // 4. 過去3か月間の出荷数  
+        $tempThreeOutQuantities = Inventory::where('inventories.status', 'active')
+                                            ->select('item_id')
+                                            ->selectRaw('SUM(out_quantity) AS threeOutQuantities')
+                                            ->groupBY('item_id') 
+                                            ->orderBY('item_id')
+                                            ->paginate(20);
+
+        // 商品別の出荷数の配列
+        $threeOutQuantities = [];
+        foreach ($tempThreeOutQuantities as $TOQ){
+        $threeOutQuantities[$TOQ->item_id]=$TOQ->threeOutQuantities;
         }
 
-    $totalValuations = array_sum($tempValuations);
+        //  全商品の合計数
+        $totalThreeOutQuantity = array_sum($threeOutQuantities);
 
-    return view('inventory.index', compact('items', 'totalBalance', 'balances', 'tempUnitPrices', 'tempValuations', 'totalValuations'));
+    // 5. 過去3か月間の在庫回転率 
+
+        // 期首の在庫数
+
+        // システム導入日から期首までの期間
+        $beginningPeriod = [$initialDate, $startDate];
+
+        $tempInitialBalances = Inventory::where('inventories.status', 'active')
+                                    ->whereBetween('created_at', $beginningPeriod)
+                                    ->select('item_id')
+                                    ->selectRaw('SUM(in_quantity) - SUM(out_quantity) AS initialBalances')
+                                    ->groupBY('item_id') 
+                                    ->get();
+
+        // 商品別の期首在庫数の配列（３か月前の在庫数）
+        $initialBalances = [];
+        foreach ($tempInitialBalances as $IB){
+        $initialBalances[$IB->item_id]=$IB->initialBalances;
+        }  
+
+        //  全商品の期首在庫数
+        $totalInitialBalance = array_sum($initialBalances);
+        
+        // 商品別の期首在庫数と期末在庫数の平均の配列
+        $averageBalances=[];
+        foreach ($initialBalances as $key => $value) {
+                $averageBalances[$key] = ($value + $updatedBalances[$key])/2;
+            }
+
+        // 各商品の在庫回転率の配列
+        $turnoverInventories=[];
+        foreach ($threeOutQuantities as $key => $value) {
+                $turnoverInventories[$key] = $value/$averageBalances[$key];
+            }
+       
+        // 全商品の在庫回転率 = 全商品の過去３か月間の出荷数/全商品の過去３か月の平均在庫数
+        $totalTurnoverInventory = $totalThreeOutQuantity/($totalInitialBalance + $totalUpdatedBalance)/2;
+
+    //  2. 各商品の単価を計算する                           
+  
+        $unitPrices = Inventory::where('inventories.status', 'active')
+            ->select('item_id')
+            ->selectRaw('SUM(in_amount)/SUM(in_quantity) AS unitPrices')
+            ->groupBY('item_id')
+            ->orderBY('item_id')
+            ->paginate(10);
+
+        $tempUnitPrices =[];
+            foreach ($unitPrices as $u){
+            $tempUnitPrices[$u->item_id]=$u->unitPrices;
+            }
+
+        // 7.在庫評価額の計算
+        $tempValuations = Inventory::where('inventories.status', 'active')
+            ->select('item_id')
+            ->selectRaw('(SUM(in_quantity) - SUM(out_quantity))*SUM(in_amount)/SUM(in_quantity) AS valuations')
+            ->groupBY('item_id') 
+            ->orderBY('item_id') 
+            ->paginate(10);
+
+        // $valuationsから各商品の在庫評価額を配列として取り出す
+        // $vはどのようなものでも構わない
+        $valuations = [];
+            foreach ($tempValuations as $v){
+            $valuations[$v->item_id]=$v->valuations;
+            }
+
+        // 各商品の在庫評価額の合計額
+        $totalValuation = array_sum($valuations);
+
+    return view('inventory.index', 
+            compact(
+                'items', 
+                'updatedBalances',
+                'totalUpdatedBalance',
+                'threeInQuantities',
+                'totalThreeInQuantity',
+                'threeOutQuantities',
+                'totalThreeOutQuantity',
+                'tempUnitPrices',
+                'valuations',
+                'totalValuation',
+                'turnoverInventories',
+                'totalTurnoverInventory'
+            ));
+
+
+
+
 
    }
         // 別の実装方法
@@ -79,12 +190,10 @@ class InventoryController extends Controller
         // ↓
         // $items = Item::select('id')// 1,2,3
         
-        
         // foreach ( $items as $item)
         //   where id = $item->id
         // endforeach （編集済み） 
-       
-       
+         
         // $items = Item::select('id')
         // foreach ( $items as $item)
         //   where id = $item->
