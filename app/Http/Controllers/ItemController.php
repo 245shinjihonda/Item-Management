@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\Code;
 use App\Models\Inventory;
-
 
 class ItemController extends Controller
 {
@@ -25,18 +25,25 @@ class ItemController extends Controller
     public function ItemIndex()
     {
         // 商品一覧取得
-    
-
         $items = item::latest()
-                        ->paginate(10);
+                        ->paginate(20);
+    
+        foreach($items as $item){
 
+        if($item->status == 'active'){
+            $item->status = '商品取扱中';
+        }
+        else{
+        $item->status = '取扱終了';
+        }
+
+        }
+           
         return view('item.index', compact('items'));
     }
 
-
-    
     //  商品登録
-     
+    
     public function ItemAdd(Request $request)
     {
         // POSTリクエストのとき
@@ -47,7 +54,7 @@ class ItemController extends Controller
                 'item_code' => 'required|size:3',
                 'item_number' => 'required|size:4',
                 ]);
-
+   
             // 同一番号がなれけば商品登録
             if (!Item::where('item_code', '=' ,$request->item_code)
                         ->where('item_number', '=' ,$request->item_number)
@@ -67,7 +74,7 @@ class ItemController extends Controller
 
                     $inventory_insert = $query->where('item_code', '=' ,$request->item_code)
                                                 ->where('item_number', '=' ,$request->item_number)
-                                        ->first();
+                                                ->first();
 
                     Inventory:: create([
 
@@ -81,6 +88,7 @@ class ItemController extends Controller
                     'out_amount' => '0',
                     ]);
 
+                  
                     // dd($inventory->in_quantity);
                     // exit;
     
@@ -112,7 +120,13 @@ class ItemController extends Controller
                     //     }
         }
 
-    return view('item.add');
+        // 商品のコードを取得する
+        $query = Code::query();
+
+        $codes = $query->where('status', 'active')
+                        ->get();
+
+    return view('item.add', compact('codes'));
        
     }
 

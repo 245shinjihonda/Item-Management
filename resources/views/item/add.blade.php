@@ -33,7 +33,13 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="cut_number">種別コード</label>
-                            <input type="text" class="form-control" name="item_code" placeholder="AAA, AAB, ...">
+                            <select name="item_code" data-toggle="select">
+                                <option value="">種別コードを選択して下さい</option>
+                                @foreach ($codes as $code)
+                                <option value="{{$code->item_code}}">{{$code->item_code}}</option>
+                                @endforeach
+                            </select>
+                            {{-- <input type="text" class="form-control" name="item_code" placeholder="AAA, AAB, ..."> --}}
                         </div>
 
                         <div class="form-group">

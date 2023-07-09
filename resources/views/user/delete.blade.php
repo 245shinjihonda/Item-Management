@@ -1,5 +1,5 @@
 @extends('adminlte::page')
-@include('ommon')
+@include('common')
 
 @section('title', '利用者削除')
 
@@ -30,8 +30,8 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr>
-                                    <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{$user->name}}</td>
+                                    <td>{{$user->email}}</td>
                                     <td><button type="sumbit" class="btn btn-default"><a href="/users/delete/{{$user->id}}">削除</a></td>
                                 </tr>
                             @endforeach

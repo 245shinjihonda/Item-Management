@@ -21,6 +21,15 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::prefix('codes')->group(function () {
+    Route::get('/', [App\Http\Controllers\CodeController::class, 'CodeIndex']);
+    Route::get('/add', [App\Http\Controllers\CodeController::class, 'CodeAdd']);
+    Route::post('/add', [App\Http\Controllers\CodeController::class, 'CodeAdd']);
+    Route::get('/delete-list', [App\Http\Controllers\CodeController::class, 'CodeDeleteList']);
+    Route::get('/delete/{id}', [App\Http\Controllers\CodeController::class, 'CodeDelete']);
+    Route::get('/search', [App\Http\Controllers\CodeController::class, 'CodeSearch']);
+});
+
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'ItemIndex']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);

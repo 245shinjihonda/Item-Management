@@ -232,6 +232,12 @@ return [
         ],
 
         [
+            'text' => '商品種別コード画面へ',
+            'url'  => 'codes',
+            'icon' => 'fas fa-gamepad',
+        ],
+
+        [
             'text' => '在庫情報画面へ',
             'url'  => 'inventories',
             'icon' => 'fas fa-gamepad',

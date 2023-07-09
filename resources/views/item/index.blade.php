@@ -101,7 +101,7 @@
                             <td>{{$item->brand}}</td>
                             <td><a href="/inventories/{{$item->id}}">{{$item->item_name}}</td>
                             <td>{{number_format($item->list_price) }}円</td>
-                            <td><a href="/inventories/{{$item->id}}" class="btn btn-default">確認する</a></td>
+                            <td>{{$item->status}}</td>
                             <td>{{$item->created_at->format('Y/m/d')}}</td>
                             {{-- <td><a href="/inventories/update/{{$item->id}}" class="btn btn-default">入力する</a></td>  --}}
                         </tr>
@@ -112,6 +112,9 @@
     </div>
 </div>
 
+<footer>
+    <div>{{$items->appends(request()->query())->links('pagination::bootstrap-4')}} </div>
+</footer>
 
 
 @stop
