@@ -9,42 +9,48 @@
 
 @section('content')
 
+<div>
+<a href="{{ url('items/add') }}" class="btn btn-default">商品を登録する</a>
+</div>
+
+<br>
+
 <div class="search-form">
     <form class="row g-2" action="{{ url('items/search') }}" method="GET">
-    @csrf
+        @csrf
 
-    <div class="col-auto">
-        <input class="btn btn-success" type="submit" value="検索">
-    </div>
+        <div class="col-auto">
+           <input class="btn btn-success" type="submit" value="検索">   
+        </div>
 
-    <div class="col-auto">
-        <label for="item_code">商品コード
-        <select name="item_code" data-toggle="select">
-        <option value="">全て</option>
-        @foreach ($items as $item)
-        <option value="{{$item->item_code}}">{{$item->item_code}}</option>
-        @endforeach
-        </select>
-        </label>  
-    <div>
+        <div class="col-auto">
+            <label for="item_code">商品コード
+                <select name="item_code" data-toggle="select">
+                    <option value="">全て</option>
+                    @foreach ($items as $item)
+                        <option value="{{$item->item_code}}">{{$item->item_code}}</option>
+                    @endforeach
+                </select>
+            </label>  
+        <div>
 
-    <div class="col-auto">
-        <label for="list_price">定価
-        <select name="list_price" data-toggle="select">
-        <option value="">全て</option> 
-        <option value="10000">10,000円未満</option>
-        <option value="20000">10,000円以上20,000円未満</option>
-        <option value="30000">20,000円以上30,000円未満</option>
-        <option value="30001">30,000円以上</option>
-        </select>
-        </label> 
-    </div> 
+        <div class="col-auto">
+            <label for="list_price">定価
+                <select name="list_price" data-toggle="select">
+                    <option value="">全て</option> 
+                    <option value="10000">10,000円未満</option>
+                    <option value="20000">10,000円以上20,000円未満</option>
+                    <option value="30000">20,000円以上30,000円未満</option>
+                    <option value="30001">30,000円以上</option>
+                </select>
+            </label> 
+        </div> 
 
     </form>
 </div>
 
 <br>
-        {{-- <?php $url = $_SERVER['REQUEST_URI']; ?>
+        <?php $url = $_SERVER['REQUEST_URI']; ?>
         @if (strstr($url, 'item_code'))
             検索結果表示 
         @endif
@@ -57,13 +63,12 @@
         <p>該当する商品はありません。</p>
         </div>
         @endif
-       --}}
-       {{-- @if (session('flashmessage'))
+      
+       @if (session('flashmessage'))
             <div class="flash_message">
                 {{ session('flashmessage') }}
             </div>
-        @endif --}}
-
+        @endif
 
 <div class="col-auto">
     <div class="card">
@@ -72,7 +77,6 @@
             <div class="card-tools">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append">
-                        <a href="{{ url('items/add') }}" class="btn btn-default">商品登録</a>
                     </div>
                 </div>
             </div>
@@ -81,7 +85,7 @@
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
-                        <th>種別コード</th>
+                        <th>品目コード</th>
                         <th>商品番号</th>
                         <th>種別名</th>
                         <th>ブランド</th>   
@@ -102,7 +106,6 @@
                             <td>{{number_format($item->list_price) }}円</td>
                             <td>{{$item->status}}</td>
                             <td>{{$item->created_at->format('Y/m/d')}}</td>
-                            {{-- <td><a href="/inventories/update/{{$item->id}}" class="btn btn-default">入力する</a></td>  --}}
                         </tr>
                     @endforeach
                 </tbody>

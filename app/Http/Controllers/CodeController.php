@@ -91,7 +91,6 @@ class CodeController extends Controller
         return view('code.delete', compact('codes'));
     }
    
-
     // 商品削除
 
     public function CodeDelete(Request $request, $id)
@@ -115,7 +114,6 @@ class CodeController extends Controller
             $code = $query->where('code_name', 'LIKE', "%{$keyword}%")
                     ->get();
 
-            // dd($code);
         }
 
         $codes = $query->get();
@@ -132,11 +130,4 @@ class CodeController extends Controller
         return view('code.index', compact('codes', 'keyword'));
     }
 }
-
-    // $items = Item
-        //     ::where('items.status', 'active')
-        //     ->select()
-        //     ->latest()
-        //     ->paginate(10);
- //
 

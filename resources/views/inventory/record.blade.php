@@ -15,7 +15,10 @@
         </div>
     </form>
 
+    <div>
     <a href="/inventories/update/{{$item->id}}" class="btn btn-default">出入荷記録を入力する</a>
+    <a href="/items/delete/{{$item->id}}" class="btn btn-default">この商品の登録を削除する</a>
+    </div>
 
 @stop
 
@@ -26,13 +29,12 @@
         <table class="table table-hover text-nowrap">
             <thead>
             <tr>
-                <th>種別コード</th>
+                <th>品目コード</th>
                 <th>商品番号</th>
-                <th>種別名</th>
+                <th>品目名</th>
                 <th>ブランド</th>   
                 <th>商品名</th>
                 <th>定価</th>
-                <th>登録削除</th>
             </tr>
             </thead>
             <tbody>
@@ -42,8 +44,7 @@
                 <td>{{$item->category}}</td>
                 <td>{{$item->brand}}</td>
                 <td>{{$item->item_name}}</td>
-                <td>{{number_format($item->list_price)}}円</td>
-                <td><a href="/items/delete/{{$item->id}}" class="btn btn-default">削除する</a></td> 
+                <td>{{number_format($item->list_price)}}円</td>  
             </tr>
             </tbody>
         </table>

@@ -1,16 +1,18 @@
 @extends('adminlte::page')
 @include('common')
 
-@section('title', '種別コード一覧')
+@section('title', '品目コード一覧')
 
 @section('content_header')
-    <h1>種別コード一覧</h1>
+    <h1>品目コード一覧</h1>
 @stop
 
 @section('content')
 
-<a href="{{ url('codes/add') }}" class="btn btn-default">種別コード登録</a>
-<a href="{{ url('codes/delete-list') }}" class="btn btn-default">種別コード削除</a>
+<div>
+<a href="{{ url('codes/add') }}" class="btn btn-default">品目コード登録</a>
+<a href="{{ url('codes/delete-list') }}" class="btn btn-default">品目コード削除</a>
+<div>
 
 <div class="search-form">
     <form class="row g-2" action="{{ url('codes/search') }}" method="GET">
@@ -20,7 +22,7 @@
                 </div>
                 <div class="col-auto">
                     <input class="form-control" type="text" name="keyword" value="商品タイプを入力">
-            </div>
+                </div>
     </form>
 </div>
 
@@ -45,11 +47,10 @@
             </div>
         @endif
 
-
 <div class="col-auto">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">種別コード一覧</h3>
+            <h3 class="card-title">品目コード一覧</h3>
             <div class="card-tools">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append">
@@ -61,7 +62,7 @@
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
-                        <th>種別コード</th>
+                        <th>品目コード</th>
                         <th>対象となる商品のタイプ</th>
                         <th>取扱状況</th>
                     </tr>

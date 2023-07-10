@@ -11,6 +11,7 @@
 
 <br>
 <br>
+<img style="width:300px" src="../img/yufuin.JPG">
 
 <div class="col-12">
     <table class="table table-hover text-nowrap">
@@ -33,6 +34,9 @@
                 <td>億円</td>
                 <td align="right"> {{number_format(10000)}}</td>
                 <td>個</td>
+
+            
+          
             </tr>
         </table>
 </div>

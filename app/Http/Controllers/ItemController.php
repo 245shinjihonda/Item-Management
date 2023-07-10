@@ -79,11 +79,11 @@ class ItemController extends Controller
                     'user_id' => Auth::user()->id,
                     'item_id' => $inventory_insert->id,
                     'in_quantity' => '1',
-                    'in_unit_price' => '0',
-                    'in_amount' => '0',
-                    'out_quantity' => '0',
-                    'out_unit_price' => '0',
-                    'out_amount' => '0',
+                    'in_unit_price' => '1',
+                    'in_amount' => '1',
+                    'out_quantity' => '1',
+                    'out_unit_price' => '1',
+                    'out_amount' => '1',
                     ]);
 
                     // dd($inventory->in_quantity);
@@ -98,23 +98,6 @@ class ItemController extends Controller
                 return view('item.add', compact('error_existingItem'));
             }
             
-                    // 別の実装方法
-                    // $item_code = $request->item_code;
-                    // $item_number = $request->item_number;
-        
-                    // $query = Item::query();
-                    // $query->where('item_code', '=' ,$item_code);
-                    // $query->where('item_number', '=' ,$item_number);
-                    // $existingItem = $query->first();
-        
-                    // if ($existingItem)
-                    //     {
-                    //         $error_existingItem = 'この商品はすでに登録されています。';
-        
-                    //         return view('item.add', compact('error_existingItem'));
-        
-                    //         // return view('item.add')->with('error_existingItem', $error_existingItem);
-                    //     }
         }
 
         // 商品のコードを取得する
@@ -172,8 +155,3 @@ class ItemController extends Controller
     }
 }
 
-    // $items = Item
-        //     ::where('items.status', 'active')
-        //     ->select()
-        //     ->latest()
-        //     ->paginate(10);

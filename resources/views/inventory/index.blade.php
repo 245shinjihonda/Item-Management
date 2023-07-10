@@ -9,13 +9,14 @@
 
 @section('content')
 <br>
-<h2>全商品在庫状況</h2>
+<h2>当期在庫状況</h2>
 <br>
 
 <div class="col-auto">
     <div class="card">
         <div class="card-header">    
             <div class="card-title"></div>
+            <h3>全商品</h3>
         </div>
 
         <div class="card-body table-responsive p-0">
@@ -49,13 +50,12 @@
 
 {{-- 商品別の在庫一覧表 --}}
 <br>
-<h2>商品別在庫状況</h2>
-<br>
 
 <div class="col-auto">
     <div class="card">
         <div class="card-header">    
-            <div class="card-title"></div>   
+            <div class="card-title"></div> 
+            <h3>商品別</h3>
         </div>
 
         <div class="card-body table-responsive p-0">

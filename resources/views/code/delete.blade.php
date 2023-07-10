@@ -4,7 +4,7 @@
 @section('title', '種別コード削除')
 
 @section('content_header')
-    <h1>種別コード削除</h1>
+    <h1>品目コードを削除する</h1>
 @stop
 
 @section('content')
@@ -56,7 +56,7 @@
 <div class="col-auto">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">種別コード一覧</h3>
+            <h3 class="card-title">品目コード リスト</h3>
             <div class="card-tools">
                 <div class="input-group input-group-sm">
                     <div class="input-group-append">
@@ -68,7 +68,7 @@
             <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
-                        <th>種別コード</th>
+                        <th>品目コード</th>
                         <th>対象となる商品のタイプ</th>
                     </tr>
                 </thead>
@@ -87,7 +87,7 @@
 </div>
 
     <footer>
-    <div>{{$codes->appends(request()->query())->links('pagination::bootstrap-4')}} </div>
+    {{-- <div>{{$codes->appends(request()->query())->links('pagination::bootstrap-4')}} </div> --}}
     </footer>
 
 @stop

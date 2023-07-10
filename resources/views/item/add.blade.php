@@ -32,9 +32,9 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="cut_number">種別コード</label>
+                            <label for="cut_number">品目コード</label>
                             <select name="item_code" data-toggle="select">
-                                <option value="">種別コードを選択して下さい</option>
+                                <option value="">品目コードを選択して下さい</option>
                                 @foreach ($codes as $code)
                                 <option value="{{$code->item_code}}">{{$code->item_code}}</option>
                                 @endforeach
@@ -48,7 +48,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="category">種別名</label>
+                            <label for="category">品目名</label>
                             <input type="text" class="form-control" name="category" placeholder="ザック, 靴, レインウエア等">
                         </div>
                         <div class="form-group">

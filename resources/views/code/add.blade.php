@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 @include('common')
 
-@section('title', '商品登録')
+@section('title', '品目コード登録')
 
 @section('content_header')
-    <h1>コード登録</h1>
+    <h1>品目コードを登録する</h1>
 @stop
 
 @section('content')
@@ -32,7 +32,7 @@
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="cut_number">種別コード</label>
+                            <label for="cut_number">品目コード</label>
                             <input type="text" class="form-control" name="item_code" placeholder="AAA, AAB, ...">
                         </div>
 
