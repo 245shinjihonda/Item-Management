@@ -34,10 +34,7 @@
             </tbody>
         </table>
     </div>
-
 <br>
-<br>
-
     <form method="POST" action="/inventories/input/{{$item->id}}" enctype="multipart/form-data">
         @csrf
 
@@ -67,7 +64,6 @@
             <div><input type ='button', id='ShiireRun', value ='合計額'>
 <br>
 <br>
-<br>
         <h2>出荷</h3>
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
@@ -90,7 +86,6 @@
                 </table>
             <div><input type='button' id='HanbaiRun' value='合計額'>
     </div>
-<br>
 <br>
         <div class="card-footer">
             <button type="submit" class="btn btn-primary">出入荷を入力する</button>

@@ -15,39 +15,29 @@
 <div class="search-form">
     <form class="row g-2" action="{{ url('codes/search') }}" method="GET">
         @csrf
-
-        {{-- <div class="col-auto">
-            <input class="btn btn-success" type="submit" value="検索">
-        </div>
-
-        <div class="col-auto">
-            <label for="item_code">商品コード
-            <select name="item_code" data-toggle="select">
-            <option value="">全て</option>
-            @foreach ($items as $item)
-            <option value="{{$code->item_code}}">{{$item->item_code}}</option>
-            @endforeach
-            </select>
-            </label>  
-        <div> --}}
-
+                <div class="col-auto">
+                    <input class="btn btn-success" type="submit" value="検索">
+                </div>
+                <div class="col-auto">
+                    <input class="form-control" type="text" name="keyword" value="商品タイプを入力">
+            </div>
     </form>
 </div>
 
 <br>
-        {{-- <?php $url = $_SERVER['REQUEST_URI']; ?>
-        @if (strstr($url, 'item_code'))
+        <?php $url = $_SERVER['REQUEST_URI']; ?>
+        @if (strstr($url, 'code_name'))
             検索結果表示 
         @endif
 
        <?php   
-        $noitem = $items->isEmpty();
+        $nocode = $codes->isEmpty();
         ?>
-        @if($noitem)
+        @if($nocode)
         <div class="alert alert-danger">
         <p>該当する商品はありません。</p>
         </div>
-        @endif --}}
+        @endif
        
        @if (session('flashmessage'))
             <div class="flash_message">
@@ -91,7 +81,7 @@
 </div>
 
     <footer>
-    <div>{{$codes->appends(request()->query())->links('pagination::bootstrap-4')}} </div>
+    {{-- <div>{{$codes->appends(request()->query())->links('pagination::bootstrap-4')}} </div> --}}
     </footer>
 
 @stop

@@ -51,10 +51,6 @@
 
     <br>
     
-    <?php echo date("Y-01-01")." 00:00:00"?>
-    <?php echo date("Y-01-01", strtotime('-1 year'))?>
-    <?php echo date("Y-m-t", strtotime('-1 year'))?>
-
     @isset ($currentRevenue)
     <h2>KPI</h2>
     <div class="card-body table-responsive p-0">

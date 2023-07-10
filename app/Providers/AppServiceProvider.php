@@ -21,7 +21,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    
+     public function boot()
     {
         //
         if (\App::environment(['production'])) {
@@ -30,5 +31,8 @@ class AppServiceProvider extends ServiceProvider
 
         \Illuminate\Support\Facades\Schema::defaultStringLength(191);
         }
+
+
     }
+
 }

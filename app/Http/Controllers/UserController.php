@@ -20,22 +20,23 @@ class UserController extends Controller
         // input()は<form>で送付された<input>のname属性
         
         $keyword = $request->input('keyword');
+
         $query = User::query();
 
-        // $keywordが存在すれば、$queryにif文の中の条件が設定される
-        if(!empty($keyword)) {
-            $query->where('email', 'LIKE', "%{$keyword}%")
-            ->select()     
-            ->get();
-        }
+            // $keywordが存在すれば、$queryにif文の中の条件が設定される
+            if(!empty($keyword)) {
+                $query->where('email', 'LIKE', "%{$keyword}%")
+                ->select()     
+                ->get();
+                }
                     // 利用者一覧取得
-        $admiusers = User::where('users.is_admi', '1')
-            ->select()
-            ->get();
+        $admiusers = $query->where('users.is_admi', '1')
+                    ->select()
+                    ->get();
 
-        $users = $query->where('users.is_admi', '0')
-            ->select()
-            ->get();
+        $users = User::where('users.is_admi', '0')
+                    ->select()
+                    ->get();
 
         return view('user.list', compact('admiusers', 'users', 'keyword'));
     }
@@ -65,9 +66,6 @@ class UserController extends Controller
         ]);
         return redirect('/users');
     }
-
-// dd($request->id);
-        // exit;
 
     // 利用者がパスワードを更新する際、名前とメールアドレスを入力するフォームを表示する  
     public function UserPassword(Request $request)

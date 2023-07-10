@@ -26,7 +26,7 @@ class CodeController extends Controller
     {
         // 商品一覧取得
         $codes = Code::latest()
-                        ->paginate(20);
+                        ->get();
 
         foreach($codes as $code){
 
@@ -36,13 +36,12 @@ class CodeController extends Controller
             else{
             $code->status = '取扱終了';
             }
-    
         }
                         
         return view('code.index', compact('codes'));
     }
 
-    //  商品登録
+    //  Code登録
      
     public function CodeAdd(Request $request)
     {
@@ -108,8 +107,29 @@ class CodeController extends Controller
     public function CodeSearch(Request $request)
     {
         // キーワード検索を入れる
-                
-        return view('code.index', compact('codes'));
+        $keyword = $request->input('keyword');
+
+        $query = Code::query();
+        if(!empty($keyword)) 
+        {
+            $code = $query->where('code_name', 'LIKE', "%{$keyword}%")
+                    ->get();
+
+            // dd($code);
+        }
+
+        $codes = $query->get();
+    
+        foreach($codes as $code)
+        {
+            if($code->status == 'active'){
+                $code->status = '商品取扱中';
+            }
+            else{
+            $code->status = '取扱終了';
+            }
+        }
+        return view('code.index', compact('codes', 'keyword'));
     }
 }
 

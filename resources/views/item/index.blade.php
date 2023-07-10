@@ -44,7 +44,7 @@
 </div>
 
 <br>
-        <?php $url = $_SERVER['REQUEST_URI']; ?>
+        {{-- <?php $url = $_SERVER['REQUEST_URI']; ?>
         @if (strstr($url, 'item_code'))
             検索結果表示 
         @endif
@@ -57,13 +57,12 @@
         <p>該当する商品はありません。</p>
         </div>
         @endif
-       <!-- if($noitem)はif($items->isEmpty())でも可 -->
-
-       @if (session('flashmessage'))
+       --}}
+       {{-- @if (session('flashmessage'))
             <div class="flash_message">
                 {{ session('flashmessage') }}
             </div>
-        @endif
+        @endif --}}
 
 
 <div class="col-auto">
@@ -113,7 +112,7 @@
 </div>
 
 <footer>
-    <div>{{$items->appends(request()->query())->links('pagination::bootstrap-4')}} </div>
+    {{-- <div>{{$items->appends(request()->query())->links('pagination::bootstrap-4')}} </div> --}}
 </footer>
 
 

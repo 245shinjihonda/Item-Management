@@ -26,18 +26,16 @@ class ItemController extends Controller
     {
         // 商品一覧取得
         $items = item::latest()
-                        ->paginate(20);
+                        ->get();
     
-        foreach($items as $item){
-
-        if($item->status == 'active'){
-            $item->status = '商品取扱中';
-        }
-        else{
-        $item->status = '取扱終了';
-        }
-
-        }
+            foreach($items as $item){
+                if($item->status == 'active'){
+                    $item->status = '商品取扱中';
+                }
+                else{
+                $item->status = '取扱終了';
+                }
+            }
            
         return view('item.index', compact('items'));
     }
@@ -88,7 +86,6 @@ class ItemController extends Controller
                     'out_amount' => '0',
                     ]);
 
-                  
                     // dd($inventory->in_quantity);
                     // exit;
     
@@ -170,7 +167,7 @@ class ItemController extends Controller
                     }
                 })
                 ->get();
-                
+
         return view('item.index',$items,compact('items'));
     }
 }
