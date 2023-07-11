@@ -87,7 +87,7 @@
                     <tr>
                         <th>品目コード</th>
                         <th>商品番号</th>
-                        <th>種別名</th>
+                        <th>品目名</th>
                         <th>ブランド</th>   
                         <th>商品名</th>
                         <th>定価</th>
@@ -103,7 +103,7 @@
                             <td>{{$item->category}}</td>
                             <td>{{$item->brand}}</td>
                             <td><a href="/inventories/{{$item->id}}">{{$item->item_name}}</td>
-                            <td>{{number_format($item->list_price) }}円</td>
+                            <td class="table_number">{{number_format($item->list_price) }} 円</td>
                             <td>{{$item->status}}</td>
                             <td>{{$item->created_at->format('Y/m/d')}}</td>
                         </tr>

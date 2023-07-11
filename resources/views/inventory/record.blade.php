@@ -6,6 +6,8 @@
 @section('content_header')
     <h1>在庫状況 </h1>
 
+<br>
+
     <form class="row g-2" Method="GET" action="/inventories/{{$item->id}}/search">
         <div>
             <label for="">出入荷記録を検索して確認する。</label>
@@ -16,65 +18,64 @@
     </form>
 
     <div>
-    <a href="/inventories/update/{{$item->id}}" class="btn btn-default">出入荷記録を入力する</a>
-    <a href="/items/delete/{{$item->id}}" class="btn btn-default">この商品の登録を削除する</a>
+        <a href="/inventories/update/{{$item->id}}" class="btn btn-default">出入荷記録を入力する</a>
+        <a href="/items/delete/{{$item->id}}" class="btn btn-default">この商品の登録を削除する</a>
     </div>
-
 @stop
 
 @section('content')
 <br>
     <h2>商品詳細</h2>
-    <div class="card-body table-responsive p-0">
-        <table class="table table-hover text-nowrap">
-            <thead>
-            <tr>
-                <th>品目コード</th>
-                <th>商品番号</th>
-                <th>品目名</th>
-                <th>ブランド</th>   
-                <th>商品名</th>
-                <th>定価</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>{{$item->item_code}}</td>
-                <td>{{$item->item_number}}</td>
-                <td>{{$item->category}}</td>
-                <td>{{$item->brand}}</td>
-                <td>{{$item->item_name}}</td>
-                <td>{{number_format($item->list_price)}}円</td>  
-            </tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead>
+                <tr>
+                    <th>品目コード</th>
+                    <th>商品番号</th>
+                    <th>品目名</th>
+                    <th>ブランド</th>   
+                    <th>商品名</th>
+                    <th>定価</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{$item->item_code}}</td>
+                    <td>{{$item->item_number}}</td>
+                    <td>{{$item->category}}</td>
+                    <td>{{$item->brand}}</td>
+                    <td>{{$item->item_name}}</td>
+                    <td class="table_number">{{number_format($item->list_price)}} 円</td>  
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-    <br>
+<br>
     
     @isset ($currentRevenue)
-    <h2>KPI</h2>
-    <div class="card-body table-responsive p-0">
-    <table class="table table-hover text-nowrap">
-            <thead>
-            <tr class="KPI-table-title">
-                <th>当月売上高 </th>
-                <th>当月利益</th>
-                <th>現在の在庫数</th>
-                <th>現在の在庫単価</th>
-                <th>現在の在庫評価額</th>
-            </tr>
-            </thead>     
-            
-            <tr class="KPI-table-index">
-                <td>{{number_format($currentRevenue)}}円</td>
-                <td>{{number_format($currentProfit)}}円</td>
-                <td >{{number_format($currentQuantity)}}個</td>
-                <td >{{number_format($currentUnitPrice)}}円</td>
-                <td >{{number_format($currentValuation)}}円</td>  
-            </tr>
-            </tbody>
-            </table>
+        <h2>KPI</h2>
+        <div class="card-body table-responsive p-0">
+        <table class="table table-hover text-nowrap">
+                <thead>
+                <tr class="KPI-table-title">
+                    <th>当月売上高 </th>
+                    <th>当月利益</th>
+                    <th>現在の在庫数</th>
+                    <th>現在の在庫単価</th>
+                    <th>現在の在庫評価額</th>
+                </tr>
+                </thead>     
+                
+                <tr class="KPI-table-index">
+                    <td class="table_number">{{number_format($currentRevenue)}} 円</td>
+                    <td class="table_number">{{number_format($currentProfit)}} 円</td>
+                    <td class="table_number">{{number_format($currentQuantity)}} 個</td>
+                    <td class="table_number">{{number_format($currentUnitPrice)}} 円</td>
+                    <td class="table_number">{{number_format($currentValuation)}} 円</td>  
+                </tr>
+                </tbody>
+                </table>
     @endisset
     <br>
 
@@ -101,12 +102,12 @@
                     @foreach($recordInventories as $recordInventory)
                     <tr>
                         <td>{{$recordInventory->created_at}}</td>
-                        <td>{{number_format($recordInventory->in_quantity)}}</td>
-                        <td>{{number_format($recordInventory->in_unit_price)}}</td>
-                        <td>{{number_format($recordInventory->in_amount)}}</td>
-                        <td>{{number_format($recordInventory->out_quantity)}}</td>
-                        <td>{{number_format($recordInventory->out_unit_price)}}</td>
-                        <td>{{number_format($recordInventory->out_amount)}}</td>
+                        <td class="table_number">{{number_format($recordInventory->in_quantity)}} 個</td>
+                        <td class="table_number">{{number_format($recordInventory->in_unit_price)}} 円</td>
+                        <td class="table_number">{{number_format($recordInventory->in_amount)}} 円</td>
+                        <td class="table_number">{{number_format($recordInventory->out_quantity)}} 個</td>
+                        <td class="table_number">{{number_format($recordInventory->out_unit_price)}} 円</td>
+                        <td class="table_number">{{number_format($recordInventory->out_amount)}} 円</td>
                         <td>{{$recordInventory->user_id}}</td>
                     </tr>
                     @endforeach

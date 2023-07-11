@@ -36,6 +36,7 @@ class UserController extends Controller
 
         $users = User::where('users.is_admi', '0')
                     ->select()
+                    ->orderBy('users.email')
                     ->get();
 
         return view('user.list', compact('admiusers', 'users', 'keyword'));
@@ -47,15 +48,15 @@ class UserController extends Controller
         return view('user.add');
     }
 
-    // 管理者が許可した利用者を登録する
+    // 管理者が許可した者を利用者として登録する
     public function UserAdd(Request $request)
     {
         // バリデーションの設定
-        // $this->validate($request, [
-        // 'name' => 'required|max:255',
-        // 'email' => 'required|min:5|email|unique:users',
-        // 'password' => 'required|max:255|',
-        // ]);
+        $this->validate($request, [
+        'name' => 'required|max:255',
+        'email' => 'required|min:5|email|unique:users',
+        'password' => 'required|max:255|',
+        ]);
 
         // アカウント作成
         User::create([
@@ -66,38 +67,15 @@ class UserController extends Controller
         ]);
         return redirect('/users');
     }
-
-    // 利用者がパスワードを更新する際、名前とメールアドレスを入力するフォームを表示する  
-    public function UserPassword(Request $request)
-    {                 
-        return view('user.password');
-    }
-
-    // 利用者がパスワードを更新する際、名前とメールアドレスを入力する  
-    public function UserPasswordForm(Request $request)
-    {                 
-         // 利用者のメールアドレスで利用者を特定する
-         $passwordUser = User::where('email', '=',$request->email)->first();
-
-         return view('user.passwordupdate', compact('passwordUser'));
-    }
-
-    // 利用者がパスワードを更新する  
-    public function UserPasswordUpdate(Request $request, $id)
-    {                 
-        User::where('id', '=',$request->id)
-            ->update(['password' => password_hash($request->password, PASSWORD_DEFAULT)]);
-           
-            return redirect('/users');
-    }
-
+  
     // 利用者削除画面を表示する。
     public function UserDeleteList()
     {
         // 利用者一覧取得
         $users = User::where('users.is_admi', '0')
-        ->select()
-        ->get();
+                        ->select()
+                        ->orderBY('users.email')
+                        ->get();
 
         return view('user.delete', compact('users'));
     }
@@ -106,9 +84,35 @@ class UserController extends Controller
     public function UserDelete(Request $request, $id)
     {      
             // 対象の利用者を削除する関数       
-            User::where('id', '=',$request->id)->delete();
+            User::where('id', '=',$request->id)
+                ->delete();
            
             return redirect('/users');
     }
+
+//   // 利用者がパスワードを更新する際、名前とメールアドレスを入力するフォームを表示する  
+//   public function UserPassword(Request $request)
+//   {                 
+//       return view('user.password');
+//   }
+
+//   // 利用者がパスワードを更新する際、名前とメールアドレスを入力する  
+//   public function UserPasswordForm(Request $request)
+//   {                 
+//        // 利用者のメールアドレスで利用者を特定する
+//        $passwordUser = User::where('email', '=',$request->email)->first();
+
+//        return view('user.passwordupdate', compact('passwordUser'));
+//   }
+
+//   // 利用者がパスワードを更新する  
+//   public function UserPasswordUpdate(Request $request, $id)
+//   {                 
+//       User::where('id', '=',$request->id)
+//           ->update(['password' => password_hash($request->password, PASSWORD_DEFAULT)]);
+
+//           return redirect('/users');
+//   }
+
 
 }

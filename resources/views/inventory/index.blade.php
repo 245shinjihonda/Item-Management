@@ -37,10 +37,10 @@
                         <td>全商品</td>
                         <td></a></td>
                         <td></td>
-                        <td>{{number_format($totalCurrentInQuantity)}}個</td>
-                        <td>{{number_format($totalCurrentOutQuantity)}}個</td>                     
-                        <td>{{number_format($totalUpdatedBalance)}} 個</td>                                 
-                        <td>{{number_format($totalValuation)}}円</td>
+                        <td class="table_number">{{number_format($totalCurrentInQuantity)}} 個</td>
+                        <td class="table_number">{{number_format($totalCurrentOutQuantity)}} 個</td>                     
+                        <td class="table_number">{{number_format($totalUpdatedBalance)}} 個</td>                                 
+                        <td class="table_number">{{number_format($totalValuation)}} 円</td>
                     </tr>           
                 </tbody>
             </table>
@@ -78,11 +78,11 @@
                         <tr>
                             <td>{{$item->item_code}}</td>
                             <td><a href="/inventories/{{$item->id}}">{{$item->item_name}}</a></td>
-                            <td>{{number_format($item->list_price)}}円</td>
-                            <td>{{number_format($currentInQuantities[$item->id])}}個</td>
-                            <td>{{number_format($currentOutQuantities[$item->id])}}個</td>                     
-                            <td>{{number_format($updatedBalances[$item->id])}}個</td>                                        
-                            <td>{{number_format($valuations[$item->id])}}円</td>
+                            <td class="table_number">{{number_format($item->list_price)}} 円</td>
+                            <td class="table_number">{{number_format($currentInQuantities[$item->id])}} 個</td>
+                            <td class="table_number">{{number_format($currentOutQuantities[$item->id])}} 個</td>                     
+                            <td class="table_number">{{number_format($updatedBalances[$item->id])}} 個</td>                                        
+                            <td class="table_number">{{number_format($valuations[$item->id])}} 円</td>
                         </tr>
                 <?php $i++ ?>
                   @endforeach             

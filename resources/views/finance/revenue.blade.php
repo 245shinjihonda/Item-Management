@@ -47,11 +47,11 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td>{{number_format($itemNumber)}}</td>
-                            <td>{{number_format($totalMonthRevenue)}}円</td>
-                            <td>{{number_format($totalCurrentRevenue)}}円</td>
-                            <td>{{number_format($totalCurrentProfit)}}円</td>
-                            <td>{{number_format($totalCurrentProfitRatio)}}%</td>
+                            <td class="table_number">{{number_format($itemNumber)}} 品目</td>
+                            <td class="table_number">{{number_format($totalMonthRevenue)}} 円</td>
+                            <td class="table_number">{{number_format($totalCurrentRevenue)}} 円</td>
+                            <td class="table_number">{{number_format($totalCurrentProfit)}} 円</td>
+                            <td class="table_number">{{number_format($totalCurrentProfitRatio)}} %</td>
                         </tr>                
                 </tbody>
             </table>
@@ -86,11 +86,11 @@
                         <tr>
                             <td>{{ $item->item_code}}</td>
                             <td><a href="/inventories/{{$item->id}}">{{ $item->item_name }}</a></td>
-                            <td>{{number_format($item->list_price)}}円</td>
-                            <td>{{number_format($monthRevenues[$item->id] ?? 0)}}円</td>
-                            <td>{{number_format($currentRevenues[$item->id] ?? 0)}}円</td>
-                            <td>{{number_format($currentProfits[$item->id] ?? 0)}}円</td>
-                            <td>{{number_format($currentProfitRatios[$item->id] ?? 0)}}%</td>
+                            <td class="table_number">{{number_format($item->list_price)}} 円</td>
+                            <td class="table_number">{{number_format($monthRevenues[$item->id] ?? 0)}} 円</td>
+                            <td class="table_number">{{number_format($currentRevenues[$item->id] ?? 0)}} 円</td>
+                            <td class="table_number">{{number_format($currentProfits[$item->id] ?? 0)}} 円</td>
+                            <td class="table_number">{{number_format($currentProfitRatios[$item->id] ?? 0)}} %</td>
                         </tr>
                     @endforeach
                 </tbody>
