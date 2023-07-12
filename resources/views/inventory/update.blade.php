@@ -46,18 +46,18 @@
                 <table class="table table-hover text-nowrap">
                     <tr>
                         <td>仕入個数</td>
-                        <td><input type='number' id='in_quantity' name='in_quantity' value ='0'></td>
+                        <td><input type='number' id='in_quantity' name='in_quantity' value ='0' min='0'></td>
                         <td>個</td>
                     </tr>
                     <tr>
                         <td>仕入単価</td>
-                        <td><input type='number' id='in_unit_price' name='in_unit_price' value='0'></td>
+                        <td><input type='number' id='in_unit_price' name='in_unit_price' value='0' min='0'></td>
                         <td>円</td>
                     </tr>
                     <tr>
                         <td>合計額</td>
                         <td><p id='in_amount'></p>    </td>  
-                        <input type='hidden' id='total_in_amount' type='number' name='in_amount' value='0'>
+                        <input type='hidden' id='total_in_amount' type='number' name='in_amount' value='0' min='0'>
                         <td>円</td>
                     </tr>
                 </table>
@@ -69,18 +69,18 @@
                 <table class="table table-hover text-nowrap">
                     <tr>
                         <td>販売個数</td>
-                        <td><input type='number' id='out_quantity' name="out_quantity" value='0'></td>
+                        <td><input type='number' id='out_quantity' name='out_quantity' value='0' min="0"></td>
                         <td>個</td>
                     </tr>
                     <tr>
                     <td>販売単価</td>
-                        <td><input type='number' id='out_unit_price' name='out_unit_price' value='0'></td>
+                        <td><input type='number' id='out_unit_price' name='out_unit_price' value='0' min='0'></td>
                         <td>円</td>
                     </tr>
                     <tr>
                         <td>合計額</td>
                         <td><p id='out_amount'></p></td>
-                        <input type='hidden' id='total_out_amount' type='number' name='out_amount' value='0'>
+                        <input type='hidden' id='total_out_amount' type='number' name='out_amount' value='0' min-'0'>
                         <td>円</td>
                     </tr>
                 </table>

@@ -11,11 +11,33 @@
 
     @section('content')
     <div class="yama">
-            <br>
-            <br>
-        <img style="width:500px" src="../img/yufuin.JPG">
-
         
+            <br>
+        {{-- <img style="width:100px" src="../img/yufuin.JPG"> --}}
+
+
+
+       <h3 class="yama-title">利用案内</h3>
+
+
+        <div class="top-circle">
+            <p class="top-circle-text">商品管理データ</p>
+        </div>
+
+       <div class="right-line"> </div>
+
+       <div class="left-line"> </div>
+        
+        <div class='bottom-circle'>
+            <div class="top-circle">
+            <p class="top-circle-text">在庫管理データ</p>
+            </div>
+
+            <div class="top-circle">
+            <p class="top-circle-text">売上データ</p>
+            </div>
+            </div>
+
     </div>  
     @stop    
         {{-- <div class="col-12">

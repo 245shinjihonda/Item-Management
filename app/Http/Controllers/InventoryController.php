@@ -158,10 +158,10 @@ class InventoryController extends Controller
     public function InventoryRecord(Request $request, $id)
     {
          $item = Item::where('id', '=' ,$request->id)
-         ->first();
+                        ->first();
          
          $itemInventory = Inventory::where('item_id', '=' ,$request->id)
-             ->first();
+                                    ->first();
 
         if(isset($itemInventory->item_id)){
 
@@ -255,7 +255,14 @@ class InventoryController extends Controller
     // 出入荷記録を登録する
     public function InventoryInput(Request $request)
     {
-         Inventory::create([
+        $this->validate($request, [
+            'in_quantity' => 'integer|min:0',
+            'in_unit_price' => 'integer|min:0',
+            'out_quantity' => 'integer|min:0',
+            'out_unit_price' => 'integer|min:0',
+            ]);
+        
+        Inventory::create([
             'user_id' => Auth::user()->id,
             'item_id' => $request->item_id,
             'in_quantity' => $request->in_quantity,

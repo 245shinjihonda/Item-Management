@@ -49,8 +49,12 @@ class ItemController extends Controller
         {
             // バリデーション
             $this->validate($request, [
-                'item_code' => 'required|size:3',
-                'item_number' => 'required|size:4',
+                'item_code' => 'required|regex:/^[A-Z]{3}+$/',
+                'item_number' => 'required|regex:/^[0-9]{4}+$/',
+                'category' =>'required|max:100',
+                'brand' =>'required|max:100',
+                'item_name' =>'required|max:100',
+                'list_price' => 'required|integer|min:1',
                 ]);
    
             // 同一番号がなれけば商品登録
@@ -81,9 +85,9 @@ class ItemController extends Controller
                     'in_quantity' => '1',
                     'in_unit_price' => '1',
                     'in_amount' => '1',
-                    'out_quantity' => '1',
-                    'out_unit_price' => '1',
-                    'out_amount' => '1',
+                    'out_quantity' => '0',
+                    'out_unit_price' => '0',
+                    'out_amount' => '0',
                     ]);
 
                     // dd($inventory->in_quantity);

@@ -33,12 +33,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="cut_number">品目コード</label>
-                            <input type="text" class="form-control" name="item_code" placeholder="AAA, AAB, ...">
+                            <input type="text" class="form-control" name="item_code" placeholder="アルファベット大文字3文字" required>
                         </div>
 
                         <div class="form-group">
                             <label for="item_number">対象となる商品のタイプ</label>
-                            <input type="text" class="form-control" name="code_name" placeholder="ザック, 靴, レインウエア等">
+                            <input type="text" class="form-control" name="code_name" placeholder="ザック, 靴, レインウエア等" maxlength='100' required>
                         </div>
 
                     <div class="card-footer">

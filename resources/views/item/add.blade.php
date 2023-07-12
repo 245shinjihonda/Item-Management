@@ -39,31 +39,30 @@
                                 <option value="{{$code->item_code}}">{{$code->item_code}}</option>
                                 @endforeach
                             </select>
-                            {{-- <input type="text" class="form-control" name="item_code" placeholder="AAA, AAB, ..."> --}}
                         </div>
 
                         <div class="form-group">
                             <label for="item_number">商品番号</label>
-                            <input type="text" class="form-control" name="item_number" placeholder="0000, 0000, ...">
+                            <input type="text" class="form-control" name="item_number" placeholder="アルファベット大文字3文字" maxlength='4' required>
                         </div>
 
                         <div class="form-group">
                             <label for="category">品目名</label>
-                            <input type="text" class="form-control" name="category" placeholder="ザック, 靴, レインウエア等">
+                            <input type="text" class="form-control" name="category" placeholder="ザック, 靴, レインウエア等" maxlength='100' required>
                         </div>
                         <div class="form-group">
                             <label for="brand">ブランド</label>
-                            <input type="text" class="form-control" name="brand" placeholder="ブランド名, メーカー名">
+                            <input type="text" class="form-control" name="brand" placeholder="ブランド名, メーカー名" maxlength='100' required>
                         </div>
 
                         <div class="form-group">
                             <label for="item_name">商品名</label>
-                            <input type="text" class="form-control" name="item_name" placeholder="商品名">
+                            <input type="text" class="form-control" name="item_name" placeholder="商品名" maxlength='100' required>
                         </div>
 
                         <div class="form-group">
                             <label for="list_price">定価</label>
-                            <input type="number" class="form-control" name="list_price" placeholder="定価（税込価格）">
+                            <input type="number" class="form-control" name="list_price" placeholder="定価（税込価格）" min='1' required>
                         </div>
                     </div>
 

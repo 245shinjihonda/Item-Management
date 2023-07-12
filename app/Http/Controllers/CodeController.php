@@ -50,8 +50,8 @@ class CodeController extends Controller
         {
             // バリデーション
             $this->validate($request, [
-                'item_code' => 'required|size:3',
-                'code_name' => 'required',
+                'item_code' => 'required|regex:/^[A-Z]{3}+$/',
+                'code_name' => 'required|max:200',
                 ]);
 
             // 同一コードがなれけば商品登録
