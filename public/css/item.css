@@ -1,64 +1,109 @@
-/* h2{
-background-color: rgb(140, 184, 235);
-} */
+.toge{
+color:red;
+}
 
 .yama{
-height:100vh;
-background-image: url(../img/yufuin10.JPG);
-background-color:rgba(255,255,255,0.5);
-background-blend-mode:lighten;
+    height:100vh;
+    background-image: url(../img/yufuin10.JPG);
+    background-color:rgba(255,255,255,0.5);
+    background-blend-mode:lighten;
 }
 
-/* .yama-title{
+.explanation{
+    font-weight: bold;
+    margin-left: 5px;
+    margin-right:5px ;
+}
 
-    background-color: ;
-} */
-
+.yama-title{
+    color: blue;
+    margin-left:5px;
+}
 
 .top-circle{
-width:160px;
-height:160px;
-margin:auto;
-background-color: blue;
-border-radius: 50%;
+    width:170px;
+    height:170px;
+    margin:auto;
+    background-color: blue;
+    border-radius: 50%;
 }
 
-.top-circle-text{
-width:100%;
-/* height:100%; */
-font-size: 20px;
-text-align: center;
-margin-top: 60px;
-margin-bottom: 50px;
-/* vertical-align: middle; */
-display: inline-block;
-color: white;
+.circle-text{
+    width:100%;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 50px;
+    display: inline-block;
+    color: white;
 }
 
-.right-line{
-    background-color:blue;
-    transform: rotate(-135deg);
-    /*修正*/width: 141px;
-    border: 0;
-    /*修正*/border-top: 1px solid #333;
-    margin: 0;
-    padding: 0;
-    transform-origin: 100% 0;
+.middle-circles{
+    width:320px;
+    height:100px;
+    display:flex;
+    margin:auto
 }
 
-.left-line{
-    transform: rotate(-45deg);
-    /*修正*/width: 141px;
-    border: 0;
-    /*修正*/border-top: 1px solid #333;
-    margin: 0;
-    padding: 0;
-    transform-origin: 100% 0%;
+.middle-left-line{
+    width:240px;
+    height:20px;
+    margin-top:40px;
+    transform: rotate(-54deg);
+    background-color: rgb(255, 51, 0);
+    } 
+
+.middle-space{
+    width:30px;
+    margin-left:0px;
+    margin-right:0px;
 }
 
+.middle-right-line{
+    width:240px;
+    height:20px;
+    margin-top: 40px;
+    transform:rotate(54deg);
+    background-color: rgb(255, 51, 0);
+    } 
 
+.bottom-circles{
+    width:510px;
+    display:flex;
+    margin-right:0px;
+    margin:auto;
+}
 
+.bottom-left-circle{
+    width:170px;
+    height:170px;
+    margin-right:0px;
+    background-color: blue;
+    border-radius: 50%;
+    }
 
+.bottom-center-circle{
+    width:170px;
+    height:170px;
+    margin-right:0px;
+    margin-left: 0px;
+    }
+
+.bottom-line{
+    width:100%;
+    height:20px;
+    margin-top: 70px;  
+    background-color: rgb(255, 51, 0);
+    } 
+   
+.bottom-right-circle{
+    width:170px;
+    height:160px;
+    margin-left:0px;
+    margin-right:0px;
+    background-color: blue;
+    border-radius: 50%;
+    }
 
 thead{
     text-align:center;
@@ -67,4 +112,3 @@ thead{
 .table_number{
     text-align:right;
 }
-

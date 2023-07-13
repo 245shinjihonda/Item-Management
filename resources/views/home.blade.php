@@ -6,71 +6,72 @@
 <div class="home_body">
 
     @section('content_header')
-        <h2>アウトドア商品管理システム - TOGE - </h2>
+        <h2 class="toge">アウトドア商品管理システム - TOGE - </h2>
     @stop
 
     @section('content')
-    <div class="yama">
-        
-            <br>
+    <div class="yama">  
+    <br>
         {{-- <img style="width:100px" src="../img/yufuin.JPG"> --}}
+    <div class="explanation">
+       TOGEは、弊社が取り扱うアウトドア商品に関する、商品の登録データ、出入荷に関する在庫データ及び財務に関する売上・利益データ
+       を連係して一括管理できるデータシステムです。商品販売に関するこれら３つのデータをリアルタイムで提供することにより顧客の
+       ニーズに適した商品選択と最適な在庫管理を実現します。
+    </div>
 
+    <br>
+        
+        <div class="upper">
+            {{-- <div class="left-line"> 
+            </div> 
+         --}}
+            <div class="top-circle">
+                <p class="circle-text">商品登録<br>データ</p>
+            </div>
 
-
-       <h3 class="yama-title">利用案内</h3>
-
-
-        <div class="top-circle">
-            <p class="top-circle-text">商品管理データ</p>
+            {{-- <div class="right-line"> 
+            </div>  --}}
         </div>
 
-       <div class="right-line"> </div>
+    <div class="middle-circles">
+        <div class="middle-left-line"></div>
+        <div class="middle-space"> </div>
+        <div class="middle-right-line"></div>
+    </div>
 
-       <div class="left-line"> </div>
-        
-        <div class='bottom-circle'>
-            <div class="top-circle">
-            <p class="top-circle-text">在庫管理データ</p>
+        <div class="bottom-circles">
+            <div class="bottom-left-circle">
+                <p class="circle-text">在庫・出入荷<br>データ</p>
             </div>
 
-            <div class="top-circle">
-            <p class="top-circle-text">売上データ</p>
-            </div>
+            <div class="bottom-center-circle">
+                <div class="bottom-line"></div>
             </div>
 
-    </div>  
+            <div class="bottom-right-circle">
+                <p class="circle-text">売上・利益<br>データ</p>
+            </div>
+        </div>
+
+    <h4 class="yama-title">商品登録</h4>
+        <div class="explanation">
+            商品の販売開始が決定したら、商品情報画面から商品登録を行って下さい。登録にあたっては、設定された品目コードを利用して下さい。
+            該当する品目コードがない場合は、品目コード画面から新規に品目コードを登録して下さい。
+        </div>
+    <br>
+     <h4 class="yama-title">出入荷記録の入力</h4>
+        <div class="explanation">
+            在庫情報画面では、在庫数など在庫情報を一覧表で確認できます。商品の出入荷を記録する時は、該当する商品名をクリックして
+            商品毎の画面に遷移したのち、「出入荷記録を入力する」をクリックしてください。入力画面に遷移します。
+        </div>
+    <br>
+     <h4 class="yama-title">出入荷記録の入力</h4>
+        <div class="explanation">
+            財務情報画面では、当期の売上高及び利益と商品毎に一覧表で確認できます。
+        </div>
+
+</div>
     @stop    
-        {{-- <div class="col-12">
-            <table class="table table-hover text-nowrap">
-                    <tr>
-                        <td align="center" colspan="2">累積売上高</td>
-                        <td align="center" colspan="2">累積利益</td>
-                    </tr>
-                    <tr>
-                        <td align="right">{{number_format(100)}}</td>
-                        <td>億円</td>
-                        <td align="right">{{number_format(20)}}</td>
-                        <td>億円</td>
-                    </tr>
-                    <tr>
-                        <td align="center" colspan="2">在庫評価額</td>
-                        <td align="center" colspan="2">取扱商品数</td>
-                    </tr>
-                    <tr>
-                        <td align="right"> {{number_format(1000)}}</td>
-                        <td>億円</td>
-                        <td align="right"> {{number_format(10000)}}</td>
-                        <td>個</td>
-
-                    
-                
-                    </tr>
-                </table>
-        </div> --}}
-
-   
-
-
 
 @section('css')
     {{-- <link rel="stylesheet" href="/css/admin_custom.css"> --}}

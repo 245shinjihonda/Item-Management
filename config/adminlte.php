@@ -232,7 +232,7 @@ return [
         ],
 
         [
-            'text' => '商品種別コード画面へ',
+            'text' => '品目コード画面へ',
             'url'  => 'codes',
             'icon' => 'fas fa-gamepad',
         ],
@@ -261,11 +261,11 @@ return [
             'icon' => 'fas fa-gamepad',
         ],
 
-        [
-            'text' => 'change_password',
-            'url'  => 'password',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+        // [
+        //     'text' => 'change_password',
+        //     'url'  => 'password',
+        //     'icon' => 'fas fa-fw fa-lock',
+        // ],
 
         // AdminLTEデフォルト
         // 
