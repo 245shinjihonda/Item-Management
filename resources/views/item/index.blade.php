@@ -27,8 +27,8 @@
             <label for="item_code">商品コード
                 <select name="item_code" data-toggle="select">
                     <option value="">全て</option>
-                    @foreach ($items as $item)
-                        <option value="{{$item->item_code}}">{{$item->item_code}}</option>
+                    @foreach ($codes as $code)
+                        <option value="{{$code->item_code}}">{{$code->item_code}}</option>
                     @endforeach
                 </select>
             </label>  

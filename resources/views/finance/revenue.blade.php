@@ -51,7 +51,7 @@
                             <td class="table_number">{{number_format($totalMonthRevenue)}} 円</td>
                             <td class="table_number">{{number_format($totalCurrentRevenue)}} 円</td>
                             <td class="table_number">{{number_format($totalCurrentProfit)}} 円</td>
-                            <td class="table_number">{{number_format($totalCurrentProfitRatio)}} %</td>
+                            <td class="table_number">{{number_format($totalCurrentProfitRatio, 2)}} %</td>
                         </tr>                
                 </tbody>
             </table>
@@ -90,7 +90,7 @@
                             <td class="table_number">{{number_format($monthRevenues[$item->id] ?? 0)}} 円</td>
                             <td class="table_number">{{number_format($currentRevenues[$item->id] ?? 0)}} 円</td>
                             <td class="table_number">{{number_format($currentProfits[$item->id] ?? 0)}} 円</td>
-                            <td class="table_number">{{number_format($currentProfitRatios[$item->id] ?? 0)}} %</td>
+                            <td class="table_number">{{sprintf('%.2f' ,$currentProfitRatios[$item->id] ?? 0)}} %</td>
                         </tr>
                     @endforeach
                 </tbody>

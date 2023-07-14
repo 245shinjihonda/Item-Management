@@ -3,8 +3,7 @@
 
 @section('title', '在庫状況')
 
-@section('content_header')
-    
+@section('content_header')   
 @stop
 
 @section('content')

@@ -112,3 +112,8 @@ thead{
 .table_number{
     text-align:right;
 }
+
+.pagination{
+    width:100%;
+    justify-content: center;
+}

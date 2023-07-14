@@ -125,7 +125,7 @@ class FinanceController extends Controller
 
         // 当期の売上原価
         $currentCostOfSales=[];
-        foreach ($inQuantities as $key => $value) {
+        foreach ($outQuantities as $key => $value) {
                 $currentCostOfSales[$key] = $value*$currentUnitPrices[$key];
         }
 
@@ -141,11 +141,12 @@ class FinanceController extends Controller
         // 当期利益率（各商品）
         $currentProfitRatios=[];
         foreach ($currentProfits as $key => $value) {
-                $currentProfitRatios[$key] = $value/$currentRevenues[$key];
+                $currentProfitRatios[$key] = $value/$currentRevenues[$key]*100;
         }
 
         // 当期利益率（全商品）
         $totalCurrentProfitRatio = $totalCurrentProfit/$totalCurrentRevenue*100;
+
 
 // dd($totalProfitRatio);
 

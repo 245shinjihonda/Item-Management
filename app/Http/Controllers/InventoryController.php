@@ -40,8 +40,7 @@ class InventoryController extends Controller
                                 ->orderBY('item_id')
                                 ->get();
 
-                                
-                                 
+                                                       
         // 各商品の現在の在庫数の配列
         $updatedBalances = [];
         foreach ($tempUpdatedBalances as $UB){
@@ -169,9 +168,10 @@ class InventoryController extends Controller
             // 全出入荷記録
             $recordInventories = Inventory::   
                                 join('users', 'inventories.user_id', '=', 'users.id')
+                                ->select('*', 'inventories.created_at AS created_at')
                                 ->where('item_id', $itemInventory->item_id)
                                 ->orderBY('inventories.created_at', 'desc')
-                                ->paginate(10);
+                                ->paginate(3);
 
             // dd($recordInventories);
 
@@ -255,19 +255,25 @@ class InventoryController extends Controller
     {
         $item = Item::where('id', '=' ,$request->id)->first();
 
+        if($item->status == 'delete'){
+
+           return redirect('inventories/' .$item->id)->with('flashmessage', '既に取扱中止です。');
+        }
+
         return view('inventory.update', compact('item'));
     }
 
     // 出入荷記録を登録する
     public function InventoryInput(Request $request)
     {
+        
         $this->validate($request, [
             'in_quantity' => 'integer|min:0',
             'in_unit_price' => 'integer|min:0',
             'out_quantity' => 'integer|min:0',
             'out_unit_price' => 'integer|min:0',
             ]);
-        
+
         Inventory::create([
             'user_id' => Auth::user()->id,
             'item_id' => $request->item_id,

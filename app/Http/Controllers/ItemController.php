@@ -25,7 +25,7 @@ class ItemController extends Controller
     public function ItemIndex()
     {
         // 商品一覧取得
-        $items = item::latest()
+        $items = item::orderBY('status','asc','item_code')
                         ->get();
     
             foreach($items as $item){
@@ -36,8 +36,11 @@ class ItemController extends Controller
                 $item->status = '取扱終了';
                 }
             }
-           
-        return view('item.index', compact('items'));
+          
+        $codes = code::where('status','active')
+                        ->get(); 
+
+        return view('item.index', compact('items', 'codes'));
     }
 
     //  商品登録
@@ -117,6 +120,12 @@ class ItemController extends Controller
     {
         // 商品削除
           $item = Item::find($id);
+
+          if($item->status == 'delete'){
+
+            return redirect('inventories/' .$item->id)->with('flashmessage', '既に取扱中止です。');
+            }
+
           $item->status = 'delete';
           $item->save();
           return redirect('/items');
@@ -152,7 +161,10 @@ class ItemController extends Controller
                 })
                 ->get();
 
-        return view('item.index',$items,compact('items'));
+        $codes = Code::where('status', 'active')
+                        ->get();
+
+        return view('item.index',$items,compact('items', 'codes'));
     }
 }
 
