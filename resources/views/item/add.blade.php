@@ -62,7 +62,7 @@
 
                         <div class="form-group">
                             <label for="list_price">定価</label>
-                            <input type="number" class="form-control" name="list_price" placeholder="定価（税込価格）" min='1' required>
+                            <input type="number" class="form-control" name="list_price" placeholder="定価（税抜価格）" min='1' required>
                         </div>
                     </div>
 

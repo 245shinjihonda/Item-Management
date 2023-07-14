@@ -139,8 +139,7 @@ class ItemController extends Controller
 
         $query = Item::query();
 
-        $items= $query->where('status','active')
-                ->when($code, function($query) use ($code){
+        $items= $query->when($code, function($query) use ($code){
                     $query->where('item_code', $code);
                 })
                 ->when($price, function($query) use ($price){
@@ -163,6 +162,15 @@ class ItemController extends Controller
 
         $codes = Code::where('status', 'active')
                         ->get();
+
+        foreach($items as $item){
+            if($item->status == 'active'){
+                $item->status = '商品取扱中';
+            }
+            else{
+            $item->status = '取扱終了';
+            }
+        }
 
         return view('item.index',$items,compact('items', 'codes'));
     }

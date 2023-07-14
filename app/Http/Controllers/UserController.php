@@ -48,6 +48,12 @@ class UserController extends Controller
         return view('user.add');
     }
 
+    // 管理者登録画面を表示する。
+    public function UserAdmiAddForm()
+    {
+        return view('user.admiadd');
+    }
+
     // 管理者が許可した者を利用者として登録する
     public function UserAdd(Request $request)
     {
@@ -62,12 +68,34 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'is_admi' => '0',
             //パスワードを暗号化してデータベースに保存
             'password' => password_hash($request->password, PASSWORD_DEFAULT),
         ]);
         return redirect('/users');
     }
-  
+
+    // 管理者が許可した者を利用者として登録する
+    public function UserAdmiAdd(Request $request)
+    {
+        // バリデーションの設定
+        $this->validate($request, [
+        'name' => 'required|max:255',
+        'email' => 'required|min:5|email|unique:users',
+        'password' => 'required|max:255|',
+        ]);
+
+        // アカウント作成
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'is_admi' => '1',
+            //パスワードを暗号化してデータベースに保存
+            'password' => password_hash($request->password, PASSWORD_DEFAULT),
+        ]);
+        return redirect('/users');
+    }
+    
     // 利用者削除画面を表示する。
     public function UserDeleteList()
     {
@@ -80,6 +108,18 @@ class UserController extends Controller
         return view('user.delete', compact('users'));
     }
 
+    // 管理者削除画面を表示する。
+    public function UserAdmiDeleteList()
+    {
+        // 管理者一覧取得
+        $administrators = User::where('users.is_admi', '1')
+                        ->select()
+                        ->orderBY('users.email')
+                        ->get();
+
+        return view('user.admidelete', compact('administrators'));
+    }
+
     // 利用者を削除する。
     public function UserDelete(Request $request, $id)
     {      
@@ -90,29 +130,18 @@ class UserController extends Controller
             return redirect('/users');
     }
 
-//   // 利用者がパスワードを更新する際、名前とメールアドレスを入力するフォームを表示する  
-//   public function UserPassword(Request $request)
-//   {                 
-//       return view('user.password');
-//   }
+    // 管理者を削除する。
+    public function UserAdmiDelete(Request $request, $id)
+    {      
+            // 対象の利用者を削除する関数       
+            User::where('id', '=',$request->id)
+                ->delete();
+           
+            return redirect('/users');
+    }
 
-//   // 利用者がパスワードを更新する際、名前とメールアドレスを入力する  
-//   public function UserPasswordForm(Request $request)
-//   {                 
-//        // 利用者のメールアドレスで利用者を特定する
-//        $passwordUser = User::where('email', '=',$request->email)->first();
 
-//        return view('user.passwordupdate', compact('passwordUser'));
-//   }
 
-//   // 利用者がパスワードを更新する  
-//   public function UserPasswordUpdate(Request $request, $id)
-//   {                 
-//       User::where('id', '=',$request->id)
-//           ->update(['password' => password_hash($request->password, PASSWORD_DEFAULT)]);
-
-//           return redirect('/users');
-//   }
 
 
 }

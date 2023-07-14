@@ -53,9 +53,13 @@ Route::prefix('finance')->group(function () {
 Route::prefix('users')->group(function () {
     Route::get('/', [App\Http\Controllers\UserController::class, 'UserList']);
     Route::get('/add-form', [App\Http\Controllers\UserController::class, 'UserAddForm']);
+    Route::get('/admi/add-form', [App\Http\Controllers\UserController::class, 'UserAdmiAddForm']);
     Route::post('/add', [App\Http\Controllers\UserController::class, 'UserAdd']);
+    Route::post('/admi/add', [App\Http\Controllers\UserController::class, 'UserAdmiAdd']);
     Route::get('/delete-list', [App\Http\Controllers\UserController::class, 'UserDeleteList']);
+    Route::get('/admi/delete-list', [App\Http\Controllers\UserController::class, 'UserAdmiDeleteList']);
     Route::get('/delete/{id}', [App\Http\Controllers\UserController::class, 'UserDelete']);
+    Route::get('/admi/delete/{id}', [App\Http\Controllers\UserController::class, 'UserAdmiDelete']);
 });
 
 Route::prefix('password')->group(function () {

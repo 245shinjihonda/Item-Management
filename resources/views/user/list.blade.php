@@ -14,6 +14,8 @@
     <div>
         <a href="{{ url('users/add-form') }}" class="btn btn-default">利用者登録</a>
         <a href="{{ url('users/delete-list') }}" class="btn btn-default">利用者削除</a>
+        <a href="{{ url('users/admi/add-form') }}" class="btn btn-default">管理者登録</a>   
+        <a href="{{ url('users/admi/delete-list') }}" class="btn btn-default">管理者削除</a>
     </div>
     <br>
     <div class="row">

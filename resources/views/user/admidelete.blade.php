@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 @include('common')
 
-@section('title', '利用者削除')
+@section('title', '管理者削除')
 
 @section('content_header')
-    <h1>利用者削除</h1>
+    <h1>管理者削除</h1>
 @stop
 
 @section('content')
@@ -15,7 +15,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">利用者一覧</h3>
+                    <h3 class="card-title">管理者一覧</h3>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
@@ -27,11 +27,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $user)
+                            @foreach ($administrators as $administrator)
                                 <tr>
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->email}}</td>
-                                    <td><button type="sumbit" class="btn btn-default"><a href="/users/delete/{{$user->id}}">削除</a></td>
+                                    <td>{{$administrator->name}}</td>
+                                    <td>{{$administrator->email}}</td>
+                                    <td><button type="sumbit" class="btn btn-default"><a href="/users/admi/delete/{{$administrator->id}}">削除</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
