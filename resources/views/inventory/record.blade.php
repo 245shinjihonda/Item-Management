@@ -108,7 +108,7 @@
                         <td class="table_number">{{number_format($recordInventory->out_quantity)}} 個</td>
                         <td class="table_number">{{number_format($recordInventory->out_unit_price)}} 円</td>
                         <td class="table_number">{{number_format($recordInventory->out_amount)}} 円</td>
-                        <td>{{$recordInventory->user_id}}</td>
+                        <td>{{$recordInventory->name}}</td>
                     </tr>
                     @endforeach
                 </tbody>

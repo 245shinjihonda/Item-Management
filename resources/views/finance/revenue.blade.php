@@ -35,9 +35,9 @@
                         <th></th>
                         <th>品目数</th>  
                         <th>{{date("n")}}月売上高</th>
-                        <th>売上高</th>
-                        <th>利益</th> 
-                        <th>利益率</th>
+                        <th>当期売上高</th>
+                        <th>当期利益</th> 
+                        <th>当期利益率</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,9 +76,9 @@
                         <th>商品名</th>
                         <th>定価</th>
                         <th>{{date("n")}}月売上高</th>       
-                        <th>売上高</th>
-                        <th>利益</th> 
-                        <th>利益率</th>
+                        <th>当期売上高</th>
+                        <th>当期利益</th> 
+                        <th>当期利益率</th>
                     </tr>
                 </thead>
                 <tbody>

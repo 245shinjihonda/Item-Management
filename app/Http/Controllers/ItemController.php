@@ -85,14 +85,11 @@ class ItemController extends Controller
                     'in_quantity' => '1',
                     'in_unit_price' => '1',
                     'in_amount' => '1',
-                    'out_quantity' => '0',
-                    'out_unit_price' => '0',
-                    'out_amount' => '0',
+                    'out_quantity' => '1',
+                    'out_unit_price' => '1',
+                    'out_amount' => '1',
                     ]);
 
-                    // dd($inventory->in_quantity);
-                    // exit;
-    
                 return redirect('/items');
                 }
 

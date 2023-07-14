@@ -140,8 +140,8 @@ class FinanceController extends Controller
 
         // 当期利益率（各商品）
         $currentProfitRatios=[];
-        foreach ($currentRevenues as $key => $value) {
-                $currentProfitRatios[$key] = $value/$currentProfits[$key];
+        foreach ($currentProfits as $key => $value) {
+                $currentProfitRatios[$key] = $value/$currentRevenues[$key];
         }
 
         // 当期利益率（全商品）

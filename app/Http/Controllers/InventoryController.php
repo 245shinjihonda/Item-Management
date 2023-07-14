@@ -40,6 +40,7 @@ class InventoryController extends Controller
                                 ->orderBY('item_id')
                                 ->get();
 
+                                
                                  
         // 各商品の現在の在庫数の配列
         $updatedBalances = [];
@@ -167,8 +168,12 @@ class InventoryController extends Controller
 
             // 全出入荷記録
             $recordInventories = Inventory::   
-                                where('item_id', $itemInventory->item_id)                             
-                                ->latest()->paginate(10);
+                                join('users', 'inventories.user_id', '=', 'users.id')
+                                ->where('item_id', $itemInventory->item_id)
+                                ->orderBY('inventories.created_at', 'desc')
+                                ->paginate(10);
+
+            // dd($recordInventories);
 
             // 当月を取得
             $currentStart = date("Y-m-01"). " 00:00:00";
@@ -215,6 +220,7 @@ class InventoryController extends Controller
             // 当月利益         
             $currentProfit = ($currentRevenue - $currentCostOfSale);
 
+       
             return view('inventory.record', compact('item', 'recordInventories', 'currentRevenue', 'currentProfit',
             'currentQuantity', 'currentUnitPrice', 'currentValuation'));
             }  
