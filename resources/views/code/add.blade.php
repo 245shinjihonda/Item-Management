@@ -9,11 +9,11 @@
 
 @section('content')
            
-        @if(isset($error_existingItem))
+    @if(isset($error_existingItem))
         <div class="alert alert-danger">
         {{$error_existingItem}}
         </div>
-        @endif
+    @endif
         
     <div class="row">
         <div class="col-md-10">
@@ -33,12 +33,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="cut_number">品目コード</label>
-                            <input type="text" class="form-control" name="item_code" placeholder="アルファベット大文字3文字" required>
+                            <input type="text" class="form-control" name="item_code" placeholder="アルファベット大文字3文字" maxlength="3" required>
                         </div>
 
                         <div class="form-group">
                             <label for="item_number">対象となる商品のタイプ</label>
-                            <input type="text" class="form-control" name="code_name" placeholder="ザック, 靴, レインウエア等" maxlength='100' required>
+                            <input type="text" class="form-control" name="code_name" placeholder="ザック, 靴, レインウエア等" maxlength="100" required>
                         </div>
 
                     <div class="card-footer">

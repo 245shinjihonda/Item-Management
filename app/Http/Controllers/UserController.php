@@ -29,7 +29,7 @@ class UserController extends Controller
                 ->select()     
                 ->get();
                 }
-                    // 利用者一覧取得
+                    // 利用者及び管理者一覧取得
         $admiusers = $query->where('users.is_admi', '1')
                     ->select()
                     ->get();
@@ -64,7 +64,7 @@ class UserController extends Controller
         'password' => 'required|max:255|',
         ]);
 
-        // アカウント作成
+        // 利用者アカウント作成
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -72,10 +72,11 @@ class UserController extends Controller
             //パスワードを暗号化してデータベースに保存
             'password' => password_hash($request->password, PASSWORD_DEFAULT),
         ]);
+
         return redirect('/users');
     }
 
-    // 管理者が許可した者を利用者として登録する
+    // 管理者が許可した者を管理者として登録する
     public function UserAdmiAdd(Request $request)
     {
         // バリデーションの設定
@@ -85,7 +86,7 @@ class UserController extends Controller
         'password' => 'required|max:255|',
         ]);
 
-        // アカウント作成
+        // 管理者アカウント作成
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -93,6 +94,7 @@ class UserController extends Controller
             //パスワードを暗号化してデータベースに保存
             'password' => password_hash($request->password, PASSWORD_DEFAULT),
         ]);
+        
         return redirect('/users');
     }
     

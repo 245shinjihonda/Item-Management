@@ -9,14 +9,16 @@
 
 @section('content')
            
-        @if(isset($error_existingItem))
+    @if(isset($error_existingItem))
         <div class="alert alert-danger">
         {{$error_existingItem}}
         </div>
-        @endif
+    @endif
         
     <div class="row">
+
         <div class="col-md-10">
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -71,8 +73,11 @@
                     </div>
                 </form>
             </div>
+            
         </div>
+
     </div>
+
 @stop
 
 @section('css')

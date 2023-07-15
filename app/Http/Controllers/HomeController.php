@@ -25,9 +25,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        $admiuser = User::where('is_admi', '=', '1')->first();
-        
-        return view('home', compact('admiuser'));
+    {  
+        return view('home');
     }
 }

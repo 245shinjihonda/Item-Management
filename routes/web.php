@@ -62,10 +62,5 @@ Route::prefix('users')->group(function () {
     Route::get('/admi/delete/{id}', [App\Http\Controllers\UserController::class, 'UserAdmiDelete']);
 });
 
-Route::prefix('password')->group(function () {
-    Route::get('/', [App\Http\Controllers\UserController::class, 'UserPassword']);
-    Route::post('/update-form', [App\Http\Controllers\UserController::class, 'UserPasswordForm']);
-    Route::post('/update/{id}', [App\Http\Controllers\UserController::class, 'UserPasswordUpdate']);
-});
 
 

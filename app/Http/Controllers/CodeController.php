@@ -20,11 +20,11 @@ class CodeController extends Controller
         $this->middleware('auth');
     }
 
-    // 商品一覧
+    // 品目コード一覧
     
     public function CodeIndex()
     {
-        // 商品一覧取得
+        // 品目コード取得
         $codes = Code::latest()
                         ->get();
 
@@ -41,7 +41,7 @@ class CodeController extends Controller
         return view('code.index', compact('codes'));
     }
 
-    //  Code登録
+    //  品目コード登録
      
     public function CodeAdd(Request $request)
     {
@@ -64,15 +64,12 @@ class CodeController extends Controller
                     'code_name' => $request->code_name,
                     ]);
 
-                    // dd($inventory->in_quantity);
-                    // exit;
-    
                 return redirect('/codes');
                 }
 
                 // そうでなければ登録済をエラーとして返す
             else{
-                $error_existingItem = 'この種別コードはすでに登録されています。';
+                $error_existingItem = 'この品目コードはすでに登録されています。';
                 return view('code.add', compact('error_existingItem'));
             }    
         }
@@ -81,21 +78,20 @@ class CodeController extends Controller
 
     }
 
-    // 利用者削除画面を表示する。
+    // 品目コード削除画面を表示する。
     public function CodeDeleteList()
     {
-        // 利用者一覧取得
+        // 品目コード一覧取得
         $codes = Code::where('status', 'active')
         ->paginate(20);
 
         return view('code.delete', compact('codes'));
     }
    
-    // 商品削除
-
+    // 品目コード削除
     public function CodeDelete(Request $request, $id)
     {
-        // コード削除
+        // 品目コード削除
           $item = Code::find($id);
           $item->status = 'delete';
           $item->save();
@@ -109,11 +105,11 @@ class CodeController extends Controller
         $keyword = $request->input('keyword');
 
         $query = Code::query();
+
         if(!empty($keyword)) 
         {
             $code = $query->where('code_name', 'LIKE', "%{$keyword}%")
                     ->get();
-
         }
 
         $codes = $query->get();
@@ -127,7 +123,9 @@ class CodeController extends Controller
             $code->status = '取扱終了';
             }
         }
+
         return view('code.index', compact('codes', 'keyword'));
     }
+
 }
 
