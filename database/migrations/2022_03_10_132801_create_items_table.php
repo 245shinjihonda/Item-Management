@@ -17,8 +17,8 @@ class CreateItemsTable extends Migration
             $table->id();
             $table->string('status', 100)->default('active');
             $table->bigInteger('user_id')->unsigned()->index();
-            $table->String('item_code')->index();
-            $table->String('item_number')->index();
+            $table->String('item_code', 100)->index();
+            $table->String('item_number', 100)->index();
             $table->index(['item_code', 'item_number'])->unique();
             $table->string('category', 100)->index();
             $table->string('brand', 100)->index();
