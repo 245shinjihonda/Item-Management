@@ -61,7 +61,7 @@
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>種別コード</th>
+                            <th>品目コード</th>
                             <th>商品名</th>
                             <th>定価</th>
                             <th>当期仕入数</th>

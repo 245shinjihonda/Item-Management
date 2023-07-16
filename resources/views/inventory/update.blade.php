@@ -16,9 +16,9 @@
         <table class="table table-hover text-nowrap">
             <thead>
                 <tr>
-                    <th>種別番号</th>
+                    <th>品目コード</th>
                     <th>商品番号</th>
-                    <th>種別</th>
+                    <th>品目</th>
                     <th>ブランド</th>   
                     <th>商品名</th>
                     <th>定価</th>
