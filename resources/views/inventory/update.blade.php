@@ -68,7 +68,7 @@
                 </table>
             <div>
 
-            <input type ='button', id='ShiireRun', value ='合計額を計算する。'>
+            <input type ='button', id='ShiireRun', value ='合計額を計算する'>
 
         <br>
         <br>
@@ -95,7 +95,7 @@
                 </table>
             <div>
                 
-            <input type='button' id='HanbaiRun' value='合計額を計算する。'>
+            <input type='button' id='HanbaiRun' value='合計額を計算する'>
 
         </div>
 

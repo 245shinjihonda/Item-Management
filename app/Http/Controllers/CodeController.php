@@ -25,7 +25,7 @@ class CodeController extends Controller
     public function CodeIndex()
     {
         // 品目コード取得
-        $codes = Code::latest()
+        $codes = Code::orderBY('status','asc','item_code')
                         ->get();
 
         foreach($codes as $code){

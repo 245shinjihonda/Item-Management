@@ -37,7 +37,7 @@
         ?>
         @if($nocode)
         <div class="alert alert-danger">
-        <p>該当する商品はありません。</p>
+        <p>該当する品目コードはありません。</p>
         </div>
         @endif
        

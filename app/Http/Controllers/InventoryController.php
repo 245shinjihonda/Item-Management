@@ -224,8 +224,12 @@ class InventoryController extends Controller
         $item = Item::where('id', '=' ,$request->id)
                         ->first();
 
-        $from = $request->input('from');
-        $until = $request->input('until');
+        $tempFrom = $request->input('from');
+        $tempUntil = $request->input('until');
+
+        $from = $tempFrom. ' 00:00:00';
+        $until = $tempUntil. ' 23:59:59';
+        
         $period = [$from, $until];
         $query = Inventory::query();
 
