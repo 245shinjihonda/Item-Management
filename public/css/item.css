@@ -5,7 +5,7 @@ margin-bottom: 0px;
 
 .yama{
     height:100vh;
-    background-image: url(../img/yufuin10.JPG);
+    background-image: url(../img/yufuin10.jpg);
     background-color:rgba(255,255,255,0.5);
     background-blend-mode:lighten;
 }
