@@ -4,7 +4,7 @@
 @section('title', '在庫状況')
 
     @section('content_header')
-        <h1>{{$item->item_name}} 在庫状況 </h1>
+        <h1>- {{$item->item_name}}  -  在庫状況 </h1>
     @stop
 
 @section('content')
@@ -28,7 +28,7 @@
         ?>
         @if($noRecord)
             <div class="alert alert-danger">
-            <p>該当する在庫記録はありません。</p>
+            <p>該当する出入荷記録はありません。</p>
             </div>
         @endif
 

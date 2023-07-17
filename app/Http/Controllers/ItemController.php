@@ -85,12 +85,12 @@ class ItemController extends Controller
 
                     'user_id' => Auth::user()->id,
                     'item_id' => $inventory_insert->id,
-                    'in_quantity' => '1',
-                    'in_unit_price' => '1',
-                    'in_amount' => '1',
-                    'out_quantity' => '1',
-                    'out_unit_price' => '1',
-                    'out_amount' => '1',
+                    'in_quantity' => '0',
+                    'in_unit_price' => '0',
+                    'in_amount' => '0',
+                    'out_quantity' => '0',
+                    'out_unit_price' => '0',
+                    'out_amount' => '0',
                     ]);
 
                 return redirect('/items');

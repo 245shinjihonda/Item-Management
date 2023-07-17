@@ -36,6 +36,7 @@ class FinanceController extends Controller
 
             $tempMonthRevenues =  Inventory::where('inventories.status', 'active')
                                             ->whereBetween('created_at', $currentMonth)
+                                            ->where('out_amount', '>', '0')
                                             ->select('item_id')                
                                             ->selectRaw('SUM(out_amount) AS monthRevenues')
                                             ->groupBY('item_id')
@@ -58,12 +59,13 @@ class FinanceController extends Controller
             $currentYear = [$currentYearStart, $currentYearEnd];
 
             // 当期売上高(DBより取得)
-                $tempCurrentRevenues = Inventory::where('inventories.status', 'active')
-                                            ->whereBetween('created_at', $currentYear)
-                                            ->select('item_id')                
-                                            ->selectRaw('SUM(out_amount) AS currentRevenues')
-                                            ->groupBY('item_id')
-                                            ->get();
+            $tempCurrentRevenues = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $currentYear)
+                                        ->where('out_amount', '>', '0')
+                                        ->select('item_id')                
+                                        ->selectRaw('SUM(out_amount) AS currentRevenues')
+                                        ->groupBY('item_id')
+                                        ->get();
         
             // 当期売上高(DBで取得した情報を商品毎に配列に格納)                              
             $currentRevenues = [];
@@ -77,12 +79,13 @@ class FinanceController extends Controller
         //  3. 当期の利益を計算  
      
             // 当期仕入高
-                $tempInAmounts = Inventory::where('inventories.status', 'active')
-                                            ->whereBetween('created_at', $currentYear)
-                                            ->select('item_id')
-                                            ->selectRaw('SUM(in_amount) AS inAmounts')
-                                            ->groupBY('item_id') 
-                                            ->get();
+            $tempInAmounts = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $currentYear)
+                                        ->where('in_amount', '>', '0')
+                                        ->select('item_id')
+                                        ->selectRaw('SUM(in_amount) As inAmounts')
+                                        ->groupBY('item_id') 
+                                        ->get();
 
             $inAmounts = [];
             foreach ($tempInAmounts as $ia){
@@ -92,23 +95,25 @@ class FinanceController extends Controller
             // 当期仕入数
                 $tempInQuantities = Inventory::where('inventories.status', 'active')
                                             ->whereBetween('created_at', $currentYear)
+                                            ->where('in_quantity', '>', '0')
                                             ->select('item_id')
                                             ->selectRaw('SUM(in_quantity) AS inQuantities')
                                             ->groupBY('item_id') 
                                             ->get();
-
+           
             $inQuantities = [];
             foreach ($tempInQuantities as $iq){
             $inQuantities[$iq->item_id]=$iq->inQuantities;
             }        
 
             // 当期出荷数
-                $tempOutQuantities = Inventory::where('inventories.status', 'active')
-                ->whereBetween('created_at', $currentYear)
-                ->select('item_id')
-                ->selectRaw('SUM(out_quantity) AS outQuantities')
-                ->groupBY('item_id') 
-                ->get();
+            $tempOutQuantities = Inventory::where('inventories.status', 'active')
+                                        ->whereBetween('created_at', $currentYear)
+                                        ->where('out_quantity', '>', '0')
+                                        ->select('item_id')
+                                        ->selectRaw('SUM(out_quantity) AS outQuantities')
+                                        ->groupBY('item_id') 
+                                        ->get();
 
             $outQuantities = [];
             foreach ($tempOutQuantities as $oq){

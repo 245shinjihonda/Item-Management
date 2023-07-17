@@ -22,7 +22,6 @@ class InventoryController extends Controller
         // 商品一覧取得
         $items = Item::where('items.status', 'active')
                         ->select()
-                        ->orderBy('id')
                         ->get();
 
         // $tempCategories =[];
@@ -40,13 +39,13 @@ class InventoryController extends Controller
                                     ->orderBY('item_id')
                                     ->get();
 
-                                                        
+                                                                                         
             // 各商品の現在の在庫数の配列
             $updatedBalances = [];
             foreach ($tempUpdatedBalances as $UB){
                 $updatedBalances[$UB->item_id]=$UB->updatedBalances;
                 }
-        
+
             // 全商品の在庫数の合計
             $totalUpdatedBalance = array_sum($updatedBalances);
       
@@ -59,7 +58,8 @@ class InventoryController extends Controller
         // 3. 当期仕入数を計算する
            
             $tempCurrentInQuantities = Inventory::where('inventories.status', 'active')
-                                                ->where('created_at', '>=', date ('Y-01-01 00:00:00')) 
+                                                ->where('created_at', '>=', date ('Y-01-01 00:00:00'))
+                                                ->where('in_quantity', '>', '0')
                                                 ->select('item_id')
                                                 ->selectRaw('SUM(in_quantity) AS currentInQuantities')
                                                 ->groupBY('item_id') 
@@ -72,6 +72,8 @@ class InventoryController extends Controller
                     $currentInQuantities[$CIQ->item_id]=$CIQ->currentInQuantities;
                 }
 
+            // dd($currentInQuantities);
+
             //  全商品の仕入合計数
             $totalCurrentInQuantity = array_sum($currentInQuantities);
 
@@ -79,6 +81,7 @@ class InventoryController extends Controller
 
             $tempCurrentOutQuantities = Inventory::where('inventories.status', 'active')
                                                 ->where('created_at', '>=', date ('Y-01-01 00:00:00')) 
+                                                ->where('out_quantity', '>', '0')
                                                 ->select('item_id')
                                                 ->selectRaw('SUM(out_quantity) AS currentOutQuantities')
                                                 ->groupBY('item_id') 
@@ -98,6 +101,7 @@ class InventoryController extends Controller
   
             $tempUnitPrices = Inventory::where('inventories.status', 'active')
                                     ->select('item_id')
+                                    ->where('in_quantity', '>', '0')
                                     ->selectRaw('SUM(in_amount)/SUM(in_quantity) AS unitPrices')
                                     ->groupBY('item_id')
                                     ->orderBY('item_id')
@@ -111,11 +115,11 @@ class InventoryController extends Controller
         // 6.在庫評価額の計算
 
             $tempValuations = Inventory::where('inventories.status', 'active')
-                                ->select('item_id')
-                                ->selectRaw('(SUM(in_quantity) - SUM(out_quantity))*SUM(in_amount)/SUM(in_quantity) AS valuations')
-                                ->groupBY('item_id') 
-                                ->orderBY('item_id') 
-                                ->get();
+                                        ->select('item_id') 
+                                        ->selectRaw('(SUM(in_quantity) - SUM(out_quantity))*SUM(in_amount)/SUM(in_quantity) AS valuations')
+                                        ->groupBY('item_id') 
+                                        ->orderBY('item_id') 
+                                        ->get();
 
             // $valuationsから各商品の在庫評価額を配列として取り出す
             // $vはどのようなものでも構わない
@@ -171,27 +175,36 @@ class InventoryController extends Controller
 
             // 3. 現在の在庫の単価を取得
                 $totalInAmount = Inventory::   
-                                        where('item_id', $request->id)                      
+                                        where('item_id', $request->id) 
+                                        ->where('in_amount', '>', '0')                     
                                         ->sum('in_amount');
                 $totalInQuantity = Inventory::   
-                                        where('item_id', $request->id)                      
+                                        where('item_id', $request->id) 
+                                        ->where('in_quantity', '>', '0')                          
                                         ->sum('in_quantity');
                 $totalOutQuantity = Inventory::   
-                                        where('item_id', $request->id)                      
+                                        where('item_id', $request->id) 
+                                        ->where('out_quantity', '>', '0')                    
                                         ->sum('out_quantity');
-            
+
                 // 現在の在庫数
                 $currentQuantity  = ($totalInQuantity - $totalOutQuantity);
 
                 // 現在の在庫単価
+                if(!($totalInQuantity == '0')){
                 $currentUnitPrice= $totalInAmount/$totalInQuantity;
+                }
+                else{
+                $currentUnitPrice = '0';
+                };
 
             // 4. 当月の出荷数を取得する
                 $currentOutQuantity = Inventory::
                                 where('item_id', $request->id)
                                 ->whereBetween('created_at', $currentMonth)
+                                ->where('out_quantity', '>', '0')
                                 ->sum('out_quantity');
-        
+
             // 5. 当月の売上原価
                 $currentCostOfSale = $currentUnitPrice*$currentOutQuantity;
 
@@ -201,6 +214,7 @@ class InventoryController extends Controller
             // 7. 当月売上高
                 $currentRevenue = Inventory::
                             where('item_id', $request->id)
+                            ->where('out_quantity', '>', '0')
                             ->whereBetween('created_at', $currentMonth)
                             ->sum('out_amount');
 
@@ -224,6 +238,9 @@ class InventoryController extends Controller
         $item = Item::where('id', '=' ,$request->id)
                         ->first();
 
+        $itemInventory = Inventory::where('item_id', '=' ,$request->id)
+                        ->first();
+        
         $tempFrom = $request->input('from');
         $tempUntil = $request->input('until');
 
@@ -232,11 +249,15 @@ class InventoryController extends Controller
         
         $period = [$from, $until];
         $query = Inventory::query();
-
-        $recordInventories = $query->where('item_id', $request->id)                      
-                                    ->whereBetween('created_at', $period)
-                                   ->latest()->paginate(20);
   
+        $recordInventories = $query   
+                            ->join('users', 'inventories.user_id', '=', 'users.id')
+                            ->select('*', 'inventories.created_at AS created_at')
+                            ->whereBetween('inventories.created_at', $period)
+                            ->where('item_id', $itemInventory->item_id)
+                            ->orderBY('inventories.created_at', 'desc')
+                            ->paginate(3);
+        
         return view('inventory.record', compact('item', 'recordInventories'));
 
     }

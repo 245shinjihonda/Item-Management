@@ -45,7 +45,7 @@
 
                         <div class="form-group">
                             <label for="item_number">商品番号</label>
-                            <input type="text" class="form-control" name="item_number" placeholder="アルファベット大文字3文字" maxlength='4' required>
+                            <input type="text" class="form-control" name="item_number" placeholder="数字4つを入力して下さい。" maxlength='4' required>
                         </div>
 
                         <div class="form-group">
