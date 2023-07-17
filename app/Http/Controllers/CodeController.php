@@ -82,7 +82,9 @@ class CodeController extends Controller
     public function CodeDeleteList()
     {
        
-        $codes = Code::get();
+        $codes = Code::orderBY('status','asc','item_code')
+                        ->get();
+
 
         foreach($codes as $code){
             if($code->status == 'active'){

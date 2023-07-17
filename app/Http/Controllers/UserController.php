@@ -32,6 +32,7 @@ class UserController extends Controller
                     // 利用者及び管理者一覧取得
         $admiusers = $query->where('users.is_admi', '1')
                     ->where('status', 'active')
+                    ->orderBy('users.email')
                     ->select()
                     ->get();
 
