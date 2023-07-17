@@ -19,12 +19,19 @@
                     <h3 class="card-title">管理者一覧</h3>
                 </div>
 
+                @if (session('flashmessage'))
+                <div style ="font-size: 20px; color:red;" class="flash_message">
+                    {{ session('flashmessage') }}
+                </div>
+                @endif
+
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
                                 <th>氏名</th>
                                 <th>メールアドレス</th>
+                                <th>登録状況</th>
                                 <th>             </th>
                             </tr>
                         </thead>
@@ -33,6 +40,7 @@
                                 <tr>
                                     <td>{{$administrator->name}}</td>
                                     <td>{{$administrator->email}}</td>
+                                    <td>{{$administrator->status}}</td>
                                     <td><button type="sumbit" class="btn btn-default"><a href="/users/admi/delete/{{$administrator->id}}">削除</a></td>
                                 </tr>
                             @endforeach

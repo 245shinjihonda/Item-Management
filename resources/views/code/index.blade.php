@@ -11,7 +11,9 @@
 
     <div>
         <a href="{{ url('codes/add') }}" class="btn btn-default">品目コード登録</a>
+        @can('is_admi')
         <a href="{{ url('codes/delete-list') }}" class="btn btn-default">品目コード削除</a>
+        @endcan
     <div>
 
     <div class="search-form">

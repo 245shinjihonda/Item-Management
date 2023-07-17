@@ -31,10 +31,12 @@ class UserController extends Controller
                 }
                     // 利用者及び管理者一覧取得
         $admiusers = $query->where('users.is_admi', '1')
+                    ->where('status', 'active')
                     ->select()
                     ->get();
 
         $users = User::where('users.is_admi', '0')
+                    ->where('status', 'active')
                     ->select()
                     ->orderBy('users.email')
                     ->get();
@@ -107,6 +109,15 @@ class UserController extends Controller
                         ->orderBY('users.email')
                         ->get();
 
+        foreach($users as $user){
+            if($user->status == 'active'){
+                $user->status = '登録中';
+            }
+            else{
+            $user->status = '登録削除済';
+            }
+        }
+
         return view('user.delete', compact('users'));
     }
 
@@ -119,31 +130,49 @@ class UserController extends Controller
                         ->orderBY('users.email')
                         ->get();
 
+        foreach($administrators as $administrator){
+            if($administrator->status == 'active'){
+                $administrator->status = '登録中';
+            }
+            else{
+            $administrator->status = '登録削除済';
+            }          
+        }
         return view('user.admidelete', compact('administrators'));
     }
 
     // 利用者を削除する。
     public function UserDelete(Request $request, $id)
     {      
-            // 対象の利用者を削除する関数       
-            User::where('id', '=',$request->id)
-                ->delete();
-           
-            return redirect('/users');
+        $user = User::find($id);
+
+        if($user->status == 'delete'){
+
+            return redirect('users/delete-list')->with('flashmessage', '既に削除済です。');
+            }
+
+        $user->status = 'delete';
+        $user->save();
+        return redirect('/users');
+ 
     }
 
     // 管理者を削除する。
     public function UserAdmiDelete(Request $request, $id)
     {      
-            // 対象の利用者を削除する関数       
-            User::where('id', '=',$request->id)
-                ->delete();
-           
-            return redirect('/users');
+        
+        $user = User::find($id);
+
+        if($user->status == 'delete'){
+
+            return redirect('users/admi/delete-list')->with('flashmessage', '既に削除済です。');
+            }
+
+        $user->status = 'delete';
+        $user->save();
+        return redirect('/users');
+
     }
-
-
-
 
 
 }

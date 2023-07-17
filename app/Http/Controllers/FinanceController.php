@@ -150,7 +150,12 @@ class FinanceController extends Controller
             }
 
             // 当期利益率（全商品）
+            if (!($totalCurrentRevenue == '0')){
             $totalCurrentProfitRatio = $totalCurrentProfit/$totalCurrentRevenue*100;
+            }
+            else{
+            $totalCurrentProfitRatio = '0';
+            }
 
         // 5. 計算結果をbladeに返す。
         
