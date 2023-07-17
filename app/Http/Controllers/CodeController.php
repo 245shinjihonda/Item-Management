@@ -81,9 +81,17 @@ class CodeController extends Controller
     // 品目コード削除画面を表示する。
     public function CodeDeleteList()
     {
-        // 品目コード一覧取得
-        $codes = Code::where('status', 'active')
-        ->paginate(20);
+       
+        $codes = Code::get();
+
+        foreach($codes as $code){
+            if($code->status == 'active'){
+                $code->status = '登録中';
+            }
+            else{
+            $code->status = '登録削除済';
+            }          
+        }  
 
         return view('code.delete', compact('codes'));
     }
@@ -91,11 +99,18 @@ class CodeController extends Controller
     // 品目コード削除
     public function CodeDelete(Request $request, $id)
     {
-        // 品目コード削除
-          $item = Code::find($id);
-          $item->status = 'delete';
-          $item->save();
-          return redirect('/codes');
+   
+        $code = Code::find($id);
+
+        if($code->status == 'delete'){
+
+            return redirect('codes/delete-list')->with('flashmessage', '既に削除済です。');
+            }
+
+        $code->status = 'delete';
+        $code->save();
+        return redirect('/codes');
+
     }
 
     // 検索機能

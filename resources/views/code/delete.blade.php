@@ -24,12 +24,20 @@
                 </div>
             </div>
 
+            @if (session('flashmessage'))
+            <div style ="font-size: 20px; color:red;" class="flash_message">
+                {{ session('flashmessage') }}
+            </div>
+            @endif
+
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
                             <th>品目コード</th>
                             <th>対象となる商品のタイプ</th>
+                            <th>登録状況</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,6 +45,7 @@
                             <tr>
                                 <td>{{$code->item_code}}</td>
                                 <td>{{$code->code_name}}</td>
+                                <td>{{$code->status}}</td>
                                 <td><button type="sumbit" class="btn btn-default"><a href="/codes/delete/{{$code->id}}">削除</a></td>
                             </tr>
                         @endforeach
