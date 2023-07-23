@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>アウトドア商品管理システム TOGE</title>
+          {{-- {{ config('app.name', 'Laravel') }} --}}
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

@@ -85,7 +85,6 @@ class CodeController extends Controller
         $codes = Code::orderBY('status','asc','item_code')
                         ->get();
 
-
         foreach($codes as $code){
             if($code->status == 'active'){
                 $code->status = '登録中';
@@ -101,14 +100,27 @@ class CodeController extends Controller
     // 品目コード削除
     public function CodeDelete(Request $request, $id)
     {
-   
         $code = Code::find($id);
 
         if($code->status == 'delete'){
 
-            return redirect('codes/delete-list')->with('flashmessage', '既に削除済です。');
+            return redirect('/codes/delete-list')->with('flashmessage', '既に削除済です。');
             }
 
+        $items = Item::where('status', 'active')
+                        ->where('item_code', '=', $code->item_code)
+                        ->get();
+         
+        if(isset($items)){
+
+            $codes = Code::orderBY('status','asc','item_code')
+                            ->get();
+
+            $message = 'この品目コードで登録されている商品があるため削除できません。';
+
+            return view('code.delete', compact('codes', 'message'));        
+        }
+ 
         $code->status = 'delete';
         $code->save();
         return redirect('/codes');

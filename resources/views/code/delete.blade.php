@@ -24,6 +24,14 @@
                 </div>
             </div>
 
+           
+            @if(isset($message))
+            <div class="alert alert-danger">
+            <p>{{$message}}</p>
+            </div>
+            @endif
+            
+            
             @if (session('flashmessage'))
             <div style ="font-size: 20px; color:red;" class="flash_message">
                 {{ session('flashmessage') }}
