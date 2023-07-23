@@ -19,8 +19,9 @@
     </form>
 
     <div>
-        <a href="/inventories/update/{{$item->id}}" class="btn btn-default">出入荷情報を入力する</a>
-        <a href="/items/delete/{{$item->id}}" class="btn btn-default">この商品の登録を削除する</a>
+        <a href="/inventories/update/{{$item->id}}" class="btn btn-default" style="background:rgb(199, 241, 175)">出入荷情報を入力する</a>
+        <a href="/items/edit/{{$item->id}}" class="btn btn-default" style="background:rgb(199, 241, 175)">この商品の登録内容を変更する</a>
+        <a href="/items/delete/{{$item->id}}" class="btn btn-default" id="delete_item" style="background:rgb(199, 241, 175)">この商品の登録を削除する</a>
     </div>
 
         <?php   
@@ -143,5 +144,6 @@
 @stop
 
 @section('js')
+    <script>delete_item.onclick=function(){return confirm("この商品を削除しても良いですか？")}; </script>
     <script> console.log('Hi!'); </script>
 @stop

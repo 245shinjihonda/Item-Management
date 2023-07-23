@@ -34,6 +34,8 @@ Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'ItemIndex']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
+    Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'ItemEdit']);
+    Route::post('/update/{id}', [App\Http\Controllers\ItemController::class, 'ItemUpdate']);
     Route::get('/delete/{id}', [App\Http\Controllers\ItemController::class, 'ItemDelete']);
     Route::get('/search', [App\Http\Controllers\ItemController::class, 'ItemSearch']);
 });

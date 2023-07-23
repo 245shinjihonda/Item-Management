@@ -106,6 +106,7 @@ class UserController extends Controller
     {
         // 利用者一覧取得
         $users = User::where('users.is_admi', '0')
+                        ->where('status', 'active')
                         ->select()
                         ->orderBY('users.email')
                         ->get();

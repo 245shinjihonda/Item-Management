@@ -40,7 +40,7 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{$user->status}}</td>
-                                    <td><button type="sumbit" class="btn btn-default"><a href="/users/delete/{{$user->id}}">削除</a></td>
+                                    <td><button type="sumbit" class="btn btn-default" onclick="return confirm('入力内容を削除しても良いですか？');"><a href="/users/delete/{{$user->id}}">削除</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

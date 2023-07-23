@@ -37,7 +37,7 @@ class ItemController extends Controller
                 }
             }
           
-        $codes = code::where('status','active')
+        $codes = Code::where('status','active')
                         ->get(); 
 
         return view('item.index', compact('items', 'codes'));
@@ -113,6 +113,75 @@ class ItemController extends Controller
     return view('item.add', compact('codes'));
        
     }
+
+// 商品情報更新画面を表示する
+
+public function ItemEdit(Request $request, $id)
+    {
+        $codes = Code::where('status','active')
+                        ->get(); 
+     
+        $item = Item::where('id', '=' ,$request->id)
+                        ->first();
+         
+        return view('item.edit', compact('codes', 'item'));
+    }  
+
+// 商品情報を更新を表示する
+
+public function ItemUpdate(Request $request, $id)
+    {    
+         // バリデーション
+         $this->validate($request, [
+            'item_code' => 'required|regex:/^[A-Z]{3}+$/',
+            'item_number' => 'required|regex:/^[0-9]{4}+$/',
+            'category' =>'required|max:100',
+            'brand' =>'required|max:100',
+            'item_name' =>'required|max:100',
+            'list_price' => 'required|integer|min:1',
+            ]);
+        
+        $item = Item::where('id', '=' ,$request->id)
+                        ->first();
+
+        $codes = Code::where('status','active')
+                        ->get(); 
+
+        // 商品コードと商品番号が変更されていない場合
+        if(($item->item_code == $request->item_code) && ($item->item_number == $request->item_number))
+            {
+                $item->category = $request->category;
+                $item->brand = $request->brand;
+                $item->item_name = $request->item_name;
+                $item->list_price = $request->list_price;
+    
+            $item->save();
+            return redirect('/inventories/'.$request->id);
+
+            }
+
+        // 商品コード又は商品番号が変更されている場合
+        elseif(!Item::where('item_code', '=' ,$request->item_code)
+                        ->where('item_number', '=' ,$request->item_number)
+                        ->exists())
+            {                  
+                    $item->item_code = $request->item_code;
+                    $item->item_number = $request->item_number;
+                    $item->category = $request->category;
+                    $item->brand = $request->brand;
+                    $item->item_name = $request->item_name;
+                    $item->list_price = $request->list_price;
+                    $item->update();
+                    
+            return redirect('/inventories/'.$request->id);
+            } 
+
+        // 変更された商品コードと商品番号の組み合わせが既存のものと一致していた場合                      
+        else{
+            $error_existingItem = 'その商品コードと商品番号の組み合わせはすでに登録されています。';
+            return view('item.edit', compact('error_existingItem', 'item', 'codes'));
+        }
+    }  
 
     // 商品削除
 
