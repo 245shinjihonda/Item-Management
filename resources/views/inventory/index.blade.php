@@ -11,6 +11,11 @@
     <h2>在庫一覧</h2>
     <br>
 
+    <a href="/inventories/download" class="btn btn-default" style="background:rgb(199, 241, 175)">CSVファイルにダウンロードする</a>
+
+    <br>
+    <br>
+    
     <div class="col-auto">
         <div class="card">
             <div class="card-header">    

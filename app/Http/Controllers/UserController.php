@@ -156,7 +156,6 @@ class UserController extends Controller
         $user->status = 'delete';
         $user->save();
         return redirect('/users');
- 
     }
 
     // 管理者を削除する。
@@ -173,8 +172,6 @@ class UserController extends Controller
         $user->status = 'delete';
         $user->save();
         return redirect('/users');
-
     }
-
 
 }

@@ -111,13 +111,23 @@ class CodeController extends Controller
                         ->where('item_code', '=', $code->item_code)
                         ->get();
          
-        if(isset($items)){
-
-            $codes = Code::orderBY('status','asc','item_code')
-                            ->get();
+        if(!($items->isEmpty())){
 
             $message = 'この品目コードで登録されている商品があるため削除できません。';
 
+            $codes = Code::orderBY('status','asc','item_code')
+            ->get();
+
+            foreach($codes as $code){
+
+                if($code->status == 'active'){
+                    $code->status = '商品取扱中';
+                }
+                else{
+                $code->status = '取扱終了';
+                }
+            }
+        
             return view('code.delete', compact('codes', 'message'));        
         }
  

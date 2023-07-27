@@ -121,4 +121,19 @@ thead{
     justify-content: center;
 }
 
+.delete-button{
+ background-color: aqua; 
+ height:25px;
+ padding-top:0px;
+ padding-bottom:0px;
+ border: none;
+ border-radius: 20%;
+}
+
+.delete-button-text{
+    margin-top:0px;
+    margin-bottom:0px;
+    color: red;
+}
+
 

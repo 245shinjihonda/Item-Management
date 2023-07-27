@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Inventory;
@@ -301,6 +302,60 @@ class InventoryController extends Controller
         ]);
 
         return redirect('/inventories/'.$request->item_id);
+    }
+
+    public function InventoryDownload()
+    {
+        $inventories = Inventory::all();
+
+        //ストリームを書き込みモードで開く
+        $stream = fopen('php://temp', 'w');   
+
+        //CSVファイルのカラム（列）名の指定
+        $arr = array('item_id', 'in_quantity', 'in_unit_price', 'in_amount',
+                        'out_quantity', 'out_unit_price', 'out_amount', 'created_at', 'updated_at');           
+
+       //1行目にカラム（列）名のみを書き込む（繰り返し処理には入れない）
+        fputcsv($stream, $arr);  
+
+        foreach ($inventories as $inventory) {
+            
+            $item_name = Item::find($inventory->item_id);
+
+            $arrInfo = array(
+                'item_id' => $item_name->item_name,
+                'in_quantity' => $inventory->in_quantity,
+                'in_unit_price' => $inventory->in_unit_price,
+                'in_amount' => $inventory->in_amount,
+                'out_quantity' => $inventory->out_quantity,
+                'out_unit_price' => $inventory->out_unit_price,
+                'out_amount' => $inventory->out_amount,
+                'created_at' => $inventory->created_at,
+                'updated_at' => $inventory->updated_at,
+                );
+            fputcsv($stream, $arrInfo);       //DBの値を繰り返し書き込む
+        }
+
+        //ファイルポインタを先頭に戻す
+        rewind($stream);  
+
+        //ストリームを変数に格納
+        $csv = stream_get_contents($stream);  
+
+        //文字コードを変換
+        $csv = mb_convert_encoding($csv, 'sjis-win', 'UTF-8');   
+
+        //ストリームを閉じる
+        fclose($stream);                      
+
+        //ヘッダー情報を指定する
+        $headers = array(                     
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=inventories.csv'
+        );
+
+        //ファイルをダウンロードする
+        return Response::make($csv, 200, $headers);   
     }
 
 }

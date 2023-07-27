@@ -10,7 +10,8 @@
 @section('content')
 
     <div>
-        <a href="{{ url('items/add') }}" class="btn btn-default">商品を登録する</a>
+        <a href="{{ url('items/add') }}" class="btn btn-default" style="background:rgb(236, 243, 131)">商品を登録する</a>
+        <a href="/items/download" class="btn btn-default" style="background:rgb(199, 241, 175)">CSVファイルにダウンロードする</a>
     </div>
 
     <br>

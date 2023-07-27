@@ -54,7 +54,8 @@
                                 <td>{{$code->item_code}}</td>
                                 <td>{{$code->code_name}}</td>
                                 <td>{{$code->status}}</td>
-                                <td><button type="sumbit" class="btn btn-default"><a href="/codes/delete/{{$code->id}}">削除</a></td>
+                                <td><button type="sumbit" class="delete-button" id="delete_code">
+                                    <a href="/codes/delete/{{$code->id}}"><p class="delete-button-text">削除</p></a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -74,4 +75,5 @@
 @stop
 
 @section('js')
+<script>delete_code.onclick=function(){return confirm("この品目コードを削除しても良いですか？")}; </script>
 @stop

@@ -32,6 +32,7 @@ Route::prefix('codes')->group(function () {
 
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'ItemIndex']);
+    Route::get('/download', [App\Http\Controllers\ItemController::class, 'ItemDownload']); 
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'ItemAdd']);
     Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'ItemEdit']);
@@ -42,6 +43,7 @@ Route::prefix('items')->group(function () {
 
 Route::prefix('inventories')->group(function () {
     Route::get('/', [App\Http\Controllers\InventoryController::class, 'InventoryIndex']);
+    Route::get('/download', [App\Http\Controllers\InventoryController::class, 'InventoryDownload']);
     Route::get('/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryRecord']);
     Route::get('/{id}/search', [App\Http\Controllers\InventoryController::class, 'InventorySearch']);
     Route::get('/update/{id}', [App\Http\Controllers\InventoryController::class, 'InventoryUpdate']);

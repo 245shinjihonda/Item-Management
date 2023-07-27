@@ -10,9 +10,9 @@
 @section('content')
 
     <div>
-        <a href="{{ url('codes/add') }}" class="btn btn-default">品目コード登録</a>
+        <a href="{{ url('codes/add') }}" class="btn btn-default" style="background:rgb(236, 243, 131)">品目コード登録</a>
         @can('is_admi')
-        <a href="{{ url('codes/delete-list') }}" class="btn btn-default">品目コード削除</a>
+        <a href="{{ url('codes/delete-list') }}" class="btn btn-default" style="background:rgba(252, 139, 105, 0.938)">品目コード削除</a>
         @endcan
     <div>
 

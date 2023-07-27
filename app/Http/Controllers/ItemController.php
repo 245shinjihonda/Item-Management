@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use App\Models\Item;
 use App\Models\Code;
 use App\Models\Inventory;
@@ -114,51 +115,51 @@ class ItemController extends Controller
        
     }
 
-// 商品情報更新画面を表示する
+    // 商品情報更新画面を表示する
 
-public function ItemEdit(Request $request, $id)
-    {
-        $codes = Code::where('status','active')
-                        ->get(); 
-     
-        $item = Item::where('id', '=' ,$request->id)
-                        ->first();
-         
-        return view('item.edit', compact('codes', 'item'));
-    }  
-
-// 商品情報を更新を表示する
-
-public function ItemUpdate(Request $request, $id)
-    {    
-         // バリデーション
-         $this->validate($request, [
-            'item_code' => 'required|regex:/^[A-Z]{3}+$/',
-            'item_number' => 'required|regex:/^[0-9]{4}+$/',
-            'category' =>'required|max:100',
-            'brand' =>'required|max:100',
-            'item_name' =>'required|max:100',
-            'list_price' => 'required|integer|min:1',
-            ]);
+    public function ItemEdit(Request $request, $id)
+        {
+            $codes = Code::where('status','active')
+                            ->get(); 
         
-        $item = Item::where('id', '=' ,$request->id)
-                        ->first();
+            $item = Item::where('id', '=' ,$request->id)
+                            ->first();
+            
+            return view('item.edit', compact('codes', 'item'));
+        }  
 
-        $codes = Code::where('status','active')
-                        ->get(); 
+    // 商品情報を更新を表示する
 
-        // 商品コードと商品番号が変更されていない場合
-        if(($item->item_code == $request->item_code) && ($item->item_number == $request->item_number))
-            {
-                $item->category = $request->category;
-                $item->brand = $request->brand;
-                $item->item_name = $request->item_name;
-                $item->list_price = $request->list_price;
-    
-            $item->save();
-            return redirect('/inventories/'.$request->id);
+    public function ItemUpdate(Request $request, $id)
+        {    
+            // バリデーション
+            $this->validate($request, [
+                'item_code' => 'required|regex:/^[A-Z]{3}+$/',
+                'item_number' => 'required|regex:/^[0-9]{4}+$/',
+                'category' =>'required|max:100',
+                'brand' =>'required|max:100',
+                'item_name' =>'required|max:100',
+                'list_price' => 'required|integer|min:1',
+                ]);
+            
+            $item = Item::where('id', '=' ,$request->id)
+                            ->first();
 
-            }
+            $codes = Code::where('status','active')
+                            ->get(); 
+
+            // 商品コードと商品番号が変更されていない場合
+            if(($item->item_code == $request->item_code) && ($item->item_number == $request->item_number))
+                {
+                    $item->category = $request->category;
+                    $item->brand = $request->brand;
+                    $item->item_name = $request->item_name;
+                    $item->list_price = $request->list_price;
+        
+                $item->save();
+                return redirect('/inventories/'.$request->id);
+
+                }
 
         // 商品コード又は商品番号が変更されている場合
         elseif(!Item::where('item_code', '=' ,$request->item_code)
@@ -243,5 +244,59 @@ public function ItemUpdate(Request $request, $id)
 
         return view('item.index',$items,compact('items', 'codes'));
     }
+
+    public function ItemDownload(){
+
+        $items = Item::all();
+
+        //ストリームを書き込みモードで開く
+        $stream = fopen('php://temp', 'w');   
+
+        //CSVファイルのカラム（列）名の指定
+        $arr = array('status', 'item_code', 'item_number', 'category',
+                        'brand', 'item_name', 'list_price', 'created_at', 'updated_at');           
+
+       //1行目にカラム（列）名のみを書き込む（繰り返し処理には入れない）
+        fputcsv($stream, $arr);  
+
+        foreach ($items as $item) {
+            
+            $arrInfo = array(
+                'status' => $item->status,
+                'item_code' => $item->item_code,
+                'item_number' => $item->item_number,
+                'category' => $item->category,
+                'brand' => $item->brand,
+                'item_name' => $item->item_name,
+                'list_price' => $item->list_price,
+                'created_at' => $item->created_at,
+                'updated_at' => $item->updated_at,
+                );
+            fputcsv($stream, $arrInfo);       //DBの値を繰り返し書き込む
+        }
+
+        //ファイルポインタを先頭に戻す
+        rewind($stream);  
+
+        //ストリームを変数に格納
+        $csv = stream_get_contents($stream);  
+
+        //文字コードを変換
+        $csv = mb_convert_encoding($csv, 'sjis-win', 'UTF-8');   
+
+        //ストリームを閉じる
+        fclose($stream);                      
+
+        //ヘッダー情報を指定する
+        $headers = array(                     
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename=item_list.csv'
+        );
+
+        //ファイルをダウンロードする
+        return Response::make($csv, 200, $headers);   
+
+    }
+
 }
 
