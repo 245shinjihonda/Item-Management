@@ -322,6 +322,8 @@ class InventoryController extends Controller
             
             $item_name = Item::find($inventory->item_id);
 
+            dd($item_name);
+
             $arrInfo = array(
                 'item_id' => $item_name->item_name,
                 'in_quantity' => $inventory->in_quantity,
