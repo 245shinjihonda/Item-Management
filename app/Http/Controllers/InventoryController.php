@@ -306,13 +306,16 @@ class InventoryController extends Controller
 
     public function InventoryDownload()
     {
-        $inventories = Inventory::all();
+        $inventories = Inventory::
+                        join('items', 'inventories.item_id', '=', 'items.id')
+                        ->select('*', 'items.item_name')
+                        ->get();
 
         //ストリームを書き込みモードで開く
         $stream = fopen('php://temp', 'w');   
 
         //CSVファイルのカラム（列）名の指定
-        $arr = array('item_id', 'in_quantity', 'in_unit_price', 'in_amount',
+        $arr = array('item_name', 'in_quantity', 'in_unit_price', 'in_amount',
                         'out_quantity', 'out_unit_price', 'out_amount', 'created_at', 'updated_at');           
 
        //1行目にカラム（列）名のみを書き込む（繰り返し処理には入れない）
@@ -325,7 +328,7 @@ class InventoryController extends Controller
             // dd($item_name);
 
             $arrInfo = array(
-                // 'item_id' => $item_name->item_name,
+                'item_name' => $inventory->item_name,
                 'in_quantity' => $inventory->in_quantity,
                 'in_unit_price' => $inventory->in_unit_price,
                 'in_amount' => $inventory->in_amount,
