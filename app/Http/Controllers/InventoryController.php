@@ -307,9 +307,9 @@ class InventoryController extends Controller
     public function InventoryDownload()
     {
         $inventories = Inventory::
-                        join('items', 'inventories.item_id', '=', 'items.id')
-                        ->select('*', 'items.item_name')
-                        ->get();
+                                join('items', 'inventories.item_id', '=', 'items.id')
+                                ->select('*', 'items.item_name')
+                                ->get();
 
         //ストリームを書き込みモードで開く
         $stream = fopen('php://temp', 'w');   
@@ -323,10 +323,6 @@ class InventoryController extends Controller
 
         foreach ($inventories as $inventory) {
             
-            // $item_name = Item::find($inventory->item_id);
-
-            // dd($item_name);
-
             $arrInfo = array(
                 'item_name' => $inventory->item_name,
                 'in_quantity' => $inventory->in_quantity,
