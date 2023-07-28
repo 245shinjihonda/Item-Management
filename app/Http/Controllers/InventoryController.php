@@ -320,12 +320,12 @@ class InventoryController extends Controller
 
         foreach ($inventories as $inventory) {
             
-            $item_name = Item::find($inventory->item_id);
+            // $item_name = Item::find($inventory->item_id);
 
-            dd($item_name);
+            // dd($item_name);
 
             $arrInfo = array(
-                'item_id' => $item_name->item_name,
+                // 'item_id' => $item_name->item_name,
                 'in_quantity' => $inventory->in_quantity,
                 'in_unit_price' => $inventory->in_unit_price,
                 'in_amount' => $inventory->in_amount,
